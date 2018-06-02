@@ -36,4 +36,4 @@ instance_2_public_ip = [
 
 Use the public IP addresses to access the web servers behind the HTTP load balancer.
 
-   [Networking 101] : https://codelabs.developers.google.com/codelabs/cloud-networking-101
+   [Networking 101]: <https://codelabs.developers.google.com/codelabs/cloud-networking-101/>

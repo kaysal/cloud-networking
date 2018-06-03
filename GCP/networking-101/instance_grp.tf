@@ -38,6 +38,10 @@ resource "google_compute_instance_template" "us_east1_template" {
     startup-script-url = "${var.gcs_bucket_startup_script}"
     ssh-keys           = "kayode:${file("${var.public_key_path}")}"
   }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
+  }
 }
 
 resource "google_compute_instance_template" "europe_west1_template" {
@@ -60,6 +64,10 @@ resource "google_compute_instance_template" "europe_west1_template" {
   metadata {
     startup-script-url = "${var.gcs_bucket_startup_script}"
     ssh-keys           = "kayode:${file("${var.public_key_path}")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 

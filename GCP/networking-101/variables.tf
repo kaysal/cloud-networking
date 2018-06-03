@@ -21,3 +21,8 @@ variable "public_key_path" {
 variable "source_service_accounts" {
   description = "GCE service account"
 }
+
+variable "name" {
+  description = "prefix to be appended to some resources"
+  default = "networking-101"
+}

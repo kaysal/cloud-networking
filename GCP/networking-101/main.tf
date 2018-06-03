@@ -55,7 +55,6 @@ resource "google_compute_instance" "w1_vm" {
   name         = "w1-vm"
   machine_type = "n1-standard-1"
   zone = "us-west1-b"
-  tags         = ["http-tag"]
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
@@ -80,7 +79,6 @@ resource "google_compute_instance" "w2_vm" {
   name         = "w2-vm"
   machine_type = "n1-standard-1"
   zone = "us-west1-b"
-  tags         = ["http-tag"]
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
@@ -106,7 +104,6 @@ resource "google_compute_instance" "e1_vm" {
   name         = "e1-vm"
   machine_type = "n1-standard-1"
   zone = "us-east1-b"
-  tags         = ["http-tag"]
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
@@ -131,7 +128,6 @@ resource "google_compute_instance" "eu1_vm" {
   name         = "eu1-vm"
   machine_type = "n1-standard-1"
   zone = "europe-west1-d"
-  tags         = ["http-tag"]
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
@@ -143,7 +139,7 @@ resource "google_compute_instance" "eu1_vm" {
       // Ephemeral IP
     }
   }
-  metadata {
+  metadata {  tags         = ["http-tag"]
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
   metadata_startup_script = "${file("scripts/script.sh")}"
@@ -156,7 +152,6 @@ resource "google_compute_instance" "asia1_vm" {
   name         = "asia1-vm"
   machine_type = "n1-standard-1"
   zone = "asia-east1-b"
-  tags         = ["http-tag"]
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"

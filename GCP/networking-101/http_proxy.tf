@@ -36,19 +36,20 @@ resource "google_compute_backend_service" "my_backend_service" {
 # Create http proxy frontend
 #---------------------------------------
 
-resource "google_compute_url_map" "default" {
-  name = "default"
+resource "google_compute_url_map" "my_gclb" {
+  name = "my-gclb"
   default_service = "${google_compute_backend_service.my_backend_service.self_link}"
 }
 
-resource "google_compute_target_http_proxy" "http_lb_proxy" {
-  name    = "http-lb-proxy"
-  url_map = "${google_compute_url_map.default.self_link}"
+resource "google_compute_target_http_proxy" "http_proxy" {
+  name    = "http-proxy"
+  description = "gclb http proxy"
+  url_map = "${google_compute_url_map.my_gclb.self_link}"
 }
 
 resource "google_compute_global_forwarding_rule" "nw101_forwarding_rule" {
   name       = "nw101-forwarding-rule"
-  target     = "${google_compute_target_http_proxy.http_lb_proxy.self_link}"
+  target     = "${google_compute_target_http_proxy.http_proxy.self_link}"
   ip_protocol = "TCP"
   port_range = "80"
 }

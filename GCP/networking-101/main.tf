@@ -58,7 +58,7 @@ resource "google_compute_instance" "w1_vm" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -77,7 +77,7 @@ resource "google_compute_instance" "w1_vm" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 
@@ -88,7 +88,7 @@ resource "google_compute_instance" "w2_vm" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -108,7 +108,7 @@ resource "google_compute_instance" "w2_vm" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 
@@ -119,7 +119,7 @@ resource "google_compute_instance" "e1_vm" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -138,7 +138,7 @@ resource "google_compute_instance" "e1_vm" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 
@@ -149,7 +149,7 @@ resource "google_compute_instance" "eu1_vm" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -168,7 +168,7 @@ resource "google_compute_instance" "eu1_vm" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 
@@ -179,7 +179,7 @@ resource "google_compute_instance" "asia1_vm" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -198,7 +198,7 @@ resource "google_compute_instance" "asia1_vm" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 

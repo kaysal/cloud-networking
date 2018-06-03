@@ -1,10 +1,8 @@
 # https://codelabs.developers.google.com/codelabs/cloud-networking-101
 
 provider "google" {
-  //region      = "${var.region}"
   project     = "${var.project_name}"
   credentials = "${file("${var.credentials_file_path}")}"
-  #zone        = "${var.region_zone}"
 }
 
 # Create VPC
@@ -90,7 +88,7 @@ resource "google_compute_instance" "w2_vm" {
   }
   network_interface {
     subnetwork = "${google_compute_subnetwork.us_west1_s2.name}"
-    address = 10.11.0.100
+    address = "10.11.0.100"
     access_config {
       // Ephemeral IP
     }

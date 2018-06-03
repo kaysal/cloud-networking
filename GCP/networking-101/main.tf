@@ -54,22 +54,28 @@ resource "google_compute_subnetwork" "asia_east1" {
 resource "google_compute_instance" "w1_vm" {
   name         = "w1-vm"
   machine_type = "n1-standard-1"
-  zone = "us-west1-b"
+  zone         = "us-west1-b"
+
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
     }
   }
+
   network_interface {
     subnetwork = "${google_compute_subnetwork.us_west1_s1.name}"
+
     access_config {
       // Ephemeral IP
     }
   }
+
   metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
+
   metadata_startup_script = "${file("scripts/script.sh")}"
+
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
@@ -78,23 +84,29 @@ resource "google_compute_instance" "w1_vm" {
 resource "google_compute_instance" "w2_vm" {
   name         = "w2-vm"
   machine_type = "n1-standard-1"
-  zone = "us-west1-b"
+  zone         = "us-west1-b"
+
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
     }
   }
+
   network_interface {
     subnetwork = "${google_compute_subnetwork.us_west1_s2.name}"
-    address = "10.11.0.100"
+    address    = "10.11.0.100"
+
     access_config {
       // Ephemeral IP
     }
   }
+
   metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
+
   metadata_startup_script = "${file("scripts/script.sh")}"
+
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
@@ -103,22 +115,28 @@ resource "google_compute_instance" "w2_vm" {
 resource "google_compute_instance" "e1_vm" {
   name         = "e1-vm"
   machine_type = "n1-standard-1"
-  zone = "us-east1-b"
+  zone         = "us-east1-b"
+
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
     }
   }
+
   network_interface {
     subnetwork = "${google_compute_subnetwork.us_east1.name}"
+
     access_config {
       // Ephemeral IP
     }
   }
+
   metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
+
   metadata_startup_script = "${file("scripts/script.sh")}"
+
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
@@ -127,22 +145,28 @@ resource "google_compute_instance" "e1_vm" {
 resource "google_compute_instance" "eu1_vm" {
   name         = "eu1-vm"
   machine_type = "n1-standard-1"
-  zone = "europe-west1-d"
+  zone         = "europe-west1-d"
+
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
     }
   }
+
   network_interface {
     subnetwork = "${google_compute_subnetwork.europe_west1.name}"
+
     access_config {
       // Ephemeral IP
     }
   }
-  metadata {  tags         = ["http-tag"]
+
+  metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
+
   metadata_startup_script = "${file("scripts/script.sh")}"
+
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
@@ -151,22 +175,28 @@ resource "google_compute_instance" "eu1_vm" {
 resource "google_compute_instance" "asia1_vm" {
   name         = "asia1-vm"
   machine_type = "n1-standard-1"
-  zone = "asia-east1-b"
+  zone         = "asia-east1-b"
+
   boot_disk {
     initialize_params {
       image = "projects/debian-cloud/global/images/family/debian-8"
     }
   }
+
   network_interface {
     subnetwork = "${google_compute_subnetwork.asia_east1.name}"
+
     access_config {
       // Ephemeral IP
     }
   }
+
   metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
+
   metadata_startup_script = "${file("scripts/script.sh")}"
+
   service_account {
     scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
@@ -177,30 +207,37 @@ resource "google_compute_instance" "asia1_vm" {
 resource "google_compute_firewall" "fw_allow_internal" {
   name    = "${var.name}-allow-internal"
   network = "${google_compute_network.networking_101.self_link}"
+
   allow {
     protocol = "tcp"
   }
+
   allow {
     protocol = "udp"
   }
-  source_ranges  = ["10.0.0.0/8"]
+
+  source_ranges = ["10.0.0.0/8"]
 }
 
 resource "google_compute_firewall" "fw_allow_ssh" {
   name    = "${var.name}-allow-ssh"
   network = "${google_compute_network.networking_101.self_link}"
+
   allow {
     protocol = "tcp"
     ports    = ["22"]
   }
-  source_ranges  = ["0.0.0.0/0"]
+
+  source_ranges = ["0.0.0.0/0"]
 }
 
 resource "google_compute_firewall" "fw_allow_icmp" {
   name    = "${var.name}-allow-icmp"
   network = "${google_compute_network.networking_101.self_link}"
+
   allow {
     protocol = "icmp"
   }
-  source_ranges  = ["0.0.0.0/0"]
+
+  source_ranges = ["0.0.0.0/0"]
 }

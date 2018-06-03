@@ -16,5 +16,10 @@ variable "source_service_accounts" {
 
 variable "name" {
   description = "prefix to be appended to some resources"
-  default = "networking-101"
+  default     = "networking-101"
+}
+
+variable "gcs_bucket_startup_script" {
+  description = "cloud storage startup script file"
+  default     = "gs://networking101-lab/startup.sh"
 }

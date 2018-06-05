@@ -5,6 +5,11 @@ resource "google_compute_address" "web_ext_ip" {
   region = "us-central1"
 }
 
+resource "google_compute_address" "new_web_ext_ip" {
+  name = "new-web-ext-ip"
+  region = "europe-west1"
+}
+
 # Create VPC
 #--------------------------------------
 resource "google_compute_network" "nw102" {
@@ -137,6 +142,12 @@ resource "google_compute_target_pool" "web_target" {
   instances = ["us-central1-f/nat-node-w-us"]
 }
 
+resource "google_compute_target_pool" "new_web_target" {
+  name = "new-web-target"
+  region = "europe-west1"
+  instances = ["europe-west1-c/nat-node-w-eu"]
+}
+
 # Forwarding rule for external access to web tier
 #--------------------------------------
 resource "google_compute_forwarding_rule" "web_ext" {
@@ -145,5 +156,14 @@ resource "google_compute_forwarding_rule" "web_ext" {
   ip_address = "${google_compute_address.web_ext_ip.address}"
   region = "us-central1"
   target     = "${google_compute_target_pool.web_target.self_link}"
+  port_range = "80"
+}
+
+resource "google_compute_forwarding_rule" "new_web_ext" {
+  name       = "new-web-ext"
+  ip_protocol = "TCP"
+  ip_address = "${google_compute_address.new_web_ext_ip.address}"
+  region = "europe-west1"
+  target     = "${google_compute_target_pool.new_web_target.self_link}"
   port_range = "80"
 }

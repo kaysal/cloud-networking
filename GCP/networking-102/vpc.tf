@@ -1,3 +1,9 @@
+# Reserve external IP address
+#--------------------------------------
+resource "google_compute_address" "web_ext_ip" {
+  name = "web-ext-ip"
+  region = "us-central1"
+}
 
 # Create VPC
 #--------------------------------------
@@ -85,7 +91,20 @@ resource "google_compute_firewall" "nw102_allow_ssh" {
     ports = ["22"]
   }
 
-  source_ranges = ["109.146.141.157/32"]
+  source_ranges = ["104.132.25.72/32"]
+}
+
+resource "google_compute_firewall" "nw102_allow_ext" {
+  name    = "nw102-allow-ext"
+  network = "${google_compute_network.nw102.self_link}"
+
+  allow {
+    protocol = "tcp"
+    ports = ["80"]
+  }
+
+  target_tags = ["web"]
+  source_ranges = ["0.0.0.0/0"]
 }
 
 # Routes
@@ -108,4 +127,23 @@ resource "google_compute_route" "nw102_nat_eu" {
   next_hop_instance_zone = "europe-west1-c"
   priority    = 800
   tags = ["nat-eu"]
+}
+
+# Create target pool for forwarding rule
+#--------------------------------------
+resource "google_compute_target_pool" "web_target" {
+  name = "web-target"
+  region = "us-central1"
+  instances = ["us-central1-f/nat-node-w-us"]
+}
+
+# Forwarding rule for external access to web tier
+#--------------------------------------
+resource "google_compute_forwarding_rule" "web_ext" {
+  name       = "web-ext"
+  ip_protocol = "TCP"
+  ip_address = "${google_compute_address.web_ext_ip.address}"
+  region = "us-central1"
+  target     = "${google_compute_target_pool.web_target.self_link}"
+  port_range = "80"
 }

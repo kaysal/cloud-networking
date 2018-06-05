@@ -24,23 +24,56 @@ resource "google_compute_subnetwork" "nw102_eu" {
 
 # Create firewall rules
 #--------------------------------------
-resource "google_compute_firewall" "nw102_allow_internal" {
-  name    = "nw102-allow-internal"
+resource "google_compute_firewall" "nw102_allow_app" {
+  name    = "nw102-allow-app"
   network = "${google_compute_network.nw102.self_link}"
 
   allow {
     protocol = "tcp"
+    ports = ["22","80"]
   }
+
+  source_tags = ["gw","app"]
+  target_tags = ["app"]
+}
+
+resource "google_compute_firewall" "nw102_allow_web" {
+  name    = "nw102-allow-web"
+  network = "${google_compute_network.nw102.self_link}"
+
+  allow {
+    protocol = "tcp"
+    ports = ["22","80"]
+  }
+
+  source_tags = ["gw","web"]
+  target_tags = ["web"]
+}
+
+resource "google_compute_firewall" "nw102_allow_egress" {
+  name    = "nw102-allow-egress"
+  network = "${google_compute_network.nw102.self_link}"
+
+  allow {
+    protocol = "tcp"
+    ports = ["80","443"]
+  }
+
+  source_tags = ["app","web"]
+  target_tags = ["gw"]
+}
+
+resource "google_compute_firewall" "nw102_allow_traceroute" {
+  name    = "nw102-allow-traceroute"
+  network = "${google_compute_network.nw102.self_link}"
 
   allow {
     protocol = "udp"
-  }
-
-  allow {
-    protocol = "icmp"
+    ports = ["33434-33534"]
   }
 
   source_ranges = ["192.168.10.0/24","192.168.20.0/24"]
+  target_tags = ["gw"]
 }
 
 resource "google_compute_firewall" "nw102_allow_ssh" {
@@ -52,9 +85,11 @@ resource "google_compute_firewall" "nw102_allow_ssh" {
     ports = ["22"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = ["109.146.141.157/32"]
 }
 
+# Routes
+#--------------------------------------
 resource "google_compute_route" "nw102_nat_us" {
   name        = "nw102-nat-us"
   dest_range  = "0.0.0.0/0"

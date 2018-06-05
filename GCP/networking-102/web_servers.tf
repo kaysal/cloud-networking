@@ -1,23 +1,11 @@
-# Reserve static IPs for NAT GWs
-#--------------------------------------
-resource "google_compute_address" "nat_gw_us_ip" {
-  name = "nat-gw-us-ip"
-  region = "us-central1"
-}
 
-resource "google_compute_address" "nat_gw_eu_ip" {
-  name = "nat-gw-eu-ip"
-  region = "europe-west1"
-}
-
-# Create NAT GWs
+# Create instances
 #--------------------------------------
-resource "google_compute_instance" "nat_gw_us" {
-  name         = "nat-gw-us"
+resource "google_compute_instance" "nat_node_w_us" {
+  name         = "nat-node-w-us"
   machine_type = "n1-standard-1"
   zone         = "us-central1-f"
-  tags = ["gw"]
-  can_ip_forward = "true"
+  tags = ["nat-us","web"]
 
   boot_disk {
     initialize_params {
@@ -28,32 +16,27 @@ resource "google_compute_instance" "nat_gw_us" {
   network_interface {
     subnetwork = "${google_compute_subnetwork.nw102_us.name}"
 
-    access_config {
-      nat_ip = "${google_compute_address.nat_gw_us_ip.address}"
-    }
   }
 
   metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
 
-  metadata_startup_script = "${file("scripts/script.sh")}"
+  metadata_startup_script = "${file("scripts/script-web.sh")}"
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
 }
 
-resource "google_compute_instance" "nat_gw_eu" {
-  name         = "nat-gw-eu"
+resource "google_compute_instance" "nat_node_w_eu" {
+  name         = "nat-node-w-eu"
   machine_type = "n1-standard-1"
   zone         = "europe-west1-c"
-  tags = ["gw"]
-  can_ip_forward = "true"
+  tags = ["nat-eu","web"]
 
   boot_disk {
     initialize_params {
-      #image = "projects/centos-cloud/global/images/family/centos-7"
       image = "projects/debian-cloud/global/images/family/debian-8"
     }
   }
@@ -61,16 +44,13 @@ resource "google_compute_instance" "nat_gw_eu" {
   network_interface {
     subnetwork = "${google_compute_subnetwork.nw102_eu.name}"
 
-    access_config {
-      nat_ip = "${google_compute_address.nat_gw_eu_ip.address}"
-    }
   }
 
   metadata {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
 
-  metadata_startup_script = "${file("scripts/script.sh")}"
+  metadata_startup_script = "${file("scripts/script-web.sh")}"
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]

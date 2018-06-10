@@ -96,7 +96,7 @@ resource "google_compute_firewall" "nw102_allow_ssh" {
     ports = ["22"]
   }
 
-  source_ranges = ["104.132.25.72/32"]
+  source_ranges = ["109.147.48.52/32"]
 }
 
 resource "google_compute_firewall" "nw102_allow_ext" {
@@ -110,6 +110,46 @@ resource "google_compute_firewall" "nw102_allow_ext" {
 
   target_tags = ["web"]
   source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "default_allow_http_server" {
+  name    = "default-allow-http-server"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports = ["80"]
+  }
+
+  target_tags = ["http-server"]
+}
+
+# firewall to allow external ip access through nat-gw-us
+resource "google_compute_firewall" "nw102_allow_on_prem_alt" {
+  name    = "nw102-allow-on-prem-alt"
+  network = "${google_compute_network.nw102.self_link}"
+
+  allow {
+    protocol = "tcp"
+    ports = ["80"]
+  }
+
+  target_tags = ["gw"]
+  source_ranges = ["192.168.0.0/19"]
+}
+
+# firewall to allow external ip access through nat-gw-us
+resource "google_compute_firewall" "nw102_allow_proxy" {
+  name    = "nw102-allow-proxy"
+  network = "${google_compute_network.nw102.self_link}"
+
+  allow {
+    protocol = "tcp"
+    ports = ["3128"]
+  }
+
+  target_tags = ["gw"]
+  source_ranges = ["192.168.20.0/24"]
 }
 
 # Routes
@@ -132,6 +172,15 @@ resource "google_compute_route" "nw102_nat_eu" {
   next_hop_instance_zone = "europe-west1-c"
   priority    = 800
   tags = ["nat-eu"]
+}
+
+#static route for alias IP address on nat-gw-us
+resource "google_compute_route" "nw102_192_168_30_11" {
+  name        = "nw102-192-168-30-11"
+  dest_range  = "192.168.30.11/32"
+  network     = "${google_compute_network.nw102.name}"
+  next_hop_instance = "${google_compute_instance.nat_gw_us.name}"
+  next_hop_instance_zone = "us-central1-f"
 }
 
 # Create target pool for forwarding rule

@@ -21,7 +21,7 @@ resource "google_compute_instance" "nat_gw_us" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -37,7 +37,7 @@ resource "google_compute_instance" "nat_gw_us" {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
 
-  metadata_startup_script = "${file("scripts/script.sh")}"
+  metadata_startup_script = "${file("scripts/script-gw-us.sh")}"
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
@@ -54,7 +54,7 @@ resource "google_compute_instance" "nat_gw_eu" {
   boot_disk {
     initialize_params {
       #image = "projects/centos-cloud/global/images/family/centos-7"
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -70,7 +70,7 @@ resource "google_compute_instance" "nat_gw_eu" {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
 
-  metadata_startup_script = "${file("scripts/script.sh")}"
+  metadata_startup_script = "${file("scripts/script-gw-eu.sh")}"
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]

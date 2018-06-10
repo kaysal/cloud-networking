@@ -9,7 +9,7 @@ resource "google_compute_instance" "nat_node_w_us" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 
@@ -37,7 +37,7 @@ resource "google_compute_instance" "nat_node_w_eu" {
 
   boot_disk {
     initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-8"
+      image = "projects/debian-cloud/global/images/family/debian-9"
     }
   }
 

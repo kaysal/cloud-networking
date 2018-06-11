@@ -53,8 +53,8 @@ resource "google_compute_instance" "nat_node_eu" {
   }
 }
 
-resource "google_compute_instance" "aux_on_prem_svc" {
-  name         = "aux-on-prem-svc"
+resource "google_compute_instance" "faux_on_prem_svc" {
+  name         = "faux-on-prem-svc"
   machine_type = "n1-standard-1"
   zone         = "us-central1-f"
   tags = ["http-server"]
@@ -103,7 +103,7 @@ resource "google_compute_instance" "nat_node_gcp_eu" {
     ssh-keys = "kayode:${file("${var.public_key_path}")}"
   }
 
-  metadata_startup_script = "${file("scripts/script-web.sh")}"
+  metadata_startup_script = "${file("scripts/script-nat-node-eu.sh")}"
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]

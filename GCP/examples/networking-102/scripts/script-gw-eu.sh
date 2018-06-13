@@ -23,8 +23,8 @@ sed -i 's:\(acl Safe_ports port 777*\):#\1:' /etc/squid/squid.conf
 sed -i 's:\(http_access allow localhost manager\):#\1:' /etc/squid/squid.conf
 sed -i 's:\(http_access deny manager\):#\1:' /etc/squid/squid.conf
 sed -i 's:#\(http_access allow localnet\):\1:' /etc/squid/squid.conf
-sudo cat <<EOF >>/etc/squid/squid.conf
+cat <<EOF >>/etc/squid/squid.conf
 acl nw102-approved dstdomain "/etc/squid/whitelisted-domains.txt"
 http_access allow nw102-approved
 EOF
-sudo service squid restart
+service squid restart

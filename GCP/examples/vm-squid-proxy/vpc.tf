@@ -1,7 +1,7 @@
 # Reserve external IP address
 #--------------------------------------
 resource "google_compute_address" "squid_proxy_ext_ip" {
-  name = "vpn-gw-ext-ip"
+  name = "squid-proxy-ext-ip"
   region = "europe-west1"
 }
 

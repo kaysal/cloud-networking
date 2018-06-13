@@ -96,7 +96,7 @@ resource "google_compute_firewall" "nw102_allow_ssh" {
     ports = ["22"]
   }
 
-  source_ranges = ["109.147.48.52/32"]
+  source_ranges = ["${var.local_public_ip}"]
 }
 
 resource "google_compute_firewall" "nw102_allow_ext" {
@@ -183,7 +183,7 @@ resource "google_compute_route" "nw102_192_168_30_11" {
   next_hop_instance_zone = "us-central1-f"
 }
 
-# Create target pool for forwarding rule
+# Create target pool (target instance) for forwarding rule
 #--------------------------------------
 resource "google_compute_target_pool" "web_target" {
   name = "web-target"

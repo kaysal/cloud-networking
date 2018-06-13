@@ -34,7 +34,7 @@ resource "google_compute_instance" "nat_gw_us" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-gw-us.sh")}"
@@ -67,7 +67,7 @@ resource "google_compute_instance" "nat_gw_eu" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-gw-eu.sh")}"

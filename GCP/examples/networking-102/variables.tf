@@ -19,7 +19,6 @@ variable "name" {
   default     = "networking-101"
 }
 
-variable "gcs_bucket_startup_script" {
-  description = "cloud storage startup script file"
-  default     = "gs://networking101-lab/startup.sh"
+variable "local_public_ip" {
+  description = "public ip address of local machine"
 }

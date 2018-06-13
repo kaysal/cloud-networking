@@ -16,7 +16,7 @@ resource "google_compute_instance" "nat_node_us" {
     subnetwork = "${google_compute_subnetwork.nw102_us.name}"
   }
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-web.sh")}"
@@ -43,7 +43,7 @@ resource "google_compute_instance" "nat_node_eu" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-web.sh")}"
@@ -73,7 +73,7 @@ resource "google_compute_instance" "faux_on_prem_svc" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-web.sh")}"
@@ -100,7 +100,7 @@ resource "google_compute_instance" "nat_node_gcp_eu" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-nat-node-eu.sh")}"

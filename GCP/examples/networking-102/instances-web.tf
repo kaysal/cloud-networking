@@ -19,7 +19,7 @@ resource "google_compute_instance" "nat_node_w_us" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-web.sh")}"
@@ -47,7 +47,7 @@ resource "google_compute_instance" "nat_node_w_eu" {
   }
 
   metadata {
-    ssh-keys = "kayode:${file("${var.public_key_path}")}"
+    ssh-keys = "user:${file("${var.public_key_path}")}"
   }
 
   metadata_startup_script = "${file("scripts/script-web.sh")}"

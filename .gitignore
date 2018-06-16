@@ -10,3 +10,5 @@
 
 # Other files
 *credentials/
+plugins/
+*plugins/

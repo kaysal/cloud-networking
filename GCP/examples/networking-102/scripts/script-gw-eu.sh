@@ -27,4 +27,4 @@ cat <<EOF >>/etc/squid/squid.conf
 acl nw102-approved dstdomain "/etc/squid/whitelisted-domains.txt"
 http_access allow nw102-approved
 EOF
-service squid restart
+service squid start

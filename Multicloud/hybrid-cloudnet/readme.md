@@ -68,6 +68,6 @@ Then run Terraform in the following GCP directories to create resources in the 3
 - `./gcp/us-east1/`
 
 ## Step 5
-Test for ping connectivity from any GCP node in region europe-west-1 to AWS eu-west1. And also test for connectivity from the instance in GCP us-east-1 to AWS us-east1.
+Test for ping connectivity from any GCP node in region `europe-west-1` to AWS `eu-west1`. And also test for connectivity from the instance in GCP `us-east-1` to AWS `us-east1`.
 
 [blog]: <http://www.cloudnetworkstuff.com/index.php/2018/06/23/dynamic-routing-vpn-gcp-and-aws/>

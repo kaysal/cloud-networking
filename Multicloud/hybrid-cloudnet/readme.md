@@ -59,7 +59,7 @@ All the output values will be used as input in GCP Terraform scripts automatical
 Next run Terraform for second AWS region`./aws/eu-west1/vpc1/us-east1` as described in Step 1.
 
 ## Step 3
-Next we run Terraform in directory `./gcp/vpc/` to create the GCP networks, subnets and security rules
+And then run Terraform in directory `./gcp/vpc/` to create the GCP networks, subnets and security rules
 
 ## Step 4
 Then run Terraform in the following GCP directories to create resources in the 3 regions:

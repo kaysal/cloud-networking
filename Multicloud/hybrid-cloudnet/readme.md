@@ -18,9 +18,9 @@ terraform apply \
 
 ## Step 1
 Create external IP addresses on GCP with the following names:
-- gcp-eu-west1-vpn-gw1-ip
-- gcp-eu-west1-vpn-gw2-ip
-- gcp-us-east1-vpn-gw1-ip
+- `gcp-eu-west1-vpn-gw1-ip` (region = europe-west1)
+- `gcp-eu-west1-vpn-gw2-ip` (region = europe-west1)
+- `gcp-us-east1-vpn-gw1-ip` (region = us-east1)
 
 Then copy the IP address values into the following variables in each of the following AWS Terraform files:
 - `./aws/eu-west1/vpc1/eu-west1/terraform.tfvars`   

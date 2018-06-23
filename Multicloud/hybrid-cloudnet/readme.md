@@ -17,6 +17,20 @@ terraform apply \
 ```
 
 ## Step 1
+Create external IP addresses on GCP with the following names:
+- gcp-eu-west1-vpn-gw1-ip
+- gcp-eu-west1-vpn-gw2-ip
+- gcp-us-east1-vpn-gw1-ip
+
+Then copy the IP address values into the following variables in each of the following AWS Terraform files:
+- `./aws/eu-west1/vpc1/eu-west1/terraform.tfvars`   
+  - gcp_eu_west1_vpn_gw1_ip
+  - gcp_eu_west1_vpn_gw2_ip
+
+- `./aws/eu-west1/vpc1/us-east1/terraform.tfvars`
+    - gcp_us_east1_vpn_gw1_ip
+
+## Step 2
 Run Terraform in the directory `./aws/eu-west1/vpc1/eu-west1` as follows:
 ```sh
 terraform plan
@@ -55,19 +69,19 @@ vpc1_gcp_eu_w1_vpn2_tunnel2_vgw_inside_address = 169.254.22.9
 ```
 All the output values will be used as input in GCP Terraform scripts automatically, so no need to manually copy or transfer these values.
 
-## Step 2
+## Step 3
 Next run Terraform for second AWS region`./aws/eu-west1/vpc1/us-east1` as described in Step 1.
 
-## Step 3
+## Step 4
 And then run Terraform in directory `./gcp/vpc/` to create the GCP networks, subnets and security rules
 
-## Step 4
+## Step 5
 Then run Terraform in the following GCP directories to create resources in the 3 regions:
 - `./gcp/eu-west1/`
 - `./gcp/eu-west3/`
 - `./gcp/us-east1/`
 
-## Step 5
+## Step 6
 Test for ping connectivity from any GCP node in region `europe-west-1` to AWS `eu-west1`. And also test for connectivity from the instance in GCP `us-east-1` to AWS `us-east1`.
 
 [blog]: <http://www.cloudnetworkstuff.com/index.php/2018/06/23/dynamic-routing-vpn-gcp-and-aws/>

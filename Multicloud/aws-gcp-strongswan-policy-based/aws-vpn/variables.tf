@@ -1,5 +1,11 @@
 variable "region" {
     description = "aws region"
+    default = "eu-west-2"
+}
+
+variable "zone" {
+    description = "availability zone to use."
+    default = "eu-west-2a"
 }
 
 variable "access_key" {
@@ -36,10 +42,6 @@ variable "peer_vpn_ip_address" {
 variable "vpn_bgp_asn" {
     description = "BPG Autonomous System Number (ASN) of the customer gateway for a dynamically routed VPN connection."
     default = "65000"
-}
-
-variable "zone" {
-    description = "availability zone to use."
 }
 
 variable "private_subnet" {

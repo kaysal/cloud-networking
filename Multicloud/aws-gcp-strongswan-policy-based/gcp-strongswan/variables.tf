@@ -3,7 +3,7 @@ variable "project_name" {
 }
 
 variable "credentials_file_path" {
-  description = "C://Users//salawu//SIM//ssh_keys//remote//dedes.pub"
+  description = "path for gcp authentication credentials"
 }
 
 variable "public_key_path" {
@@ -16,10 +16,6 @@ variable "private_key_path" {
 
 variable "preshared_key" {
   description = "preshaed key used for tunnels 1 and 2"
-}
-
-variable "remote_cidr" {
-  description = "remote cidr ranges"
 }
 
 variable "name" {

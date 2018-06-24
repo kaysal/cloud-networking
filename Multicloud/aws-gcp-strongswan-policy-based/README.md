@@ -57,7 +57,7 @@ Configure the Strongswan configuration files to setup the tunnel.
 
 For more information on the IPsec configuration see the Google cloud documentation [Special Configurations for VM Instances]
 ## Step 5
-Test connectivity from the GCP instance `strongswan-gcp-instance`to AWS instance `aws-instance`.
+Test connectivity from the GCP instance `gcp-instance`to AWS instance `aws-instance`.
 
 [blog]: <http://www.cloudnetworkstuff.com/index.php/2018/06/24/policy-based-vpn-gcp-strongswan-to-aws/>
 [Special Configurations for VM Instances]: https://cloud.google.com/vpc/docs/special-configurations

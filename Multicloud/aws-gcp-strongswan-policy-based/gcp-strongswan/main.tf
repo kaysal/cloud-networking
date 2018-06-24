@@ -75,8 +75,8 @@ resource "google_compute_instance" "vpn_gateway" {
   }
 }
 
-resource "google_compute_instance" "test_vpn" {
-  name         = "${var.name}-instance"
+resource "google_compute_instance" "gcp_instance" {
+  name         = "${var.name}-gcp-instance"
   machine_type = "n1-standard-1"
   zone         = "europe-west2-c"
   tags         = ["vpn"]

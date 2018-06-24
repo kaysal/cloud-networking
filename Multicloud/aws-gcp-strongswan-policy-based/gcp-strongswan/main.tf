@@ -28,14 +28,14 @@ data "google_compute_address" "strongswan_vpn_gw_ip" {
 # Create VPC
 #--------------------------------------
 resource "google_compute_network" "vpn_network" {
-  name                    = "vpn-network"
+  name                    = "${var.name}-vpc"
   auto_create_subnetworks = "false"
 }
 
 # Create Subnet
 #--------------------------------------
 resource "google_compute_subnetwork" "vpn_subnet" {
-  name          = "vpn-subnet"
+  name          = "${var.name}-subnet"
   ip_cidr_range = "10.0.0.0/24"
   network       = "${google_compute_network.vpn_network.self_link}"
   region        = "europe-west2"
@@ -44,7 +44,7 @@ resource "google_compute_subnetwork" "vpn_subnet" {
 # Create the instances
 #--------------------------------------
 resource "google_compute_instance" "vpn_gateway" {
-  name           = "vpn-gateway"
+  name           = "${var.name}-gateway"
   machine_type   = "n1-standard-1"
   zone           = "europe-west2-c"
   tags           = ["vpn-gateway"]
@@ -76,7 +76,7 @@ resource "google_compute_instance" "vpn_gateway" {
 }
 
 resource "google_compute_instance" "test_vpn" {
-  name         = "test-vpn"
+  name         = "${var.name}-instance"
   machine_type = "n1-standard-1"
   zone         = "europe-west2-c"
   tags         = ["vpn"]
@@ -104,7 +104,7 @@ resource "google_compute_instance" "test_vpn" {
 #--------------------------------------
 # allow internal ssh from authorized service account
 resource "google_compute_firewall" "allow_ssh" {
-  name    = "allow-ssh"
+  name    = "${var.name}-allow-ssh"
   network = "${google_compute_network.vpn_network.self_link}"
 
   allow {
@@ -116,7 +116,7 @@ resource "google_compute_firewall" "allow_ssh" {
 }
 
 resource "google_compute_firewall" "allow_internal" {
-  name    = "allow-internal"
+  name    = "${var.name}-allow-internal"
   network = "${google_compute_network.vpn_network.self_link}"
 
   allow {
@@ -137,7 +137,7 @@ resource "google_compute_firewall" "allow_internal" {
 }
 
 resource "google_compute_firewall" "allow_ipsec_nat" {
-  name    = "allow-ipsec-nat"
+  name    = "${var.name}-allow-ipsec-nat"
   network = "${google_compute_network.vpn_network.self_link}"
 
   allow {
@@ -154,7 +154,7 @@ resource "google_compute_firewall" "allow_ipsec_nat" {
 }
 
 resource "google_compute_firewall" "from_onprem" {
-  name    = "from-onprem"
+  name    = "${var.name}-from-onprem"
   network = "${google_compute_network.vpn_network.self_link}"
 
   allow {
@@ -179,7 +179,7 @@ resource "google_compute_firewall" "from_onprem" {
 # (lower priority)
 #--------------------------------------
 resource "google_compute_route" "aws_tunnel1_route" {
-  name        = "aws-tunnel1-route"
+  name        = "${var.name}-aws-tunnel1-route"
   dest_range  = "10.0.1.0/24"
   network     = "${google_compute_network.vpn_network.self_link}"
   next_hop_instance = "${google_compute_instance.vpn_gateway.name}"
@@ -189,7 +189,7 @@ resource "google_compute_route" "aws_tunnel1_route" {
 }
 
 resource "google_compute_route" "aws_tunnel2_route" {
-  name        = "aws-tunnel2-route"
+  name        = "${var.name}-aws-tunnel2-route"
   dest_range  = "10.0.1.0/24"
   network     = "${google_compute_network.vpn_network.self_link}"
   next_hop_instance = "${google_compute_instance.vpn_gateway.name}"

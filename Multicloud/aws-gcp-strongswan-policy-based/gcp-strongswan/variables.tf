@@ -21,3 +21,8 @@ variable "preshared_key" {
 variable "remote_cidr" {
   description = "remote cidr ranges"
 }
+
+variable "name" {
+    description = "The name of the VPC."
+    default = "strongswan"
+}

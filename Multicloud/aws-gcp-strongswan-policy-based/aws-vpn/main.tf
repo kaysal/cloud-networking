@@ -60,7 +60,7 @@ resource "aws_route" "vgw-route" {
 # Create the remote customer gateway profiles
 resource "aws_customer_gateway" "vpc-cgw" {
     bgp_asn = "${var.vpn_bgp_asn}"
-    ip_address = "${var.vpn_ip_address}"
+    ip_address = "${var.peer_vpn_ip_address}"
     type = "ipsec.1"
     tags {
         Name = "${var.name}-cgw"
@@ -123,6 +123,6 @@ resource "aws_instance" "test_instance" {
 
   #Instance tags
   tags {
-    Name = "${var.name}-instance"
+    Name = "aws-instance"
   }
 }

@@ -12,7 +12,9 @@ variable "secret_key" {
 
 variable "name" {
     description = "The name of the VPC."
+    default = "strongswan"
 }
+
 variable "cidr_block" {
     description = "The CIDR block for the VPC."
     default = "10.0.1.0/24"
@@ -27,7 +29,7 @@ variable "key_name" {
   default = "Name of the SSH keypair to use in AWS."
 }
 
-variable "vpn_ip_address" {
+variable "peer_vpn_ip_address" {
     description = "Internet-routable IP address of the customer gateway's external interface."
 }
 

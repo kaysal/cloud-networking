@@ -22,20 +22,14 @@ Create external IP addresses on GCP with the following names:
 - `gcp-eu-west1-vpn-gw2-ip` (region = europe-west1)
 - `gcp-us-east1-vpn-gw1-ip` (region = us-east1)
 
-Then copy the IP address values into the following variables in each of the following AWS Terraform files:
-- `./aws/eu-west1/vpc1/eu-west1/terraform.tfvars`   
-  - gcp_eu_west1_vpn_gw1_ip
-  - gcp_eu_west1_vpn_gw2_ip
-
-- `./aws/eu-west1/vpc1/us-east1/terraform.tfvars`
-    - gcp_us_east1_vpn_gw1_ip
-
 ## Step 2
 Run Terraform in the directory `./aws/eu-west1/vpc1/eu-west1` as follows:
 ```sh
 terraform plan
 terraform apply
 ```
+You will be prompted to enter the values of the external IP addresses created in Step 1.
+
 When Terraform completes, it will print out the output variables. An example is shown below:
 ```sh
 $ terraform output

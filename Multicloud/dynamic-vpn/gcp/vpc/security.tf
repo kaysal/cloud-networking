@@ -1,7 +1,7 @@
 # firewall rules
 #--------------------------------------
 resource "google_compute_firewall" "allow_web" {
-  name    = "allow-web"
+  name    = "${var.name}-allow-web"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {
@@ -13,7 +13,7 @@ resource "google_compute_firewall" "allow_web" {
 }
 
 resource "google_compute_firewall" "allow_egress" {
-  name    = "allow-egress"
+  name    = "${var.name}-allow-egress"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {
@@ -22,7 +22,7 @@ resource "google_compute_firewall" "allow_egress" {
 }
 
 resource "google_compute_firewall" "allow_trace" {
-  name    = "allow-trace"
+  name    = "${var.name}-allow-trace"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {
@@ -34,7 +34,7 @@ resource "google_compute_firewall" "allow_trace" {
 }
 
 resource "google_compute_firewall" "allow_ssh" {
-  name    = "allow-ssh"
+  name    = "${var.name}-allow-ssh"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {
@@ -46,7 +46,7 @@ resource "google_compute_firewall" "allow_ssh" {
 }
 
 resource "google_compute_firewall" "allow_rdp" {
-  name    = "allow-rdp"
+  name    = "${var.name}-allow-rdp"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {

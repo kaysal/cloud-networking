@@ -9,7 +9,7 @@ terraform {
   backend "gcs" {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-gcp-aws/gcp/us-east1/"
-    credentials ="/home/salawu/Terraform/credentials/gcp-credentials-shk.json"
+    credentials ="/home/salawu/Terraform/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -19,7 +19,7 @@ data "terraform_remote_state" "aws_us_east1_vpc1_data" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-gcp-aws/aws/us-east1/vpc1"
-    credentials ="/home/salawu/Terraform/credentials/gcp-credentials-shk.json"
+    credentials ="/home/salawu/Terraform/credentials/gcp-credentials-tf.json"
   }
 }
 

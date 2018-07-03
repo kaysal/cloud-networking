@@ -37,7 +37,7 @@ Run Terraform in the GCP directory `./hybrid-svpc/1-gcp-iam/` as follows:
 terraform plan
 terraform apply
 ```
-This generates an output of GCP folder and project IDs required in the next step.
+This generates an output of GCP folder and project IDs required in the next step. It also creates user accounts and service accounts for host project and service projects.
 
 
 ## Step 2
@@ -50,19 +50,11 @@ gcloud auth application-default login
 ```
 This script takes in terraform remote state data inputs from previous step - GCP folders and project IDs.
 
-Run Terraform in the GCP directory `./hybrid-svpc/2-gcp-xpn/` as follows:
-```sh
-terraform plan
-terraform apply
-```
+Run Terraform in the GCP directory `./hybrid-svpc/2-gcp-xpn/`.
 This generates an output of GCP external IP addresses that will be used for IPsec VPN tunnels in next step for AWS configuration.
 
 ## Step 3
-Run Terraform in the directories `./hybrid-svpc/3-aws/eu-w1-vpc1/` and `./hybrid-svpc/3-aws/us-e1-vpc1/`as follows:
-```sh
-terraform plan
-terraform apply
-```
+Run Terraform in the directories `./hybrid-svpc/3-aws/eu-w1-vpc1/` and `./hybrid-svpc/3-aws/us-e1-vpc1/`.
 You will be prompted to enter the values of the external IP addresses created in Step 2.
 
 When Terraform completes, it will print out the output variables. An example is shown below:
@@ -99,13 +91,13 @@ gcloud auth application-default login
 ```
 This script takes in terraform remote state data inputs from AWS and GCP IAM created earlier.
 
-Run Terraform in the GCP directory `./hybrid-svpc/4-gcp-xpn-vpn/` as follows:
-```sh
-terraform plan
-terraform apply
-```
+Run Terraform in the GCP directory `./hybrid-svpc/4-gcp-xpn-vpn/`.
 
 ## Step 5
-Manually create service projects and launch them in host project subnets.
+Before running the service projects, download the keys for the already created service accounts for the `prod-service-project` and `test-service project`. These keys will be used by Terraform REST API calls.
+Next, run Terraform in the directories `./hybrid-svpc/5-gcp-service-projects/prod`  and `./hybrid-svpc/5-gcp-service-projects/test`
+
+## Step 6
+Run ping tests from instances in GCP to AWS to confirm network connectivity.
 
 [diagram]: <https://storage.googleapis.com/cloud-network-things/multi-cloud/ipsec/shared-vpc-hybrid/hybrid-svpc.png>

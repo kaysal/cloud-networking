@@ -102,6 +102,54 @@ resource "google_project" "test_service_project" {
   billing_account = "${var.billing_account_id}"
 }
 
+# Create service accounts for host and service projects
+# These service accounts have to be given compute.network.user
+# roles by Shared VPC admin. The service accounts are the
+# credentials for Terraform scripts for service projects
+resource "google_service_account" "tf_netsec_host_project" {
+  account_id   = "tf-netsec-host-project"
+  display_name = "terraform netsec-host-project"
+  project = "${google_project.netsec_host_project.name}"
+}
+
+resource "google_service_account" "tf_prod_service_project" {
+  account_id   = "tf-prod-service-project"
+  display_name = "terraform prod-service-project"
+  project = "${google_project.prod_service_project.name}"
+}
+
+resource "google_service_account" "tf_test_service_project" {
+  account_id   = "tf-test-service-project"
+  display_name = "terraform test-service-project"
+  project = "${google_project.test_service_project.name}"
+}
+
+# Give the service accounts project editor roles
+# in their respective projects
+resource "google_project_iam_binding" "netsec_project_editor" {
+  project = "${google_project.netsec_host_project.name}"
+  role    = "roles/editor"
+  members = [
+    "serviceAccount:${google_service_account.tf_netsec_host_project.email}",
+  ]
+}
+
+resource "google_project_iam_binding" "prod_project_editor" {
+  project = "${google_project.prod_service_project.name}"
+  role    = "roles/editor"
+  members = [
+    "serviceAccount:${google_service_account.tf_prod_service_project.email}",
+  ]
+}
+
+resource "google_project_iam_binding" "test_project_editor" {
+  project = "${google_project.test_service_project.name}"
+  role    = "roles/editor"
+  members = [
+    "serviceAccount:${google_service_account.tf_test_service_project.email}",
+  ]
+}
+
 # enable compute service for all service projects
 #-------------------------------
 resource "google_project_service" "netsec_host_project" {

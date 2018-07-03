@@ -1,9 +1,9 @@
 
 # Create instances
-resource "google_compute_instance" "eu_w1b_ubuntu" {
-  name         = "${var.name}eu-w1b-ubuntu"
+resource "google_compute_instance" "us_e1b_ubuntu2" {
+  name         = "${var.name}us-e1b-ubuntu2"
   machine_type = "n1-standard-1"
-  zone         = "europe-west1-b"
+  zone         = "us-east1-c"
   tags = ["vm"]
 
   boot_disk {
@@ -13,8 +13,8 @@ resource "google_compute_instance" "eu_w1b_ubuntu" {
   }
 
   network_interface {
-    subnetwork = "${google_compute_subnetwork.eu_w1_subnet_10_10_10.name}"
-
+    subnetwork_project = "${data.terraform_remote_state.iam.netsec_host_project_id}"
+    subnetwork = "${data.google_compute_subnetwork.us_e1_subnet_10_50_10.name}"
     access_config {
       // ephemeral nat ip
     }

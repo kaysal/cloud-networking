@@ -1,7 +1,0 @@
-Terraform application_default_credentials user roles:
-- Organization Policy Administrator
-- Project Owner
-- Folder Admin
-- Project Lien Modifier
-- Organization Administrator
-- Project Creator

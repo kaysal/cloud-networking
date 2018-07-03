@@ -2,7 +2,7 @@
 
 This example illustrates how to setup a BGP dynamic-routing VPN between GCP and AWS. In addition, it shows how to deploy shared VPC in a host project and share amongst service projects.
 
-See scenario [diagram] here
+See scenario [diagram] here.
 
 ### Running the Script
 ---

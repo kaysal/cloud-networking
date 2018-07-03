@@ -100,4 +100,4 @@ Next, run Terraform in the directories `./hybrid-svpc/5-gcp-service-projects/pro
 ## Step 6
 Run ping tests from instances in GCP to AWS to confirm network connectivity.
 
-[diagram]: <https://storage.googleapis.com/cloud-network-things/multi-cloud/ipsec/shared-vpc-hybrid/hybrid-svpc.png>
+[diagram]: <https://storage.googleapis.com/cloud-network-things/multi-cloud/ipsec/shared-vpc-hybrid/hybrid-svpc2.png>

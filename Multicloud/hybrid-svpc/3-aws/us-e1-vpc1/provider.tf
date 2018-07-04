@@ -18,7 +18,7 @@ data "terraform_remote_state" "xpn" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/hybrid-svpc/2-gcp-xpn/"
+    prefix  = "states/hybrid-svpc/2-gcp-host-xpn/"
     credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
   }
 }

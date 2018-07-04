@@ -17,7 +17,7 @@ data "terraform_remote_state" "iam" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/hybrid-svpc/1-gcp-iam/"
+    prefix  = "states/hybrid-svpc/1-gcp-org-iam/"
     credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
   }
 }

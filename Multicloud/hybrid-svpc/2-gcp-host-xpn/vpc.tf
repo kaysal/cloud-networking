@@ -35,7 +35,17 @@ resource "google_compute_address" "gcp_eu_w1_vpn_gw1_ip" {
   region = "europe-west1"
 }
 
+resource "google_compute_address" "gcp_eu_w1_vpn_gw2_ip" {
+  name = "gcp-eu-w1-vpn-gw2-ip"
+  region = "europe-west1"
+}
+
 resource "google_compute_address" "gcp_us_e1_vpn_gw1_ip" {
   name = "gcp-us-e1-vpn-gw1-ip"
+  region = "us-east1"
+}
+
+resource "google_compute_address" "gcp_us_e1_vpn_gw2_ip" {
+  name = "gcp-us-e1-vpn-gw2-ip"
   region = "us-east1"
 }

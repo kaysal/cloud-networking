@@ -2,7 +2,7 @@
 #--------------------------------------
 resource "google_compute_firewall" "allow_web" {
   name    = "${var.name}allow-web"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "tcp"
@@ -14,7 +14,7 @@ resource "google_compute_firewall" "allow_web" {
 
 resource "google_compute_firewall" "allow_egress" {
   name    = "${var.name}allow-egress"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "all"
@@ -23,7 +23,7 @@ resource "google_compute_firewall" "allow_egress" {
 
 resource "google_compute_firewall" "allow_trace" {
   name    = "${var.name}allow-trace"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "udp"
@@ -35,7 +35,7 @@ resource "google_compute_firewall" "allow_trace" {
 
 resource "google_compute_firewall" "allow_icmp" {
   name    = "${var.name}allow-icmp"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "icmp"
@@ -46,7 +46,7 @@ resource "google_compute_firewall" "allow_icmp" {
 
 resource "google_compute_firewall" "allow_ssh" {
   name    = "${var.name}allow-ssh"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "tcp"
@@ -58,7 +58,7 @@ resource "google_compute_firewall" "allow_ssh" {
 
 resource "google_compute_firewall" "allow_rdp" {
   name    = "${var.name}allow-rdp"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "tcp"

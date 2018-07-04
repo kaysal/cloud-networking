@@ -55,7 +55,6 @@ This generates an output of GCP external IP addresses that will be used for IPse
 
 ## Step 3
 Run Terraform in the directories `./hybrid-svpc/3-aws/eu-w1-vpc1/` and `./hybrid-svpc/3-aws/us-e1-vpc1/`.
-You will be prompted to enter the values of the external IP addresses created in Step 2.
 
 When Terraform completes, it will print out the output variables. An example is shown below:
 ```sh

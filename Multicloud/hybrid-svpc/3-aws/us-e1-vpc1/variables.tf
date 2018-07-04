@@ -40,10 +40,6 @@ variable "us_e1_vpc1_172_18_11" {
   default     = "172.18.11.0/24"
 }
 
-variable "gcp_us_e1_vpn_gw1_ip" {
-  description = "public IP address of remote vpn gw peer gcp-us-e1-vpn-gw1-ip"
-}
-
 variable "preshared_key" {
   description = "preshared key used for tunnels 1 and 2"
 }

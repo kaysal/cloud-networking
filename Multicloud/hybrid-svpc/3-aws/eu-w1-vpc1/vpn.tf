@@ -11,7 +11,7 @@ resource "aws_vpn_gateway" "eu_w1_vpc1_vpgw" {
 # Create the remote customer gateway profiles
 resource "aws_customer_gateway" "eu_w1_vpc1_cgw1" {
   bgp_asn    = "${var.customer_side_asn}"
-  ip_address = "${var.gcp_eu_w1_vpn_gw1_ip}"
+  ip_address = "${data.terraform_remote_state.xpn.gcp_eu_w1_vpn_gw1_ip[0]}"
   type       = "ipsec.1"
 
   tags {

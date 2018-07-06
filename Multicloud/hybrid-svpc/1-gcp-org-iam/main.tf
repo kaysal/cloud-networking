@@ -152,17 +152,26 @@ resource "google_project_iam_binding" "test_project_editor" {
 
 # enable compute service for all service projects
 #-------------------------------
-resource "google_project_service" "netsec_host_project" {
+resource "google_project_services" "netsec_host_project" {
   project = "${google_project.netsec_host_project.project_id}"
-  service = "compute.googleapis.com"
+  services = [
+    "compute.googleapis.com",
+    "storage-api.googleapis.com",
+  ]
 }
 
-resource "google_project_service" "prod_service_project" {
+resource "google_project_services" "prod_service_project" {
   project = "${google_project.prod_service_project.project_id}"
-  service = "compute.googleapis.com"
+  services = [
+    "compute.googleapis.com",
+    "storage-api.googleapis.com",
+  ]
 }
 
-resource "google_project_service" "test_service_project" {
+resource "google_project_services" "test_service_project" {
   project = "${google_project.test_service_project.project_id}"
-  service = "compute.googleapis.com"
+  services = [
+    "compute.googleapis.com",
+    "storage-api.googleapis.com",
+  ]
 }

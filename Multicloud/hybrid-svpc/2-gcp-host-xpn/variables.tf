@@ -3,10 +3,14 @@ variable "name" {
   default     = "alpha-"
 }
 
-variable "billing_account_id" {
-  description = "billing account ID"
+variable "public_key_path" {
+  description = "Path to SSH public key to be attached to cloud instances"
 }
 
-variable "org_id" {
-  description = "organization ID for personal domain"
+variable "prod_peer_project_id" {
+  description = "Project ID of peer network"
+}
+
+variable "prod_peer_project_vpc_name" {
+  description = "Peer network name"
 }

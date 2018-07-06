@@ -2,9 +2,10 @@
 # launch instance into shared VPC
 resource "google_compute_instance" "eu_w1b_ubuntu" {
   name         = "${var.name}eu-w1b-ubuntu"
-  machine_type = "n1-standard-1"
+  machine_type = "g1-small"
   zone         = "europe-west1-b"
   tags = ["vm"]
+  allow_stopping_for_update = true
 
   boot_disk {
     initialize_params {
@@ -34,9 +35,10 @@ resource "google_compute_instance" "eu_w1b_ubuntu" {
 # launch instance into shared VPC
 resource "google_compute_instance" "eu_w2b_ubuntu" {
   name         = "${var.name}eu-w2b-ubuntu"
-  machine_type = "n1-standard-1"
+  machine_type = "g1-small"
   zone         = "europe-west2-b"
   tags = ["vm"]
+  allow_stopping_for_update = true
 
   boot_disk {
     initialize_params {
@@ -47,9 +49,6 @@ resource "google_compute_instance" "eu_w2b_ubuntu" {
   network_interface {
     subnetwork_project = "${data.terraform_remote_state.iam.netsec_host_project_id}"
     subnetwork = "${data.terraform_remote_state.xpn.eu_w2_subnet_10_10_20}"
-    access_config {
-      // ephemeral nat ip
-    }
   }
 
   metadata {
@@ -64,11 +63,12 @@ resource "google_compute_instance" "eu_w2b_ubuntu" {
 }
 
 # launch instance into local VPC
-resource "google_compute_instance" "eu_w3b_ubuntu_local" {
-  name         = "${var.name}eu-w3b-ubuntu-local"
-  machine_type = "n1-standard-1"
+resource "google_compute_instance" "eu_w3b_ubuntu" {
+  name         = "${var.name}eu-w3b-ubuntu"
+  machine_type = "g1-small"
   zone         = "europe-west3-b"
   tags = ["vm"]
+  allow_stopping_for_update = true
 
   boot_disk {
     initialize_params {

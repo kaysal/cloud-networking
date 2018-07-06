@@ -25,7 +25,7 @@ resource "aws_subnet" "us_e1_vpc1_172_18_11" {
   availability_zone       = "us-east-1b"
   vpc_id                  = "${aws_vpc.us_e1_vpc1.id}"
   cidr_block              = "${var.us_e1_vpc1_172_18_11}"
-  map_public_ip_on_launch = "true"
+  map_public_ip_on_launch = "false"
 
   tags {
     Name = "${var.name}us-e1-vpc1-172-18-11"

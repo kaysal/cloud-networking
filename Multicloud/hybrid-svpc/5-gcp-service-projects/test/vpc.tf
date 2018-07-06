@@ -13,3 +13,8 @@ resource "google_compute_subnetwork" "us_c1_subnet_192_168_10" {
   network       = "${google_compute_network.vpc.self_link}"
   region        = "us-central1"
 }
+
+resource "google_compute_address" "eu_w1_nat_gw_ip" {
+  name = "eu-w1-nat-gw-ip"
+  region = "us-east1"
+}

@@ -4,6 +4,8 @@ provider "google" {
   credentials = "${var.credentials_file_path}"
 }
 
+provider "random" {}
+
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"

@@ -15,10 +15,18 @@ variable "public_key_path" {
   description = "Path to SSH public key to be attached to cloud instances"
 }
 
-variable "peer_project_id" {
+variable "test_peer_project_id" {
   description = "Project ID of peer network"
 }
 
-variable "peer_project_vpc_name" {
+variable "test_peer_project_vpc_name" {
+  description = "Peer network name"
+}
+
+variable "netsec_peer_project_id" {
+  description = "Project ID of peer network"
+}
+
+variable "netsec_peer_project_vpc_name" {
   description = "Peer network name"
 }

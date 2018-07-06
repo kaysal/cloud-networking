@@ -11,6 +11,10 @@ resource "google_compute_subnetwork" "eu_w1_subnet_10_10_10" {
   name          = "${var.name}eu-w1-subnet-10-10-10"
   ip_cidr_range = "10.10.10.0/24"
   network       = "${google_compute_network.vpc.self_link}"
+  secondary_ip_range {
+    range_name = "${var.name}eu-w1-alias-192-168-100"
+    ip_cidr_range= "192.168.100.0/24"
+  }
   region        = "europe-west1"
 }
 

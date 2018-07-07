@@ -8,7 +8,7 @@ variable "secret_key" {
 
 variable "name" {
   description = "general resource prefix"
-  default     = "alpha-"
+  default     = "alt-"
 }
 
 variable "key_name_eu_west1" {

@@ -4,7 +4,7 @@ variable "project_name" {
 
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "alpha-"
+  default     = "alt-"
 }
 
 variable "credentials_file_path" {

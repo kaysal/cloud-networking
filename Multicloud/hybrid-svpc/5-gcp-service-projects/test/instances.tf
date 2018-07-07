@@ -1,7 +1,7 @@
 
 # launch instance into shared vpc
-resource "google_compute_instance" "us_e1b_ubuntu" {
-  name         = "${var.name}us-e1b-ubuntu"
+resource "google_compute_instance" "us_e1b_svpc" {
+  name         = "${var.name}us-e1b-svpc"
   machine_type = "g1-small"
   zone         = "us-east1-c"
   tags = ["vm"]
@@ -33,8 +33,8 @@ resource "google_compute_instance" "us_e1b_ubuntu" {
 }
 
 # launch instance into local VPC
-resource "google_compute_instance" "us_c1b_ubuntu" {
-  name         = "${var.name}us-c1b-ubuntu"
+resource "google_compute_instance" "us_c1b_local" {
+  name         = "${var.name}us-c1b-local"
   machine_type = "g1-small"
   zone         = "us-central1-b"
   tags = ["vm"]
@@ -61,8 +61,8 @@ resource "google_compute_instance" "us_c1b_ubuntu" {
   }
 }
 
-resource "google_compute_instance" "us_e1b_nat_gw" {
-  name         = "us-e1b-nat-gw"
+resource "google_compute_instance" "us_e1b_nat_svpc" {
+  name         = "us-e1b-nat-svpc"
   machine_type = "n1-standard-1"
   zone         = "us-east1-c"
   tags = ["nat"]
@@ -92,4 +92,5 @@ resource "google_compute_instance" "us_e1b_nat_gw" {
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
+  depends_on = ["google_compute_address.eu_w1_nat_gw_ip"]
 }

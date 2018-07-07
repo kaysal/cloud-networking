@@ -1,7 +1,7 @@
 
 # launch instance into shared VPC
-resource "google_compute_instance" "eu_w1b_ubuntu" {
-  name         = "${var.name}eu-w1b-ubuntu"
+resource "google_compute_instance" "eu_w1b_svpc" {
+  name         = "${var.name}eu-w1b-svpc"
   machine_type = "g1-small"
   zone         = "europe-west1-b"
   tags = ["vm"]
@@ -33,8 +33,8 @@ resource "google_compute_instance" "eu_w1b_ubuntu" {
 }
 
 # launch instance into shared VPC
-resource "google_compute_instance" "eu_w2b_ubuntu" {
-  name         = "${var.name}eu-w2b-ubuntu"
+resource "google_compute_instance" "eu_w2b_svpc" {
+  name         = "${var.name}eu-w2b-svpc"
   machine_type = "g1-small"
   zone         = "europe-west2-b"
   tags = ["vm"]
@@ -63,8 +63,8 @@ resource "google_compute_instance" "eu_w2b_ubuntu" {
 }
 
 # launch instance into local VPC
-resource "google_compute_instance" "eu_w3b_ubuntu" {
-  name         = "${var.name}eu-w3b-ubuntu"
+resource "google_compute_instance" "eu_w3b_local" {
+  name         = "${var.name}eu-w3b-local"
   machine_type = "g1-small"
   zone         = "europe-west3-b"
   tags = ["vm"]

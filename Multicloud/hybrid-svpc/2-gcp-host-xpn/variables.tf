@@ -1,6 +1,6 @@
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "alpha-"
+  default     = "alt-"
 }
 
 variable "public_key_path" {

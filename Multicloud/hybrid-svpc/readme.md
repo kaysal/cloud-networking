@@ -18,6 +18,8 @@ terraform apply \
 	-var="credentials_file_path=~/.gcloud/Terraform.json" \
 ```
 
+All Terraform directories have a variable `name`. This variable should be set to the same value across all folders or left blank. It i just a prefix to the AWS and GCP resources to allow easy identification of resources amongst others.
+
 ## Step 1
 Run this script using gcloud `application_default_credentials` on a user account (Organization Admin) that has the following roles at organization level:
 - Organization Policy Administrator

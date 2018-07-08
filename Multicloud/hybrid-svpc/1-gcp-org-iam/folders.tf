@@ -18,22 +18,27 @@ resource "google_folder" "test_folder" {
 # folder project owner role to allow authorized groups
 # to be project owners on all projects in the folder
 #-------------------------------
-resource "google_folder_iam_binding" "netsec_project_owner" {
+resource "google_folder_iam_policy" "netsec_folder" {
   folder  = "${google_folder.netsec_folder.name}"
-  role    = "roles/owner"
-  members = [
-    "group:netsec-grp@cloudtuple.com",
-  ]
+  policy_data = "${data.google_iam_policy.netsec_folder_policy.policy_data}"
 }
-/*
-resource "google_folder_iam_binding" "prod_project_owner" {
-  folder  = "${google_folder.prod_folder.name}"
-  role    = "roles/owner"
-  members = [
-    "group:prod-grp@cloudtuple.com",
-  ]
+
+data "google_iam_policy" "netsec_folder_policy" {
+  binding {
+    role = "roles/owner"
+    members = [
+      "group:netsec-grp@cloudtuple.com",
+    ]
+  }
+
+  binding {
+    role    = "roles/resourcemanager.folderEditor"
+    members = [
+      "group:netsec-grp@cloudtuple.com",
+    ]
+  }
 }
-*/
+
 
 resource "google_folder_iam_policy" "prod_folder" {
   folder  = "${google_folder.prod_folder.name}"
@@ -47,39 +52,32 @@ data "google_iam_policy" "prod_folder_policy" {
       "group:prod-grp@cloudtuple.com",
     ]
   }
+
+  binding {
+    role    = "roles/resourcemanager.folderEditor"
+    members = [
+      "group:prod-grp@cloudtuple.com",
+    ]
+  }
 }
 
-resource "google_folder_iam_binding" "test_project_owner" {
+resource "google_folder_iam_policy" "test_folder" {
   folder  = "${google_folder.test_folder.name}"
-  role    = "roles/owner"
-  members = [
-    "group:test-grp@cloudtuple.com",
-  ]
+  policy_data = "${data.google_iam_policy.test_folder_policy.policy_data}"
 }
 
-# folder editor role to allow authorized groups
-# edit rights to folder
-#-------------------------------
-resource "google_folder_iam_binding" "netsec_folder_editor" {
-  folder  = "${google_folder.netsec_folder.name}"
-  role    = "roles/resourcemanager.folderEditor"
-  members = [
-    "group:netsec-grp@cloudtuple.com",
-  ]
-}
+data "google_iam_policy" "test_folder_policy" {
+  binding {
+    role = "roles/owner"
+    members = [
+      "group:test-grp@cloudtuple.com",
+    ]
+  }
 
-resource "google_folder_iam_binding" "prod_folder_editor" {
-  folder  = "${google_folder.prod_folder.name}"
-  role    = "roles/resourcemanager.folderEditor"
-  members = [
-    "group:prod-grp@cloudtuple.com",
-  ]
-}
-
-resource "google_folder_iam_binding" "test_folder_editor" {
-  folder  = "${google_folder.test_folder.name}"
-  role    = "roles/resourcemanager.folderEditor"
-  members = [
-    "group:test-grp@cloudtuple.com",
-  ]
+  binding {
+    role    = "roles/resourcemanager.folderEditor"
+    members = [
+      "group:test-grp@cloudtuple.com",
+    ]
+  }
 }

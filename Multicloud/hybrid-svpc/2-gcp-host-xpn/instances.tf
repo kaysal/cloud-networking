@@ -1,4 +1,4 @@
-# create instance
+# create bastion instance
 resource "google_compute_instance" "eu_w1b_bastion" {
   name         = "${var.name}eu-w1b-bastion"
   machine_type = "g1-small"

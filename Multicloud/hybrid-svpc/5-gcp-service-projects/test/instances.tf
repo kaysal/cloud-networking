@@ -28,6 +28,7 @@ resource "google_compute_instance" "us_e1b_svpc" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
+    email = "${data.terraform_remote_state.iam.instance_test_service_project_service_account_email}"
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
@@ -57,12 +58,13 @@ resource "google_compute_instance" "us_c1b_local" {
   metadata_startup_script = "${file("scripts/script.sh")}"
 
   service_account {
+    email = "${data.terraform_remote_state.iam.instance_test_service_project_service_account_email}"
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
 
 resource "google_compute_instance" "us_e1b_nat_svpc" {
-  name         = "us-e1b-nat-svpc"
+  name         = "${var.name}us-e1b-nat-svpc"
   machine_type = "n1-standard-1"
   zone         = "us-east1-c"
   tags = ["nat"]
@@ -90,7 +92,7 @@ resource "google_compute_instance" "us_e1b_nat_svpc" {
   metadata_startup_script = "${file("scripts/script-nat.sh")}"
 
   service_account {
+    email = "${data.terraform_remote_state.iam.instance_test_service_project_service_account_email}"
     scopes = ["https://www.googleapis.com/auth/cloud-platform.read-only"]
   }
-  depends_on = ["google_compute_address.eu_w1_nat_gw_ip"]
 }

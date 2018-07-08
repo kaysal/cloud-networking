@@ -1,4 +1,4 @@
-# firewall rules
+# firewall rules for local vpc
 #--------------------------------------
 resource "google_compute_firewall" "allow_web" {
   name    = "${var.name}allow-web"

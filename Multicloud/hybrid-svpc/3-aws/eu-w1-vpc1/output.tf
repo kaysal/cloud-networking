@@ -1,18 +1,18 @@
-output "--- eu-w1-vpc1-ubuntu ---" {
+output "--- eu-w1a-vpc1-ubuntu ---" {
   value = [
-    "az:        ${aws_instance.eu_w1_vpc1_ubuntu.availability_zone } ",
-    "priv ip:   ${aws_instance.eu_w1_vpc1_ubuntu.private_ip} ",
-    "pub ip:    ${aws_instance.eu_w1_vpc1_ubuntu.public_ip} ",
-    "priv dns:  ${aws_instance.eu_w1_vpc1_ubuntu.private_dns} ",
+    "az:        ${aws_instance.eu_w1a_vpc1_ubuntu.availability_zone } ",
+    "priv ip:   ${aws_instance.eu_w1a_vpc1_ubuntu.private_ip} ",
+    "pub ip:    ${aws_instance.eu_w1a_vpc1_ubuntu.public_ip} ",
+    "priv dns:  ${aws_instance.eu_w1a_vpc1_ubuntu.private_dns} ",
   ]
 }
 
-output "--- eu-w1-vpc1-windows ---" {
+output "--- eu-w1b-vpc1-windows ---" {
   value = [
-    "az:        ${aws_instance.eu_w1_vpc1_windows.availability_zone } ",
-    "priv ip:   ${aws_instance.eu_w1_vpc1_windows.private_ip} ",
-    "pub ip:    ${aws_instance.eu_w1_vpc1_windows.public_ip} ",
-    "priv dns:  ${aws_instance.eu_w1_vpc1_windows.private_dns} ",
+    "az:        ${aws_instance.eu_w1b_vpc1_windows.availability_zone } ",
+    "priv ip:   ${aws_instance.eu_w1b_vpc1_windows.private_ip} ",
+    "pub ip:    ${aws_instance.eu_w1b_vpc1_windows.public_ip} ",
+    "priv dns:  ${aws_instance.eu_w1b_vpc1_windows.private_dns} ",
   ]
 }
 

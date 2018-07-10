@@ -14,7 +14,7 @@ resource "aws_subnet" "eu_w1_vpc1_172_16_10" {
   availability_zone       = "eu-west-1a"
   vpc_id                  = "${aws_vpc.eu_w1_vpc1.id}"
   cidr_block              = "${var.eu_w1_vpc1_172_16_10}"
-  map_public_ip_on_launch = "true"
+  map_public_ip_on_launch = "false"
 
   tags {
     Name = "${var.name}eu-w1-vpc1-172-16-10"

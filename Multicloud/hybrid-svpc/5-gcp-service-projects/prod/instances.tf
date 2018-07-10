@@ -2,7 +2,7 @@
 # launch instance into shared VPC
 resource "google_compute_instance" "eu_w1b_svpc" {
   name         = "${var.name}eu-w1b-svpc"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "europe-west1-b"
   tags = ["vm"]
   allow_stopping_for_update = true
@@ -36,7 +36,7 @@ resource "google_compute_instance" "eu_w1b_svpc" {
 # launch instance into shared VPC
 resource "google_compute_instance" "eu_w2b_svpc" {
   name         = "${var.name}eu-w2b-svpc"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "europe-west2-b"
   tags = ["vm"]
   allow_stopping_for_update = true
@@ -67,7 +67,7 @@ resource "google_compute_instance" "eu_w2b_svpc" {
 # launch instance into local VPC
 resource "google_compute_instance" "eu_w3b_local" {
   name         = "${var.name}eu-w3b-local"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "europe-west3-b"
   tags = ["vm"]
   allow_stopping_for_update = true

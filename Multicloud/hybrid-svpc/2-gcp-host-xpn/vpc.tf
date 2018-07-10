@@ -16,6 +16,7 @@ resource "google_compute_subnetwork" "eu_w1_subnet_10_10_10" {
     ip_cidr_range= "192.168.100.0/24"
   }
   region        = "europe-west1"
+  private_ip_google_access = true
 }
 
 resource "google_compute_subnetwork" "eu_w2_subnet_10_10_20" {
@@ -30,6 +31,7 @@ resource "google_compute_subnetwork" "us_e1_subnet_10_50_10" {
   ip_cidr_range = "10.50.10.0/24"
   network       = "${google_compute_network.vpc.self_link}"
   region        = "us-east1"
+  private_ip_google_access = true
 }
 
 # Create VPN GW external IP addresses

@@ -1,7 +1,7 @@
 # create bastion instance
 resource "google_compute_instance" "eu_w1b_bastion" {
   name         = "${var.name}eu-w1b-bastion"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "europe-west1-b"
   tags = ["vm"]
   allow_stopping_for_update = true

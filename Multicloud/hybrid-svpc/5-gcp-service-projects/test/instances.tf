@@ -2,7 +2,7 @@
 # launch instance into shared vpc
 resource "google_compute_instance" "us_e1b_svpc" {
   name         = "${var.name}us-e1b-svpc"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "us-east1-c"
   tags = ["vm"]
   allow_stopping_for_update = true
@@ -16,9 +16,9 @@ resource "google_compute_instance" "us_e1b_svpc" {
   network_interface {
     subnetwork_project = "${data.terraform_remote_state.iam.netsec_host_project_id}"
     subnetwork = "${data.terraform_remote_state.xpn.us_e1_subnet_10_50_10}"
-    access_config {
+    #access_config {
       // ephemeral nat ip
-    }
+    #}
   }
 
   metadata {
@@ -36,7 +36,7 @@ resource "google_compute_instance" "us_e1b_svpc" {
 # launch instance into local VPC
 resource "google_compute_instance" "us_c1b_local" {
   name         = "${var.name}us-c1b-local"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   zone         = "us-central1-b"
   tags = ["vm"]
   allow_stopping_for_update = true
@@ -65,7 +65,7 @@ resource "google_compute_instance" "us_c1b_local" {
 
 resource "google_compute_instance" "us_e1b_nat_svpc" {
   name         = "${var.name}us-e1b-nat-svpc"
-  machine_type = "n1-standard-1"
+  machine_type = "f1-micro"
   zone         = "us-east1-c"
   tags = ["nat"]
   allow_stopping_for_update = true

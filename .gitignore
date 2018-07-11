@@ -13,3 +13,4 @@
 plugins/
 *plugins/
 *.tf.x
+*scrap*

@@ -1,6 +1,6 @@
 # Specify the provider and access details
 provider "aws" {
-  region     = "eu-west-1"
+  region     = "us-east-1"
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
 }
@@ -8,8 +8,8 @@ provider "aws" {
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"
-    prefix  = "states/hybrid-svpc/3-aws/eu-w1-vpc1/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    prefix  = "states/hybrid-svpc/3-aws/us-e1-vpc1/"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -19,6 +19,6 @@ data "terraform_remote_state" "xpn" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-svpc/2-gcp-host-xpn/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }

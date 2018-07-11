@@ -1,6 +1,6 @@
 # Create hosts and service projects
 # The projects are created upfront by Org admin
-# to make it easier (for Terraform demo) to assign IAM roles
+# to make it easier (for terraform demo) to assign IAM roles
 # upfront
 #-------------------------------
 # Host Project
@@ -55,7 +55,7 @@ resource "google_service_account" "instance_test_service_project" {
 # Create service accounts for host and service projects
 # These service accounts have to be given compute.network.user
 # roles by Shared VPC admin. The service accounts are the
-# credentials for Terraform scripts for service projects
+# credentials for terraform scripts for service projects
 #----------------------------------------------------
 resource "google_service_account" "tf_netsec_host_project" {
   account_id   = "tf-netsec-host-project"

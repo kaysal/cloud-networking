@@ -1,20 +1,30 @@
-output "--- us-e1-vpc1-ubuntu ---" {
+output "--- us-e1a-vpc1-bastion ---" {
   value = [
-    "az:        ${aws_instance.us_e1_vpc1_ubuntu.availability_zone } ",
-    "priv ip:   ${aws_instance.us_e1_vpc1_ubuntu.private_ip} ",
-    "pub ip:    ${aws_instance.us_e1_vpc1_ubuntu.public_ip} ",
-    "priv dns:  ${aws_instance.us_e1_vpc1_ubuntu.private_dns} ",
-    "key name:  ${aws_instance.us_e1_vpc1_ubuntu.key_name} ",
+    "az:        ${aws_instance.us_e1a_vpc1_bastion.availability_zone } ",
+    "priv ip:   ${aws_instance.us_e1a_vpc1_bastion.private_ip} ",
+    "pub ip:    ${aws_instance.us_e1a_vpc1_bastion.public_ip} ",
+    "priv dns:  ${aws_instance.us_e1a_vpc1_bastion.private_dns} ",
+    "key name:  ${aws_instance.us_e1a_vpc1_bastion.key_name} ",
   ]
 }
 
-output "--- us-e1-vpc1-windows ---" {
+output "--- us-e1a-vpc1-ubuntu ---" {
   value = [
-    "az:        ${aws_instance.us_e1_vpc1_windows.availability_zone } ",
-    "priv ip:   ${aws_instance.us_e1_vpc1_windows.private_ip} ",
-    "pub ip:    ${aws_instance.us_e1_vpc1_windows.public_ip} ",
-    "priv dns:  ${aws_instance.us_e1_vpc1_windows.private_dns} ",
-    "key name:  ${aws_instance.us_e1_vpc1_windows.key_name} ",
+    "az:        ${aws_instance.us_e1a_vpc1_ubuntu.availability_zone } ",
+    "priv ip:   ${aws_instance.us_e1a_vpc1_ubuntu.private_ip} ",
+    "pub ip:    ${aws_instance.us_e1a_vpc1_ubuntu.public_ip} ",
+    "priv dns:  ${aws_instance.us_e1a_vpc1_ubuntu.private_dns} ",
+    "key name:  ${aws_instance.us_e1a_vpc1_ubuntu.key_name} ",
+  ]
+}
+
+output "--- us-e1b-vpc1-windows ---" {
+  value = [
+    "az:        ${aws_instance.us_e1b_vpc1_windows.availability_zone } ",
+    "priv ip:   ${aws_instance.us_e1b_vpc1_windows.private_ip} ",
+    "pub ip:    ${aws_instance.us_e1b_vpc1_windows.public_ip} ",
+    "priv dns:  ${aws_instance.us_e1b_vpc1_windows.private_dns} ",
+    "key name:  ${aws_instance.us_e1b_vpc1_windows.key_name} ",
   ]
 }
 

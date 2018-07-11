@@ -1,3 +1,12 @@
+output "--- eu-w1a-vpc1-bastion ---" {
+  value = [
+    "az:        ${aws_instance.eu_w1a_vpc1_bastion.availability_zone } ",
+    "priv ip:   ${aws_instance.eu_w1a_vpc1_bastion.private_ip} ",
+    "pub ip:    ${aws_instance.eu_w1a_vpc1_bastion.public_ip} ",
+    "priv dns:  ${aws_instance.eu_w1a_vpc1_bastion.private_dns} ",
+  ]
+}
+
 output "--- eu-w1a-vpc1-ubuntu ---" {
   value = [
     "az:        ${aws_instance.eu_w1a_vpc1_ubuntu.availability_zone } ",

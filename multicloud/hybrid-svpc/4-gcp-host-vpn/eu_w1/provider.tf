@@ -7,7 +7,7 @@ terraform {
   backend "gcs" {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-svpc/4-gcp-host-vpn/eu_w1/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -17,7 +17,7 @@ data "terraform_remote_state" "iam" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-svpc/1-gcp-org-iam/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -27,7 +27,7 @@ data "terraform_remote_state" "aws_eu_west1_vpc1_data" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-svpc/3-aws/eu-w1-vpc1/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }
 

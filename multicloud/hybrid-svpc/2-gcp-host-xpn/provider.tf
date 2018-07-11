@@ -9,7 +9,7 @@ terraform {
   backend "gcs" {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-svpc/2-gcp-host-xpn/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -19,6 +19,6 @@ data "terraform_remote_state" "iam" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/hybrid-svpc/1-gcp-org-iam/"
-    credentials ="~/Terraform/credentials/gcp-credentials-tf.json"
+    credentials ="~/terraform/credentials/gcp-credentials-tf.json"
   }
 }

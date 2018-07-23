@@ -3,21 +3,21 @@ output "netsec_folder_id" {
   value = "${google_folder.netsec_folder.id}"
 }
 
-output "netsec_host_project_id" {
-  value = "${google_project.netsec_host_project.id}"
-}
-
 output "prod_folder_id" {
   value = "${google_folder.prod_folder.id}"
 }
 
-# project ids
-output "prod_service_project_id" {
-  value = "${google_project.prod_service_project.id}"
-}
-
 output "test_folder_id" {
   value = "${google_folder.test_folder.id}"
+}
+
+# project ids
+output "netsec_host_project_id" {
+  value = "${google_project.netsec_host_project.id}"
+}
+
+output "prod_service_project_id" {
+  value = "${google_project.prod_service_project.id}"
 }
 
 output "test_service_project_id" {

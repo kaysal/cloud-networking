@@ -12,5 +12,7 @@
 *credentials/
 plugins/
 *plugins/
-*.tf.x
+*.x
 *scrap*
+*reference*
+*videos

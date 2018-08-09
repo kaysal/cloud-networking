@@ -5,6 +5,10 @@ resource "google_compute_backend_service" "prod_backend" {
   port_name = "http"
   protocol = "HTTP"
   timeout_sec = "30"
+  custom_request_headers = [
+    "X-Client-Geo-Location:{client_region},{client_city}",
+    "X-TLS:{tls_sni_hostname},{tls_version},{tls_cipher_suite}"
+  ]
 
   backend {
     group = "${google_compute_region_instance_group_manager.natgw_mig.instance_group}"
@@ -21,6 +25,11 @@ resource "google_compute_backend_service" "dev_backend" {
   port_name = "http-8080"
   protocol = "HTTP"
   timeout_sec = "30"
+  custom_request_headers = [
+    "X-Client-Geo-Location:{client_region},{client_city}",
+    "X-TLS:{tls_sni_hostname},{tls_version},{tls_cipher_suite}"
+  ]
+
 
   backend {
     group = "${google_compute_region_instance_group_manager.natgw_mig.instance_group}"

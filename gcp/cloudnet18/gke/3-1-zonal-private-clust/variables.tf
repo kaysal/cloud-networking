@@ -4,14 +4,17 @@ variable "project_name" {
 
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "cdn-"
+  default     = "gke-31-"
 }
 
 variable "credentials_file_path" {
   description = "Path to the JSON file used to describe your account credentials"
 }
 
-variable "gcs_bucket_startup_script" {
-  description = "cloud storage startup script file"
-  default     = "gs://cloudnet18/networkservices/natgw-startup.sh"
+variable "onprem_ip_range" {
+  description = "IP range for kubernetes master authorized networks"
+}
+
+variable "gcloud_console_ip" {
+  description = "IP range for kubernetes master authorized networks"
 }

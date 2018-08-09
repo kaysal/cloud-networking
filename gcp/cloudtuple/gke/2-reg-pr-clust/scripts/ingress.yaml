@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: bye-ingress
+  labels:
+    app: hello-bye
+spec:
+  backend:
+    serviceName: hello-bye
+    servicePort: 8080

@@ -4,14 +4,17 @@ variable "project_name" {
 
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "cdn-"
+  default     = "dns-"
 }
 
 variable "credentials_file_path" {
   description = "Path to the JSON file used to describe your account credentials"
 }
 
-variable "gcs_bucket_startup_script" {
-  description = "cloud storage startup script file"
-  default     = "gs://cloudnet18/networkservices/natgw-startup.sh"
+variable "public_key_path" {
+  description = "Path to SSH public key to be attached to cloud instances"
+}
+
+variable "private_key_path_prod" {
+  description = "Path to prod cert private key"
 }

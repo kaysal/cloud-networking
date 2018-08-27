@@ -13,12 +13,12 @@ terraform {
   }
 }
 
-# remote state files for IAM
-data "terraform_remote_state" "xpn" {
+# vpc remote state files
+data "terraform_remote_state" "vpc" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/base/2-host-xpn/"
+    prefix  = "states/gcp/cloudtuple/1-host/0-main-demo/0-vpc"
     credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

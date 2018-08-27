@@ -16,7 +16,7 @@ ${lookup(data.google_compute_region_instance_group.natgw_mig.instances[count.ind
 * google_compute_route.dev_nat_routes[0]: At column 71, line 1: list "data.google_compute_region_instance_group.natgw_mig.instances" does not have any elements so cannot determine type. in:
 ```
 
-Not to worry! Just run terraform again after a minute and the managed group instance data output will be available to be referenced by the routes.
+Not to worry! Just run terraform again after a minute and the managed group instance data output will be available for reference by the routes.
 
 ```sh
 terraform plan

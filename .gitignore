@@ -4,6 +4,7 @@
 *.tfstate.backup
 *.tfvars
 *.json
+*backend*
 
 # Module directory
 .terraform/

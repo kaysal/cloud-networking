@@ -37,3 +37,5 @@ fping -c 1 $(cat regions.txt)
 EOF
 
 chmod +x fpinger.sh
+
+#fping -s -g 35.199.192.1 35.199.223.254 -r 1

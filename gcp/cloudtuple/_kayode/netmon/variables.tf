@@ -4,7 +4,7 @@ variable "project_name" {
 
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "netmon-"
+  default     = "nm-"
 }
 
 variable "credentials_file_path" {

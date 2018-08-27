@@ -1,7 +1,7 @@
-resource "google_compute_instance" "eu_w1b_svpc" {
+resource "google_compute_instance" "netmon" {
   count = "${length(var.list_of_regions)}"
-  name  = "${var.list_of_region_names[count.index]}"
-  machine_type = "n1-standard-2"
+  name  = "${var.name}${var.list_of_region_names[count.index]}"
+  machine_type = "n1-standard-1"
   zone = "${var.list_of_regions[count.index]}-b"
   allow_stopping_for_update = true
 

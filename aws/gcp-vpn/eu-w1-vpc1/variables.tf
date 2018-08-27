@@ -8,7 +8,7 @@ variable "secret_key" {
 
 variable "name" {
   description = "general resource prefix"
-  default     = "gen-"
+  default     = "shk-"
 }
 
 variable "key_name_eu_west1" {
@@ -25,7 +25,7 @@ variable "eu_w1_vpc1_172_16_10" {
   default     = "172.16.10.0/24"
 }
 
-variable "us_e1_vpc1_172_18_10" {
+variable "eu_w2_vpc1_172_18_10" {
   description = "subnet"
   default     = "172.18.10.0/24"
 }

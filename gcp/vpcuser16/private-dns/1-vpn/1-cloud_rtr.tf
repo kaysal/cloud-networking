@@ -8,8 +8,13 @@ resource "google_compute_router" "cloud_router" {
     asn = 65020
     advertise_mode    = "CUSTOM"
     advertised_groups = ["ALL_SUBNETS"]
+    # private dns range
     advertised_ip_ranges {
       range = "35.199.192.0/19"
+    }
+    # restricted google api range
+    advertised_ip_ranges {
+      range = "199.36.153.4/30"
     }
   }
 }

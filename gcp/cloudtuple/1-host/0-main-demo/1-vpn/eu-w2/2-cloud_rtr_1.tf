@@ -8,8 +8,13 @@ resource "google_compute_router" "eu_w2_cr1" {
     asn = 65000
     advertise_mode    = "CUSTOM"
     advertised_groups = ["ALL_SUBNETS"]
+    # private dns range
     advertised_ip_ranges {
-      range = "5.6.7.8"
+      range = "35.199.192.0/19"
+    }
+    # restricted google api range
+    advertised_ip_ranges {
+      range = "199.36.153.4/30"
     }
   }
 }

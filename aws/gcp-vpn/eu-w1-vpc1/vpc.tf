@@ -43,3 +43,8 @@ resource "aws_vpn_gateway_route_propagation" "eu_w1_vpc1_vpgw_route_prop" {
   vpn_gateway_id = "${aws_vpn_gateway.eu_w1_vpc1_vpgw.id}"
   route_table_id = "${aws_vpc.eu_w1_vpc1.main_route_table_id}"
 }
+
+# capture local machine ipv4 to use in security configuration
+data "external" "onprem_ip" {
+  program = ["sh", "scripts/onprem-ip.sh" ]
+}

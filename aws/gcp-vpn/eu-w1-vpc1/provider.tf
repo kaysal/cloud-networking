@@ -5,6 +5,8 @@ provider "aws" {
   secret_key = "${var.secret_key}"
 }
 
+provider "random" {}
+
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"

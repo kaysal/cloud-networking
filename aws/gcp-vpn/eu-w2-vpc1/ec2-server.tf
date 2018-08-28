@@ -1,4 +1,10 @@
-resource "aws_instance" "client" {
+# elastic ips for instances
+resource "aws_eip" "server" {
+  instance = "${aws_instance.server.id}"
+  vpc      = true
+}
+
+resource "aws_instance" "server" {
   instance_type          = "t2.micro"
   availability_zone = "eu-west-2a"
   ami                    = "${data.aws_ami.ubuntu.id}"
@@ -8,15 +14,15 @@ resource "aws_instance" "client" {
   private_ip = "172.18.10.10"
   user_data = "${file("./scripts/client.sh")}"
   tags {
-    Name = "${var.name}client"
+    Name = "${var.name}server"
   }
 }
 
-output "--- client ---" {
+output "--- server ---" {
   value = [
-    "az:        ${aws_instance.client.availability_zone } ",
-    "priv ip:   ${aws_instance.client.private_ip} ",
-    "pub ip:    ${aws_instance.client.public_ip} ",
-    "priv dns:  ${aws_instance.client.private_dns} ",
+    "az:        ${aws_instance.server.availability_zone } ",
+    "priv ip:   ${aws_instance.server.private_ip} ",
+    "pub ip:    ${aws_instance.server.public_ip} ",
+    "priv dns:  ${aws_instance.server.private_dns} ",
   ]
 }

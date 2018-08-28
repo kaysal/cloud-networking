@@ -7,6 +7,7 @@ export NAME_SERVER=127.0.0.1
 export DOMAIN_NAME=cloudtuple.com
 export DOMAIN_NAME_SEARCH=aws.cloudtuple.com
 
+# resovconf()
 cp /etc/resolv.conf /etc/resolv.conf.bak
 cp /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bak
 cat <<EOF >> /etc/dhcp/dhclient.conf

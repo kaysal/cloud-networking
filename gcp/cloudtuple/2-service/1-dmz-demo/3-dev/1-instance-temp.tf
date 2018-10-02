@@ -1,6 +1,6 @@
 
-resource "google_compute_instance_template" "dev_template" {
-  name         = "${var.name}dev-template"
+resource "google_compute_instance_template" "template" {
+  name         = "${var.name}template"
   region       = "europe-west1"
   machine_type = "n1-standard-1"
   tags         = ["www"]

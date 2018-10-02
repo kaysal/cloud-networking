@@ -24,9 +24,9 @@ openssl genrsa -out ${DIRECTORY}/dev/dev.key 2048
   # Organization Name (eg, company)
   echo CloudTuple
   # Organizational Unit Name (eg, section)
-  echo prod app team
+  echo gclb prod app team
   # Common Name (e.g. server FQDN or YOUR name)
-  echo prod.cloudtuple.com
+  echo gclb.prod.cloudtuple.com
   # Email address
   echo prod@cloudtuple.com
   # A challenge password
@@ -48,7 +48,7 @@ openssl x509 -req -days 365 \
   echo London
   echo CloudTuple
   echo dev app team
-  echo dev.cloudtuple.com
+  echo gclb.dev.cloudtuple.com
   echo dev@cloudtuple.com
   echo
   echo
@@ -76,7 +76,7 @@ openssl x509 -req -days 365 \
     echo London
     echo CloudTuple
     echo prod app team
-    echo v6.prod.cloudtuple.com
+    echo gclb6.prod.cloudtuple.com
     echo prod@cloudtuple.com
     echo
     echo
@@ -95,7 +95,7 @@ openssl x509 -req -days 365 \
     echo London
     echo CloudTuple
     echo dev app team
-    echo v6.dev.cloudtuple.com
+    echo gclb6.dev.cloudtuple.com
     echo dev@cloudtuple.com
     echo
     echo

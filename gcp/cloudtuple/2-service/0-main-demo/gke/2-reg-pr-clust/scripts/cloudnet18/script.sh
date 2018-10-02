@@ -7,17 +7,17 @@
 # Run terraform apply
 
 cd
-export DIRECTORY=~/tf/gcp/cloudtuple/4-gke/2-reg-pr-clust/scripts/cloudnet18
+export DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main-demo/gke/2-reg-pr-clust/scripts/cloudnet18
 export HELLO_APP_DIRECTORY=~/kubernetes-engine-samples/hello-app
 export PROJECT_ID=gke-service-project-54
 export DOCKER_IMAGE_REPO_1=ksalawu/golang-alpine:v1
 export DOCKER_IMAGE_REPO_2=ksalawu/golang-alpine:v2
 export DOCKER_IMAGE_REPO_3=ksalawu/golang-alpine:v3
 export DOCKER_IMAGE_REPO_4=ksalawu/golang-alpine:v4
-export GCR_IMAGE_REPO_1=eu.gcr.io/${PROJECT_ID}/golang-alpine:v1
-export GCR_IMAGE_REPO_2=eu.gcr.io/${PROJECT_ID}/golang-alpine:v2
-export GCR_IMAGE_REPO_3=eu.gcr.io/${PROJECT_ID}/golang-alpine:v3
-export GCR_IMAGE_REPO_4=eu.gcr.io/${PROJECT_ID}/golang-alpine:v4
+export GCR_IMAGE_REPO_1=gcr.io/${PROJECT_ID}/golang-alpine:v1
+export GCR_IMAGE_REPO_2=gcr.io/${PROJECT_ID}/golang-alpine:v2
+export GCR_IMAGE_REPO_3=gcr.io/${PROJECT_ID}/golang-alpine:v3
+export GCR_IMAGE_REPO_4=gcr.io/${PROJECT_ID}/golang-alpine:v4
 export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_ACCOUNT=~/tf/credentials/gke-service-project.json
@@ -27,6 +27,7 @@ gcloud config set compute/region ${REGION}
 gcloud config set project ${PROJECT_ID}
 
 gcloud auth activate-service-account --key-file ${SERVICE_ACCOUNT}
+gcloud auth configure-docker
 gcloud container clusters get-credentials ${CLUSTER} --region=${REGION}
 gcloud compute instances list
 #kubectl get nodes --output yaml | grep -A4 addresses
@@ -37,13 +38,15 @@ kubectl config current-context
 rm -rf kubernetes-engine-samples/
 git clone https://github.com/GoogleCloudPlatform/kubernetes-engine-samples
 cd ${HELLO_APP_DIRECTORY}
-docker login
+
+docker login -u ksalawu
+
 docker rmi -f $(docker images -q)
 docker build -t ${DOCKER_IMAGE_REPO_1} .
 docker build -t ${GCR_IMAGE_REPO_1} .
 docker images
 
-docker run --rm -p 4000:8080 ${DOCKER_IMAGE_REPO_1}
+# docker run --rm -p 4000:8080 ${DOCKER_IMAGE_REPO_1}
 # curl http://localhost:4000
 
 docker push ${DOCKER_IMAGE_REPO_1}
@@ -123,7 +126,7 @@ cp main-extra.go ${HELLO_APP_DIRECTORY}/main.go
 cd ${HELLO_APP_DIRECTORY}
 sed -i 's/Hello, world!/Goodbye cruel world!/' main.go
 sed -i 's/Version: 1.0.0/Version: 3.0.0/' main.go
-sed -i 's/\[Put Your ILB Ingress IP Here\]/10.0.8.8/' main.go
+sed -i 's/\[Put Your ILB Ingress IP Here\]/10.0.4.6/' main.go
 
 docker build -t ${DOCKER_IMAGE_REPO_4} .
 docker build -t ${GCR_IMAGE_REPO_4} .
@@ -134,6 +137,16 @@ kubectl set image deployment/hello-bye \
   hello-bye=${GCR_IMAGE_REPO_4}
 
 
-
-
 # docker rmi -f $(docker images -q)
+
+
+# snippet examples
+kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 8080
+export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template='{{(index .spec.ports 0).nodePort}}')
+export POD_NAME=$(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
+
+kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
+sort
+
+gcr.io/gke-service-project-54/golang-alpine:v1
+kubectl exec [POD_NAME] env

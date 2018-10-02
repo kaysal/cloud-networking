@@ -35,7 +35,7 @@ resource "aws_vpn_connection" "eu_w1_vpc1_cgw1_to_gcp" {
   }
 }
 
-/*
+
 # vpn connection 2
 #-----------------
 # customer gateway profile
@@ -60,4 +60,3 @@ resource "aws_vpn_connection" "eu_w1_vpc1_cgw2_to_gcp" {
     Name = "${var.name}eu-w1-vpc1-cgw2-to-gcp"
   }
 }
-*/

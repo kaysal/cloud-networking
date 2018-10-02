@@ -23,8 +23,8 @@ resource "google_compute_firewall" "onprem_to_dmz" {
     ports = ["80","8080","22"]
   }
 
-  source_ranges = ["${data.external.onprem_ip.result.ip}"]
-  target_tags = ["natgw"]
+  source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
+  target_tags = ["natgw","bastion"]
 }
 
 #=====================
@@ -39,7 +39,7 @@ resource "google_compute_firewall" "onprem_to_prod" {
     ports = ["22"]
   }
 
-  source_ranges = ["${data.external.onprem_ip.result.ip}"]
+  source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
   target_tags = ["bastion"]
 }
 
@@ -81,7 +81,7 @@ resource "google_compute_firewall" "onprem_to_dev" {
     ports = ["22"]
   }
 
-  source_ranges = ["${data.external.onprem_ip.result.ip}"]
+  source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
   target_tags = ["bastion"]
 }
 

@@ -32,13 +32,12 @@ data "terraform_remote_state" "prod" {
   }
 }
 
-
-  # vpc remote state files
-  data "terraform_remote_state" "vpc" {
-    backend = "gcs"
-    config {
-      bucket  = "tf-shk"
-      prefix  = "states/gcp/cloudtuple/1-host/1-dmz-demo/0-vpc"
-      credentials ="~/tf/credentials/gcp-credentials-tf.json"
-    }
+# vpc remote state files
+data "terraform_remote_state" "vpc" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/gcp/cloudtuple/1-host/1-dmz-demo/0-vpc"
+    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
+}

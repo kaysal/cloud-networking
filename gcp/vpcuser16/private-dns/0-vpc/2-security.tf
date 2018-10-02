@@ -24,13 +24,15 @@ resource "google_compute_firewall" "onprem_to_prod" {
   target_tags = ["bastion"]
 }
 
-resource "google_compute_firewall" "allow_all_prod" {
-  name    = "${var.name}allow-all-prod"
+resource "google_compute_firewall" "allow_bastion" {
+  name    = "${var.name}allow-bastion"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {
     protocol = "all"
   }
+
+  source_tags = ["bastion"]
 }
 
 resource "google_compute_firewall" "aws_to_gce" {
@@ -58,5 +60,6 @@ resource "google_compute_firewall" "aws_to_gce" {
   }
 
   source_ranges = ["172.16.10.0/24","172.18.10.0/24"]
+  target_tags = ["mig","bastion"]
 
 }

@@ -15,6 +15,7 @@ resource "google_compute_subnetwork" "apple_eu_w1_10_100_10" {
   network       = "${google_compute_network.vpc.self_link}"
   ip_cidr_range = "10.100.10.0/24"
   private_ip_google_access = true
+  enable_flow_logs = true
 }
 
 resource "google_compute_subnetwork" "apple_eu_w2_10_150_10" {
@@ -23,13 +24,15 @@ resource "google_compute_subnetwork" "apple_eu_w2_10_150_10" {
   network       = "${google_compute_network.vpc.self_link}"
   ip_cidr_range = "10.150.10.0/24"
   private_ip_google_access = true
+  enable_flow_logs = true
 }
 
-resource "google_compute_subnetwork" "apple_us_e1_10_200_10" {
-  name          = "${var.name}apple-us-e1-10-200-10"
-  ip_cidr_range = "10.200.10.0/24"
+resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
+  name          = "${var.name}apple-us-e1-10-250-10"
+  ip_cidr_range = "10.250.10.0/24"
   network       = "${google_compute_network.vpc.self_link}"
   region        = "us-east1"
+  enable_flow_logs = true
 }
 
 # Kubernetes
@@ -39,6 +42,7 @@ resource "google_compute_subnetwork" "gke_eu_w1_10_0_4" {
   network       = "${google_compute_network.vpc.self_link}"
   ip_cidr_range = "10.0.4.0/22"
   private_ip_google_access = true
+  enable_flow_logs = true
 
   secondary_ip_range {
     range_name = "svc-range"
@@ -57,6 +61,7 @@ resource "google_compute_subnetwork" "gke_eu_w2_10_0_8" {
   network       = "${google_compute_network.vpc.self_link}"
   ip_cidr_range = "10.0.8.0/22"
   private_ip_google_access = true
+  enable_flow_logs = true
 
   secondary_ip_range {
     range_name = "svc-range"
@@ -89,6 +94,11 @@ resource "google_compute_address" "gcp_eu_w2_vpn_gw1_ip" {
 resource "google_compute_address" "gcp_eu_w2_vpn_gw2_ip" {
   name = "${var.name}gcp-eu-w2-vpn-gw2-ip"
   region = "europe-west2"
+}
+
+resource "google_compute_address" "gcp_us_e1_vpn_gw1_ip" {
+  name = "${var.name}gcp-us-e1-vpn-gw1-ip"
+  region = "us-east1"
 }
 
 # capture local machine ipv4 to use in security configuration

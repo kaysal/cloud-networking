@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo {\"ip\":\""`wget -qO- http://ipecho.net/plain | xargs echo`"\"}
+echo {\"ip\":\""`curl -4 ifconfig.co`"\"}

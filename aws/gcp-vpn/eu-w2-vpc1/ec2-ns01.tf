@@ -1,9 +1,10 @@
 # elastic ips for instances
+/*
 resource "aws_eip" "ns01" {
   instance = "${aws_instance.ns01.id}"
   vpc      = true
 }
-
+*/
 resource "aws_instance" "ns01" {
   instance_type          = "t2.micro"
   availability_zone = "eu-west-2a"
@@ -12,7 +13,9 @@ resource "aws_instance" "ns01" {
   vpc_security_group_ids = ["${aws_security_group.eu_w2_vpc1_sec_grp.id}"]
   subnet_id              = "${aws_subnet.eu_w2_vpc1_172_18_10.id}"
   private_ip = "172.18.10.100"
+  associate_public_ip_address = true
   user_data = "${file("./scripts/bind.sh")}"
+
   tags {
     Name = "${var.name}ns01"
   }

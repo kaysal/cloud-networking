@@ -1,6 +1,6 @@
 # create bastion instance
-resource "google_compute_instance" "dev_bastion" {
-  name         = "${var.name}dev-bastion"
+resource "google_compute_instance" "bastion" {
+  name         = "${var.name}bastion"
   machine_type = "g1-small"
   zone         = "europe-west1-b"
   tags = ["bastion"]

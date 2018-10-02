@@ -1,6 +1,6 @@
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = ""
+  default     = "prod-"
 }
 
 variable "credentials_file_path" {
@@ -9,9 +9,4 @@ variable "credentials_file_path" {
 
 variable "public_key_path" {
   description = "Path to SSH public key to be attached to cloud instances"
-}
-
-variable "dmz_mig_size" {
-  description = "number of instances in dmz managed instance group"
-  default = "2"
 }

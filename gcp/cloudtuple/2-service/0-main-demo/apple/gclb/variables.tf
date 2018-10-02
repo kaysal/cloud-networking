@@ -51,3 +51,12 @@ variable "priv_key_path_dev_v6" {
 variable "crt_path_dev_v6" {
   description = "Path to dev (ipv6) certificate"
 }
+
+variable "oauth2_client_id" {
+  description = "The client ID for use with IAP OAuth 2.0"
+}
+
+
+variable "oauth2_client_secret" {
+  description = "The client secret for use with OAuth 2.0"
+}

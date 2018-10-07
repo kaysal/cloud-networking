@@ -259,7 +259,6 @@ resource "google_compute_firewall" "aws_gce" {
   ]
 
   target_tags = ["gce"]
-
 }
 
 # AWS to GKE

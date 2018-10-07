@@ -26,7 +26,7 @@ export GOOGLEAPIS_ZONE=googleapis.zone
 export GOOGLEAPIS_ZONE_FILE=/etc/bind/db.googleapis.zone
 export LOCAL_NAME_SERVER_IP=172.18.10.100
 export REMOTE_ZONE=gcp.cloudtuple.com
-export REMOTE_NAME_SERVER_IP=10.200.10.4
+export REMOTE_NAME_SERVER_IP=10.100.10.12
 
 wget https://storage.googleapis.com/salawu-gcs/aws/bind9/named.conf.options.text
 cp named.conf.options.text /etc/bind/named.conf.options

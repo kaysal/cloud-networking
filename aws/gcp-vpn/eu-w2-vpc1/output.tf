@@ -81,7 +81,7 @@ output "gcp_eu_w2_vpc1_cgw3_tunnel2_cgw_inside_address" {
 output "aws_eu_w2_vpc1_cgw3_tunnel2_vgw_inside_address" {
   value = "${aws_vpn_connection.eu_w2_vpc1_cgw3_to_gcp.tunnel2_vgw_inside_address}"
 }
-
+/*
 #==============
 # dns scenario - vpcuser16project
 #==============
@@ -110,3 +110,4 @@ output "gcp_vpcuser16_cgw_tunnel2_cgw_inside_address" {
 output "aws_vpcuser16_cgw_tunnel2_vgw_inside_address" {
   value = "${aws_vpn_connection.vpn_to_vpcuser16.tunnel2_vgw_inside_address}"
 }
+*/

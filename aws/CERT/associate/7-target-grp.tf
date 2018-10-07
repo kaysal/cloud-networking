@@ -1,27 +1,27 @@
 resource "aws_lb_target_group" "target_grp" {
-  name     = "${var.name}target-grp"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = "${aws_vpc.vpc.id}"
-  target_type = "instance"
+  name                 = "${var.name}target-grp"
+  port                 = 80
+  protocol             = "HTTP"
+  vpc_id               = "${aws_vpc.vpc.id}"
+  target_type          = "instance"
   deregistration_delay = "300"
-  slow_start = "0"
+  slow_start           = "0"
 
   stickiness {
-    type = "lb_cookie"
+    type            = "lb_cookie"
     cookie_duration = "86400"
-    enabled = false
+    enabled         = false
   }
 
   health_check {
-    protocol = "HTTP"
-    port = "traffic-port"
-    path = "/"
-    healthy_threshold = "5"
+    protocol            = "HTTP"
+    port                = "traffic-port"
+    path                = "/"
+    healthy_threshold   = "5"
     unhealthy_threshold = "2"
-    timeout = "5"
-    interval = "30"
-    matcher = "200"
+    timeout             = "5"
+    interval            = "30"
+    matcher             = "200"
   }
 
   tags {

@@ -9,13 +9,13 @@ provider "random" {}
 
 terraform {
   backend "gcs" {
-    bucket  = "tf-shk"
-    prefix  = "states/aws/CERT/associate/"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
+    bucket      = "tf-shk"
+    prefix      = "states/aws/CERT/associate/"
+    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
 # capture local machine ipv4 to use in security configuration
 data "external" "onprem_ip" {
-  program = ["sh", "scripts/onprem-ip.sh" ]
+  program = ["sh", "scripts/onprem-ip.sh"]
 }

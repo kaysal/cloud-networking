@@ -9,18 +9,20 @@ resource "aws_route53_record" "alb_cloudtuples" {
   type    = "A"
 
   alias {
-    name = "${aws_lb.alb.dns_name}"
-    zone_id = "${aws_lb.alb.zone_id}"
+    name                   = "${aws_lb.alb.dns_name}"
+    zone_id                = "${aws_lb.alb.zone_id}"
     evaluate_target_health = true
   }
 
   set_identifier = "alb-Primary"
+
   failover_routing_policy {
     type = "PRIMARY"
   }
 
   depends_on = ["aws_lb.alb"]
 }
+
 /*
 resource "aws_route53_record" "alb_cloudtuples_s3" {
   zone_id = "${data.aws_route53_zone.cloudtuples.zone_id}"
@@ -41,3 +43,4 @@ resource "aws_route53_record" "alb_cloudtuples_s3" {
   depends_on = ["aws_lb.alb"]
 }
 */
+

@@ -17,6 +17,14 @@ resource "aws_autoscaling_group" "asg" {
     "${aws_subnet.subnet_3_private.id}",
     "${aws_subnet.subnet_4_private.id}",
   ]
+
+  enabled_metrics = [
+    "GroupMinSize",
+    "GroupMaxSize",
+    "GroupMaxSize",
+    "GroupInServiceInstances",
+    "GroupPendingInstances",
+  ]
 }
 
 resource "aws_autoscaling_policy" "asg-scale-up" {
@@ -92,7 +100,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-80-incr" {
   insufficient_data_actions = []
 
   dimensions = {
-    "AsgName" = "${var.name}asg"
+    "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
   }
 }
 
@@ -112,6 +120,6 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-50-decr" {
   insufficient_data_actions = []
 
   dimensions = {
-    "AsgName" = "${var.name}asg"
+    "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
   }
 }

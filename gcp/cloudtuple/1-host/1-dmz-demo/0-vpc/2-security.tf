@@ -27,6 +27,18 @@ resource "google_compute_firewall" "onprem_to_dmz" {
   target_tags = ["natgw","bastion"]
 }
 
+resource "google_compute_firewall" "all_dmz" {
+  name    = "${var.name}all-dmz"
+  network = "${google_compute_network.dmz.self_link}"
+
+  allow {
+    protocol = "all"
+  }
+
+  source_tags = ["natgw"]
+  target_tags = ["natgw"]
+}
+
 #=====================
 # prod network
 #=====================

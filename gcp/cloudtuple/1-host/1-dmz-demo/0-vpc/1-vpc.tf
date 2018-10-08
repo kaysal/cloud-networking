@@ -23,6 +23,11 @@ resource "google_compute_subnetwork" "dmz_subnet" {
   network       = "${google_compute_network.dmz.self_link}"
   region        = "europe-west1"
   enable_flow_logs = true
+
+  secondary_ip_range {
+    range_name = "alias"
+    ip_cidr_range= "10.0.64.0/20"
+  }
 }
 
 resource "google_compute_subnetwork" "prod_subnet" {

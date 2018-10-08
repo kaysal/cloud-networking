@@ -14,6 +14,12 @@ resource "google_compute_instance_template" "natgw_template" {
 
   network_interface {
     subnetwork = "${data.terraform_remote_state.vpc.dmz_subnet}"
+
+    alias_ip_range {
+      ip_cidr_range = "/24"
+      subnetwork_range_name = "alias"
+    }
+
     access_config {
       // Ephemeral IP
     }

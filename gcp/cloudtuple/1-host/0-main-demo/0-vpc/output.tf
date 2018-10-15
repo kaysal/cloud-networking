@@ -50,3 +50,12 @@ output "gcp_us_e1_vpn_gw1_ip" {
 output "onprem_ip" {
   value = "${data.external.onprem_ip.result.ip}"
 }
+
+# bgp attributes
+output "host_lzone1_bgp_ip" {
+  value = "${var.host_lzone1_bgp_ip}"
+}
+
+output "host_lzone2_bgp_ip" {
+  value = "${var.host_lzone2_bgp_ip}"
+}

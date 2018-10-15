@@ -27,7 +27,7 @@ data "terraform_remote_state" "apple" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/0-org/2-apple"
+    prefix  = "states/gcp/cloudtuple/0-org/2-apple/"
     credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

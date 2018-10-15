@@ -1,6 +1,6 @@
 #! /bin/bash
 apt-get update
-apt-get install -y apache2 php
+apt-get install -y apache2 php traceroute dnsutils mtr
 sed -i '/Listen 80/c\Listen 110' /etc/apache2/ports.conf
 service apache2 restart
 cd /var/www/html

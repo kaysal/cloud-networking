@@ -18,3 +18,7 @@ variable "key_name_eu_west2" {
 variable "bucket_site" {
   default = "alb.cloudtuples.com"
 }
+
+variable "bucket_penguin_site" {
+  default = "penguin.cloudtuples.com"
+}

@@ -35,7 +35,7 @@ resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
   enable_flow_logs = true
 }
 
-# Kubernetes
+# Kubernetes service project #1
 resource "google_compute_subnetwork" "gke_eu_w1_10_0_4" {
   name          = "${var.name}gke-eu-w1-10-0-4"
   region        = "europe-west1"
@@ -55,6 +55,7 @@ resource "google_compute_subnetwork" "gke_eu_w1_10_0_4" {
   }
 }
 
+# Kubernetes service project #2
 resource "google_compute_subnetwork" "gke_eu_w2_10_0_8" {
   name          = "${var.name}gke-eu-w2-10-0-8"
   region        = "europe-west2"
@@ -71,6 +72,40 @@ resource "google_compute_subnetwork" "gke_eu_w2_10_0_8" {
   secondary_ip_range {
     range_name = "pod-range"
     ip_cidr_range= "10.8.0.0/14"
+  }
+}
+
+# standalone subnets (not part of shared vpc)
+#--------------------------------------
+resource "google_compute_subnetwork" "eu_w2_10_200_50" {
+  name          = "${var.local}eu-w2-10-200-50"
+  region        = "europe-west2"
+  network       = "${google_compute_network.vpc.self_link}"
+  ip_cidr_range = "10.200.50.0/24"
+  private_ip_google_access = true
+  enable_flow_logs = true
+}
+
+resource "google_compute_subnetwork" "eu_w2_10_200_60" {
+  name          = "${var.local}eu-w2-10-200-60"
+  region        = "europe-west2"
+  network       = "${google_compute_network.vpc.self_link}"
+  ip_cidr_range = "10.200.60.0/24"
+  private_ip_google_access = true
+  enable_flow_logs = true
+}
+
+resource "google_compute_subnetwork" "eu_w2_10_200_70" {
+  name          = "${var.local}eu-w2-10-200-70"
+  region        = "europe-west2"
+  network       = "${google_compute_network.vpc.self_link}"
+  ip_cidr_range = "10.200.70.0/24"
+  private_ip_google_access = true
+  enable_flow_logs = true
+
+  secondary_ip_range {
+    range_name = "alias"
+    ip_cidr_range= "10.200.80.0/24"
   }
 }
 
@@ -102,6 +137,7 @@ resource "google_compute_address" "gcp_us_e1_vpn_gw1_ip" {
 }
 
 # capture local machine ipv4 to use in security configuration
+#--------------------------------------
 data "external" "onprem_ip" {
   program = ["sh", "scripts/onprem-ip.sh" ]
 }

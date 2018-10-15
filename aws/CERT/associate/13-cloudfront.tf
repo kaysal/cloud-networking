@@ -91,5 +91,6 @@ resource "aws_route53_record" "cdn_cloudtuples_s3" {
   alias {
     zone_id                = "${aws_cloudfront_distribution.site_distribution.hosted_zone_id}"
     name                   = "${aws_cloudfront_distribution.site_distribution.domain_name}"
+    evaluate_target_health = false
   }
 }

@@ -20,7 +20,7 @@ resource "google_compute_firewall" "onprem_to_prod" {
     ports = ["22"]
   }
 
-  source_ranges = ["${data.external.onprem_ip.result.ip}"]
+  source_ranges = ["0.0.0.0/0","${data.external.onprem_ip.result.ip}"]
   target_tags = ["bastion"]
 }
 

@@ -11,3 +11,6 @@ apt-get -y install \
   siege \
   nmap \
   fping
+
+cd /opt
+wget https://storage.googleapis.com/salawu-gcs/gcp/instances/wget.sh

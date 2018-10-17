@@ -262,6 +262,7 @@ resource "google_compute_firewall" "aws_gce" {
 }
 
 # AWS to GKE
+# ===========================
 resource "google_compute_firewall" "aws_gke" {
   name    = "${var.name}aws-gke"
   description = "allowed connections from aws to gce"
@@ -294,4 +295,32 @@ resource "google_compute_firewall" "aws_gke" {
 
   target_tags = ["gke"]
 
+}
+
+# lzone2 to gce
+# ===========================
+resource "google_compute_firewall" "lzone2_to_gce" {
+  name    = "${var.name}lzone2-to-gce"
+  network = "${google_compute_network.vpc.self_link}"
+
+  allow {
+    protocol = "all"
+  }
+
+  source_ranges = ["10.200.30.0/24"]
+  target_tags = ["gce"]
+}
+
+# lzone2 to gke
+# ===========================
+resource "google_compute_firewall" "lzone2_to_gke" {
+  name    = "${var.name}lzone2-to-gke"
+  network = "${google_compute_network.vpc.self_link}"
+
+  allow {
+    protocol = "all"
+  }
+
+  source_ranges = ["10.200.30.0/24"]
+  target_tags = ["gke"]
 }

@@ -3,6 +3,11 @@ provider "google" {
   credentials = "${var.credentials_file_path}"
 }
 
+provider "google-beta" {
+  project = "${data.terraform_remote_state.dev.dev_service_project_id}"
+  credentials = "${var.credentials_file_path}"
+}
+
 provider "random" {}
 
 terraform {

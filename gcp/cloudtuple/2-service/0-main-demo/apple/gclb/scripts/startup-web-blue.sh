@@ -17,3 +17,6 @@ bash install-monitoring-agent.sh
 # To install the Stackdriver logging agent:
 curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
 bash install-logging-agent.sh
+
+cd /opt
+wget https://storage.googleapis.com/salawu-gcs/gcp/instances/wget.sh

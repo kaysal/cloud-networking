@@ -38,6 +38,10 @@ output "gcp_eu_w2_vpn_gw1_ip" {
   value = "${google_compute_address.gcp_eu_w2_vpn_gw1_ip.address}"
 }
 
+output "gcp_eu_w2_vpn_gw3_ip" {
+  value = "${google_compute_address.gcp_eu_w2_vpn_gw3_ip.address}"
+}
+
 output "gcp_eu_w2_vpn_gw2_ip" {
   value = "${google_compute_address.gcp_eu_w2_vpn_gw2_ip.address}"
 }
@@ -49,13 +53,4 @@ output "gcp_us_e1_vpn_gw1_ip" {
 # public ip address of local machine
 output "onprem_ip" {
   value = "${data.external.onprem_ip.result.ip}"
-}
-
-# bgp attributes
-output "host_lzone1_bgp_ip" {
-  value = "${var.host_lzone1_bgp_ip}"
-}
-
-output "host_lzone2_bgp_ip" {
-  value = "${var.host_lzone2_bgp_ip}"
 }

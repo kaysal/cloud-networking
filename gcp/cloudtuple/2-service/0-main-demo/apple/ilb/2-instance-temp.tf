@@ -1,10 +1,10 @@
 
 resource "google_compute_instance_template" "prod_template" {
   name         = "${var.name}prod-template"
-  region       = "europe-west1"
+  region       = "europe-west2"
   machine_type = "n1-standard-1"
   can_ip_forward = true
-  tags = ["gce","gce-mig-ilb","nat-europe-west1"]
+  tags = ["gce","gce-mig-ilb","nat-europe-west2"]
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -12,7 +12,7 @@ resource "google_compute_instance_template" "prod_template" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
+    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w2_10_150_10}"
   }
 
   metadata {

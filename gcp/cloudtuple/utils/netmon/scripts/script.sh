@@ -38,4 +38,8 @@ EOF
 
 chmod +x fpinger.sh
 
+cd /opt
+wget https://storage.googleapis.com/salawu-gcs/gcp/instances/wget.sh
+
+
 #fping -s -g 35.199.192.1 35.199.223.254 -r 1

@@ -2,7 +2,7 @@
 resource "google_compute_instance" "bastion_eu_w1" {
   name         = "${var.name}bastion-eu-w1"
   machine_type = "g1-small"
-  zone         = "europe-west1-b"
+  zone         = "europe-west2-b"
   tags = ["gce","bastion"]
   allow_stopping_for_update = true
 
@@ -13,7 +13,7 @@ resource "google_compute_instance" "bastion_eu_w1" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
+    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w2_10_150_10}"
     access_config {
       // ephemeral nat ip
     }

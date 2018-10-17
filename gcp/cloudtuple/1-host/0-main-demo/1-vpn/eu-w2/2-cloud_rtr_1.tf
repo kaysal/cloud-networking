@@ -18,6 +18,21 @@ resource "google_compute_router" "eu_w2_cr1" {
     advertised_ip_ranges {
       range = "199.36.153.4/30"
     }
+
+    # vpcuser16project ip range
+    advertised_ip_ranges {
+      range = "10.200.10.0/24"
+    }
+
+    # lzone1 ip range
+    advertised_ip_ranges {
+      range = "10.200.20.0/24"
+    }
+
+    # lzone2 ip range
+    advertised_ip_ranges {
+      range = "10.200.30.0/24"
+    }
   }
 }
 

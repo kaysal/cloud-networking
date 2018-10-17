@@ -2,6 +2,10 @@ provider "google" {
   project = "${data.terraform_remote_state.host.host_project_id}"
 }
 
+provider "google-beta" {
+  project = "${data.terraform_remote_state.host.host_project_id}"
+}
+
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"
@@ -36,6 +40,16 @@ data "terraform_remote_state" "aws_eu_west2_vpc1_data" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/aws/gcp-vpn/eu-w2-vpc1/"
+    credentials ="~/tf/credentials/gcp-credentials-tf.json"
+  }
+}
+
+# remote state files for lzone2 data
+data "terraform_remote_state" "lzone2" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/gcp/cloudtuple/5-mango/lzone2/0-vpc"
     credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

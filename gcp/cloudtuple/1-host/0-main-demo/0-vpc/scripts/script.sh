@@ -10,3 +10,6 @@ META_REGION_STRING=$(curl "http://metadata.google.internal/computeMetadata/v1/in
 REGION=`echo "$META_REGION_STRING" | awk -F/ '{print $4}'`
 sed -i "s|region-here|$REGION|" index.php
 apt-get -y install traceroute mtr tcpdump iperf whois host dnsutils siege nmap
+
+cd /opt
+wget https://storage.googleapis.com/salawu-gcs/gcp/instances/wget.sh

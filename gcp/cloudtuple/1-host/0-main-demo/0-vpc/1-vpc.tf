@@ -75,41 +75,7 @@ resource "google_compute_subnetwork" "gke_eu_w2_10_0_8" {
   }
 }
 
-# standalone subnets (not part of shared vpc)
-#--------------------------------------
-resource "google_compute_subnetwork" "eu_w2_10_200_50" {
-  name          = "${var.local}eu-w2-10-200-50"
-  region        = "europe-west2"
-  network       = "${google_compute_network.vpc.self_link}"
-  ip_cidr_range = "10.200.50.0/24"
-  private_ip_google_access = true
-  enable_flow_logs = true
-}
-
-resource "google_compute_subnetwork" "eu_w2_10_200_60" {
-  name          = "${var.local}eu-w2-10-200-60"
-  region        = "europe-west2"
-  network       = "${google_compute_network.vpc.self_link}"
-  ip_cidr_range = "10.200.60.0/24"
-  private_ip_google_access = true
-  enable_flow_logs = true
-}
-
-resource "google_compute_subnetwork" "eu_w2_10_200_70" {
-  name          = "${var.local}eu-w2-10-200-70"
-  region        = "europe-west2"
-  network       = "${google_compute_network.vpc.self_link}"
-  ip_cidr_range = "10.200.70.0/24"
-  private_ip_google_access = true
-  enable_flow_logs = true
-
-  secondary_ip_range {
-    range_name = "alias"
-    ip_cidr_range= "10.200.80.0/24"
-  }
-}
-
-# VPN GW external IP
+# VPN GW external IPs
 #--------------------------------------
 resource "google_compute_address" "gcp_eu_w1_vpn_gw1_ip" {
   name = "${var.name}gcp-eu-w1-vpn-gw1-ip"
@@ -128,6 +94,11 @@ resource "google_compute_address" "gcp_eu_w2_vpn_gw1_ip" {
 
 resource "google_compute_address" "gcp_eu_w2_vpn_gw2_ip" {
   name = "${var.name}gcp-eu-w2-vpn-gw2-ip"
+  region = "europe-west2"
+}
+
+resource "google_compute_address" "gcp_eu_w2_vpn_gw3_ip" {
+  name = "${var.name}gcp-eu-w2-vpn-gw3-ip"
   region = "europe-west2"
 }
 

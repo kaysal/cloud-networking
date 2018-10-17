@@ -8,3 +8,6 @@ wget https://storage.googleapis.com/startup-scripts-cns/rsync/instances/index.ph
 META_REGION_STRING=$(curl "http://metadata.google.internal/computeMetadata/v1/instance/zone" -H "Metadata-Flavor: Google")
 REGION=`echo "$META_REGION_STRING" | awk -F/ '{print $4}'`
 sed -i "s|region-here|$REGION|" index.php
+
+cd /opt
+wget https://storage.googleapis.com/salawu-gcs/gcp/instances/wget.sh

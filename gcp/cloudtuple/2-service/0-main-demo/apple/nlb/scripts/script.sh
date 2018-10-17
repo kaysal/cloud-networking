@@ -37,3 +37,6 @@ fping -c 1 $(cat regions.txt)
 EOF
 
 chmod +x fpinger.sh
+
+cd /opt
+wget https://storage.googleapis.com/salawu-gcs/gcp/instances/wget.sh

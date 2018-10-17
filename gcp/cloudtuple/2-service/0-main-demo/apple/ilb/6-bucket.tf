@@ -1,7 +1,7 @@
 # create a regional bucket in us
 resource "google_storage_bucket" "bucket" {
   name     = "${var.project_name}"
-  location = "europe-west1"
+  location = "europe-west2"
   force_destroy = true
   storage_class = "REGIONAL"
 }

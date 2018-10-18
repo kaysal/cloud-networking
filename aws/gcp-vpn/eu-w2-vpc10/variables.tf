@@ -8,7 +8,7 @@ variable "secret_key" {
 
 variable "name" {
   description = "general resource prefix"
-  default     = "ks-"
+  default     = "shk-"
 }
 
 variable "key_name_eu_west2" {
@@ -20,12 +20,12 @@ variable "eu_w2_vpc1_cidr" {
   default     = "172.18.0.0/16"
 }
 
-variable "public_172_18_0" {
+variable "eu_w1_vpc1_172_16_10" {
   description = "subnet"
-  default     = "172.18.0.0/24"
+  default     = "172.16.10.0/24"
 }
 
-variable "private_172_18_10" {
+variable "eu_w2_vpc1_172_18_10" {
   description = "subnet"
   default     = "172.18.10.0/24"
 }
@@ -36,6 +36,10 @@ variable "preshared_key" {
 
 variable "aws_side_asn" {
   default = "65010"
+}
+
+variable "vpcuser16_asn" {
+  default = "65020"
 }
 
 variable "customer_side_asn" {

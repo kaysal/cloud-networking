@@ -11,25 +11,14 @@ resource "aws_vpc" "eu_w2_vpc1" {
 }
 
 # Create subnets to launch instances into
-resource "aws_subnet" "public_172_18_0" {
+resource "aws_subnet" "eu_w2_vpc1_172_18_10" {
   availability_zone       = "eu-west-2a"
   vpc_id                  = "${aws_vpc.eu_w2_vpc1.id}"
-  cidr_block              = "${var.public_172_18_0}"
-  map_public_ip_on_launch = true
+  cidr_block              = "${var.eu_w2_vpc1_172_18_10}"
+  map_public_ip_on_launch = "false"
 
   tags {
-    Name = "${var.name}public-172-18-0"
-  }
-}
-
-resource "aws_subnet" "private_172_18_10" {
-  availability_zone       = "eu-west-2a"
-  vpc_id                  = "${aws_vpc.eu_w2_vpc1.id}"
-  cidr_block              = "${var.private_172_18_10}"
-  map_public_ip_on_launch = false
-
-  tags {
-    Name = "${var.name}private-172-18-10"
+    Name = "${var.name}eu-w2-vpc1-172-18-10"
   }
 }
 

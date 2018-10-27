@@ -6,6 +6,11 @@ resource "aws_route_table" "public_route_table" {
     gateway_id = "${aws_internet_gateway.eu_w2_vpc1_igw.id}"
   }
 
+  route {
+    cidr_block                = "172.16.0.0/16"
+    vpc_peering_connection_id = "${aws_vpc_peering_connection.peer_to_eu_w1_vpc1.id}"
+  }
+
   tags {
     Name = "${var.name}public-route-table"
   }
@@ -19,8 +24,13 @@ resource "aws_route_table" "private_route_table" {
     nat_gateway_id = "${aws_nat_gateway.natgw_public_172_18_0.id}"
   }
 
+  route {
+    cidr_block                = "172.16.0.0/16"
+    vpc_peering_connection_id = "${aws_vpc_peering_connection.peer_to_eu_w1_vpc1.id}"
+  }
+
   propagating_vgws = [
-    "${aws_vpn_gateway.eu_w2_vpc1_vpgw.id}"
+    "${aws_vpn_gateway.eu_w2_vpc1_vpgw.id}",
   ]
 
   tags {

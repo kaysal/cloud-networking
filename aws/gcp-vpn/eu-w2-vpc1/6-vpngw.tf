@@ -1,7 +1,7 @@
 # Create VPN Gateway
 #-----------------
 resource "aws_vpn_gateway" "eu_w2_vpc1_vpgw" {
-  vpc_id = "${aws_vpc.eu_w2_vpc1.id}"
+  vpc_id          = "${aws_vpc.eu_w2_vpc1.id}"
   amazon_side_asn = "${var.aws_side_asn}"
 
   tags {

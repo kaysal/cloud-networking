@@ -1,6 +1,6 @@
 # Create VPC to launch our instances into
 resource "aws_vpc" "eu_w2_vpc1" {
-  cidr_block           = "${var.eu_w2_vpc1_cidr}"
+  cidr_block                       = "${var.eu_w2_vpc1_cidr}"
   assign_generated_ipv6_cidr_block = true
   enable_dns_hostnames             = true
   enable_dns_support               = true
@@ -35,8 +35,22 @@ resource "aws_subnet" "private_172_18_10" {
 
 # capture local machine ipv4 to use in security configuration
 data "external" "onprem_ip" {
-  program = ["sh", "scripts/onprem-ip.sh" ]
+  program = ["sh", "scripts/onprem-ip.sh"]
 }
+
+resource "aws_vpc_peering_connection" "peer_to_eu_w1_vpc1" {
+  vpc_id        = "${aws_vpc.eu_w2_vpc1.id}"
+  peer_region   = "eu-west-1"
+  peer_owner_id = "${var.peer_owner_id}"
+  peer_vpc_id   = "${data.terraform_remote_state.eu_w1_vpc1.eu_w1_vpc1_id}"
+
+  tags {
+    Name = "peer: eu-w2-vpc1 & eu-w1-vpc1"
+  }
+}
+
+# vpc flow log
+
 
 /*
 # DHCP options
@@ -57,3 +71,4 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
   dhcp_options_id = "${aws_vpc_dhcp_options.options.id}"
 }
 */
+

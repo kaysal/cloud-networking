@@ -9,6 +9,11 @@ output "--- eu-w1a-vpc1-ubuntu ---" {
   ]
 }
 
+# vpc output for vpc peering
+output "eu_w1_vpc1_id" {
+  value = "${aws_vpc.eu_w1_vpc1.id}"
+}
+
 # vpn connection 1
 #-----------------
 output "aws_eu_w1_vpc1_cgw1_tunnel1_address" {

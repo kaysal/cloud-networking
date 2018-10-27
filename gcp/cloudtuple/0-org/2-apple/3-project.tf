@@ -28,3 +28,11 @@ data "google_iam_policy" "apple_service_project_policy" {
     ]
   }
 }
+
+# project metadata
+resource "google_compute_project_metadata" "zonal_dns" {
+  project = "${google_project.apple_service_project.name}"
+  metadata {
+    VmDnsSetting = "ZonalPreferred"
+  }
+}

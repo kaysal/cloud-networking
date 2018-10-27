@@ -1,5 +1,5 @@
 #==============
-# vpn to gcp eu-w1 region
+# vpn to gcp eu-w2 region
 #==============
 # vpn connection 1
 #-----------------

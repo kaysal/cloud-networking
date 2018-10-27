@@ -6,33 +6,33 @@ resource "aws_security_group" "eu_w2_vpc1_bastion_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0","${data.external.onprem_ip.result.ip}/32"]
+    cidr_blocks = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}/32"]
   }
 
   # udp from local rfc1918 remote and google dns forwarding range
   ingress {
-    from_port   = 53
-    to_port     = 53
-    protocol    = "tcp"
+    from_port = 53
+    to_port   = 53
+    protocol  = "tcp"
 
     cidr_blocks = [
       "192.168.0.0/16",
       "10.0.0.0/8",
       "172.16.0.0/12",
-      "35.199.192.0/19"
+      "35.199.192.0/19",
     ]
   }
 
   ingress {
-    from_port   = 53
-    to_port     = 53
-    protocol    = "udp"
+    from_port = 53
+    to_port   = 53
+    protocol  = "udp"
 
     cidr_blocks = [
       "192.168.0.0/16",
       "10.0.0.0/8",
       "172.16.0.0/12",
-      "35.199.192.0/19"
+      "35.199.192.0/19",
     ]
   }
 
@@ -77,43 +77,43 @@ resource "aws_security_group" "eu_w2_vpc1_private_sg" {
   }
 
   ingress {
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
+    from_port       = 3389
+    to_port         = 3389
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.eu_w2_vpc1_bastion_sg.id}"]
   }
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.eu_w2_vpc1_bastion_sg.id}"]
   }
 
   # udp from local rfc1918 remote and google dns forwarding range
   ingress {
-    from_port   = 53
-    to_port     = 53
-    protocol    = "tcp"
+    from_port = 53
+    to_port   = 53
+    protocol  = "tcp"
 
     cidr_blocks = [
       "192.168.0.0/16",
       "10.0.0.0/8",
       "172.16.0.0/12",
-      "35.199.192.0/19"
+      "35.199.192.0/19",
     ]
   }
 
   ingress {
-    from_port   = 53
-    to_port     = 53
-    protocol    = "udp"
+    from_port = 53
+    to_port   = 53
+    protocol  = "udp"
 
     cidr_blocks = [
       "192.168.0.0/16",
       "10.0.0.0/8",
       "172.16.0.0/12",
-      "35.199.192.0/19"
+      "35.199.192.0/19",
     ]
   }
 

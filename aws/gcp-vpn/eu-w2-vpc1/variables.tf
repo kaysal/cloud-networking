@@ -6,6 +6,14 @@ variable "secret_key" {
   description = "account secret key"
 }
 
+variable "peer_access_key" {
+  description = "account access key"
+}
+
+variable "peer_secret_key" {
+  description = "account secret key"
+}
+
 variable "name" {
   description = "general resource prefix"
   default     = "ks-"
@@ -40,4 +48,12 @@ variable "aws_side_asn" {
 
 variable "customer_side_asn" {
   default = "65000"
+}
+
+variable "peer_owner_id" {
+  description = "AWS account ID of the owner of the peer VPC"
+}
+
+variable "sns_target_email" {
+  description = "sns topic subscription email"
 }

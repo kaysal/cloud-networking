@@ -73,7 +73,7 @@ resource "google_compute_backend_service" "dev-be-svc" {
   ]
 
   backend {
-    group = "${google_compute_region_instance_group_manager.dev_us_e1.instance_group}"
+    group = "${google_compute_region_instance_group_manager.dev_eu_w3.instance_group}"
     balancing_mode = "UTILIZATION"
     max_utilization = "0.8"
     capacity_scaler = "1"

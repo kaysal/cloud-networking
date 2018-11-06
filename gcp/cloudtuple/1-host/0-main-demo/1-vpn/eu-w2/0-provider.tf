@@ -39,7 +39,7 @@ data "terraform_remote_state" "aws_eu_west2_vpc1_data" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/aws/gcp-vpn/eu-w2-vpc1/"
+    prefix  = "states/aws/cloudtuple/1-vpc/eu-w2/vpc-1"
     credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

@@ -27,11 +27,11 @@ resource "google_compute_subnetwork" "apple_eu_w2_10_150_10" {
   enable_flow_logs = true
 }
 
-resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
-  name          = "${var.name}apple-us-e1-10-250-10"
+resource "google_compute_subnetwork" "apple_eu_w3_10_250_10" {
+  name          = "${var.name}apple-eu-w3-10-250-10"
   ip_cidr_range = "10.250.10.0/24"
   network       = "${google_compute_network.vpc.self_link}"
-  region        = "us-east1"
+  region        = "europe-west3"
   enable_flow_logs = true
 }
 
@@ -97,14 +97,15 @@ resource "google_compute_address" "gcp_eu_w2_vpn_gw2_ip" {
   region = "europe-west2"
 }
 
+# to landing zone 2
 resource "google_compute_address" "gcp_eu_w2_vpn_gw3_ip" {
   name = "${var.name}gcp-eu-w2-vpn-gw3-ip"
   region = "europe-west2"
 }
 
-resource "google_compute_address" "gcp_us_e1_vpn_gw1_ip" {
-  name = "${var.name}gcp-us-e1-vpn-gw1-ip"
-  region = "us-east1"
+resource "google_compute_address" "gcp_eu_w3_vpn_gw1_ip" {
+  name = "${var.name}gcp-eu-w3-vpn-gw1-ip"
+  region = "europe-west3"
 }
 
 # capture local machine ipv4 to use in security configuration

@@ -48,11 +48,11 @@ resource "google_compute_region_instance_group_manager" "green_eu_w2" {
   }
 }
 
-resource "google_compute_region_instance_group_manager" "dev_us_e1" {
-  name               = "${var.name}dev-us-e1"
-  base_instance_name = "${var.name}dev-us-e1"
-  instance_template  = "${google_compute_instance_template.dev_template_us_e1.self_link}"
-  region       = "us-east1"
+resource "google_compute_region_instance_group_manager" "dev_eu_w3" {
+  name               = "${var.name}dev-eu-w3"
+  base_instance_name = "${var.name}dev-eu-w3"
+  instance_template  = "${google_compute_instance_template.dev_template_eu_w3.self_link}"
+  region       = "europe-west3"
 
   named_port {
     name = "http"
@@ -125,10 +125,10 @@ resource "google_compute_region_autoscaler" "autoscaler_green_eu_w2" {
   }
 }
 
-resource "google_compute_region_autoscaler" "autoscaler_dev_us_e1" {
-  name   = "${var.name}autoscaler-dev-us-e1"
-  region       = "us-east1"
-  target = "${google_compute_region_instance_group_manager.dev_us_e1.self_link}"
+resource "google_compute_region_autoscaler" "autoscaler_dev_eu_w3" {
+  name   = "${var.name}autoscaler-dev-eu-w3"
+  region       = "europe-west3"
+  target = "${google_compute_region_instance_group_manager.dev_eu_w3.self_link}"
 
   autoscaling_policy = {
     max_replicas    = 1

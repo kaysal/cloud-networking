@@ -1,21 +1,12 @@
-# Enable shared VPC hosting in the host project
-resource "google_compute_shared_vpc_host_project" "host_project" {
-  project    = "${data.terraform_remote_state.host.host_project_id}"
-}
-
 # Enable shared VPC service project
 resource "google_compute_shared_vpc_service_project" "prod_service_project" {
   host_project    = "${data.terraform_remote_state.host.host_project_id}"
   service_project = "${data.terraform_remote_state.prod.prod_service_project_id}"
-
-  depends_on = ["google_compute_shared_vpc_host_project.host_project"]
 }
 
 resource "google_compute_shared_vpc_service_project" "dev_service_project" {
   host_project    = "${data.terraform_remote_state.host.host_project_id}"
   service_project = "${data.terraform_remote_state.dev.dev_service_project_id}"
-
-  depends_on = ["google_compute_shared_vpc_host_project.host_project"]
 }
 
 # host project: network policies

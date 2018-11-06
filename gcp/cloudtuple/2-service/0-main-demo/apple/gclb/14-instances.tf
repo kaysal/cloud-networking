@@ -61,11 +61,11 @@ resource "google_compute_instance" "vm_eu_w2" {
   }
 }
 
-resource "google_compute_instance" "vm_us_e1" {
-  name         = "${var.name}vm-us-e1"
+resource "google_compute_instance" "vm_eu_w3" {
+  name         = "${var.name}vm-eu-w3"
   machine_type = "g1-small"
-  zone         = "us-east1-b"
-  tags = ["gce","nat-us-east1"]
+  zone         = "europe-west3-b"
+  tags = ["gce","nat-europe-west3"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -75,7 +75,7 @@ resource "google_compute_instance" "vm_us_e1" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_us_e1_10_250_10}"
+    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w3_10_250_10}"
     #access_config {
       // ephemeral nat ip
     #}

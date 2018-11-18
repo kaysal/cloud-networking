@@ -6,6 +6,13 @@ provider "aws" {
   secret_key = "${var.secret_key}"
 }
 
+provider "aws" {
+  alias      = "us-e1"
+  region     = "us-east-1"
+  access_key = "${var.access_key}"
+  secret_key = "${var.secret_key}"
+}
+
 provider "random" {}
 
 # BACKEND
@@ -26,7 +33,20 @@ data "terraform_remote_state" "w2_vpc1" {
 
   config {
     bucket      = "tf-shk"
-    prefix      = "states/aws/cloudtuple/1-vpc/eu-w2/vpc-1"
+    prefix      = "states/aws/cloudtuple/1-vpc/eu-w2/vpc1"
     credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
+}
+
+# Existing zones created on aws console
+#==============================
+data "aws_route53_zone" "cloudtuples" {
+  name         = "${var.domain_name}."
+  private_zone = false
+}
+
+data "aws_route53_zone" "cloudtuples_private" {
+  name         = "${var.domain_name}."
+  vpc_id       = "${data.terraform_remote_state.w2_vpc1.vpc1}"
+  private_zone = true
 }

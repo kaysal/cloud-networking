@@ -5,7 +5,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size         = 2
 
   target_group_arns = [
-    "${aws_lb_target_group.target_grp.arn}",
+    "${aws_lb_target_group.asg_tg.arn}",
   ]
 
   launch_template = {

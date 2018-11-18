@@ -6,14 +6,6 @@ variable "secret_key" {
   description = "account secret key"
 }
 
-variable "peer_access_key" {
-  description = "account access key"
-}
-
-variable "peer_secret_key" {
-  description = "account secret key"
-}
-
 variable "name" {
   description = "general resource prefix"
   default     = "ks-w1.1-"

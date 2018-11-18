@@ -39,7 +39,7 @@ resource "google_compute_forwarding_rule" "fr_udp4500_eu_w2_vpn_gw1" {
 # vpn tunnels
 resource "google_compute_vpn_tunnel" "to_aws_eu_w2_vpc1_cgw1_tunnel1" {
   name               = "to-aws-eu-w2-vpc1-cgw1-tunnel1"
-  peer_ip            = "${data.terraform_remote_state.aws_eu_west2_vpc1_data.aws_eu_w2_vpc1_cgw1_tunnel1_address}"
+  peer_ip            = "${data.terraform_remote_state.aws_eu_w2_vpc1.aws_cgw1_tunnel1_address}"
   ike_version = "1"
   shared_secret      = "${var.preshared_key}"
   target_vpn_gateway = "${google_compute_vpn_gateway.eu_w2_vpn_gw1.self_link}"
@@ -55,7 +55,7 @@ resource "google_compute_vpn_tunnel" "to_aws_eu_w2_vpc1_cgw1_tunnel1" {
 
 resource "google_compute_vpn_tunnel" "to_aws_eu_w2_vpc1_cgw1_tunnel2" {
   name               = "to-aws-eu-w2-vpc1-cgw1-tunnel2"
-  peer_ip            = "${data.terraform_remote_state.aws_eu_west2_vpc1_data.aws_eu_w2_vpc1_cgw1_tunnel2_address}"
+  peer_ip            = "${data.terraform_remote_state.aws_eu_w2_vpc1.aws_cgw1_tunnel2_address}"
   ike_version = "1"
   shared_secret      = "${var.preshared_key}"
   target_vpn_gateway = "${google_compute_vpn_gateway.eu_w2_vpn_gw1.self_link}"

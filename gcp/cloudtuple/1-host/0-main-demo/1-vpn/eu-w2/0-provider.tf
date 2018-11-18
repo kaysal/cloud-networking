@@ -35,11 +35,11 @@ data "terraform_remote_state" "vpc" {
 }
 
 # remote state files for aws tunnel data
-data "terraform_remote_state" "aws_eu_west2_vpc1_data" {
+data "terraform_remote_state" "aws_eu_w2_vpc1" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/aws/cloudtuple/1-vpc/eu-w2/vpc-1"
+    prefix  = "states/aws/cloudtuple/1-vpc/eu-w2/vpc1"
     credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

@@ -1,6 +1,6 @@
 # launch instance into shared VPC
 resource "google_compute_instance" "bastion_eu_w1" {
-  name         = "${var.name}bastion-eu-w1"
+  name         = "${var.name}bastion-eu-w2"
   machine_type = "g1-small"
   zone         = "europe-west2-b"
   tags = ["gce","bastion"]

@@ -19,7 +19,6 @@ MAC=$(curl "http://169.254.169.254/latest/meta-data/mac")
 SECURITY_GROUPS=$(curl "http://169.254.169.254/latest/meta-data/security-groups")
 PROFILE=$(curl "http://169.254.169.254/latest/meta-data/profile")
 
-REGION=`echo "$META_REGION_STRING" | awk -F/ '{print $4}'`
 IMAGE=https://storage.googleapis.com/salawu-gcs/aws/images/aws.png
 sed -i "s|image-here|$IMAGE|" index.php
 sed -i "s|zone-here|$AZ|" index.php

@@ -1,19 +1,5 @@
-# ELASTIC IP
-#==============================
-/*
-resource "aws_eip" "eip_appliance" {
-  vpc = true
-  network_interface         = "${aws_network_interface.appliance_inside.id}"
-  associate_with_private_ip = "172.17.10.100"
-
-  tags {
-    Name = "${var.name}eip-appliance"
-  }
-}
-*/
-
 # appliance
-#------------------------------
+#==============================
 resource "aws_instance" "appliance" {
   instance_type          = "t2.medium"
   availability_zone      = "eu-west-1c"
@@ -47,6 +33,15 @@ resource "aws_network_interface" "appliance_inside" {
   }
 }
 
+# Public Zone Record
+resource "aws_route53_record" "appliance_cloudtuples_public" {
+  zone_id = "${data.aws_route53_zone.cloudtuples_public.zone_id}"
+  name    = "appliance.west.${data.aws_route53_zone.cloudtuples_public.name}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.appliance.public_ip}"]
+}
+
 output "--- appliance ---" {
   value = [
     "az:        ${aws_instance.appliance.availability_zone } ",
@@ -58,8 +53,8 @@ output "--- appliance ---" {
 }
 
 # test instance (web server)
-#------------------------------
-resource "aws_instance" "server" {
+#==============================
+resource "aws_instance" "web" {
   instance_type               = "t2.micro"
   availability_zone           = "eu-west-1c"
   ami                         = "${data.aws_ami.ubuntu.id}"
@@ -67,23 +62,21 @@ resource "aws_instance" "server" {
   vpc_security_group_ids      = ["${data.terraform_remote_state.w1_vpc2.ec2_prv_sg}"]
   subnet_id                   = "${data.terraform_remote_state.w1_vpc2.private_172_17_10}"
   private_ip                  = "172.17.10.10"
-  ipv6_address_count = 1
   associate_public_ip_address = false
   user_data                   = "${file("./scripts/web-server.sh")}"
 
   tags {
-    Name = "${var.name}web-server"
+    Name = "${var.name}web"
   }
 
   depends_on = ["aws_instance.appliance"]
 }
 
-output "--- web server ---" {
+output "--- web ---" {
   value = [
-    "az:        ${aws_instance.server.availability_zone } ",
-    "priv ip:   ${aws_instance.server.private_ip} ",
-    "priv ipv6: ${aws_instance.server.ipv6_addresses.0} ",
-    "pub ip:    ${aws_instance.server.public_ip} ",
-    "priv dns:  ${aws_instance.server.private_dns} ",
+    "az:        ${aws_instance.web.availability_zone } ",
+    "priv ip:   ${aws_instance.web.private_ip} ",
+    "pub ip:    ${aws_instance.web.public_ip} ",
+    "priv dns:  ${aws_instance.web.private_dns} ",
   ]
 }

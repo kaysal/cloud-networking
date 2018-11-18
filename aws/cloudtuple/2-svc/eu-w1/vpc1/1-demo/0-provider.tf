@@ -26,7 +26,14 @@ data "terraform_remote_state" "w1_vpc1" {
 
   config {
     bucket      = "tf-shk"
-    prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc-1"
+    prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
     credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
+}
+
+# Existing zones created on aws console
+#==============================
+data "aws_route53_zone" "cloudtuples_public" {
+  name         = "cloudtuples.com."
+  private_zone = false
 }

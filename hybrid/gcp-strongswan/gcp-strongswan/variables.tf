@@ -1,5 +1,5 @@
 variable "project_name" {
-  description = "ct-misc-demo"
+  description = "slurm-hpc-optimized"
 }
 
 variable "credentials_file_path" {

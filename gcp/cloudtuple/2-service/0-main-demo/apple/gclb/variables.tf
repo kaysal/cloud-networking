@@ -56,7 +56,6 @@ variable "oauth2_client_id" {
   description = "The client ID for use with IAP OAuth 2.0"
 }
 
-
 variable "oauth2_client_secret" {
   description = "The client secret for use with OAuth 2.0"
 }

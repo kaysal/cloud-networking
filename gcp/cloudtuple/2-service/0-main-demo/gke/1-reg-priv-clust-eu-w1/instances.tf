@@ -14,7 +14,7 @@ resource "google_compute_instance" "bastion" {
 
   network_interface {
     subnetwork = "${data.terraform_remote_state.vpc.gke_eu_w1_10_0_4}"
-    address = "10.0.4.100"
+    network_ip = "10.0.4.100"
     access_config {
       // ephemeral nat ip
     }

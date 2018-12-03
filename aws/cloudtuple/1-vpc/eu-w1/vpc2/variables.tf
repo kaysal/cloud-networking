@@ -26,6 +26,12 @@ variable "private_172_17_10" {
   default     = "172.17.10.0/24"
 }
 
+variable "private_172_17_12" {
+  description = "subnet"
+  default     = "172.17.12.0/24"
+}
+
+
 variable "peer_owner_id" {
   description = "AWS account ID of the owner of the peer VPC"
 }

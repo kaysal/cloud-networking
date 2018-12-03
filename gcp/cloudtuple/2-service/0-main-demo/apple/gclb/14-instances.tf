@@ -1,9 +1,9 @@
 # launch instance into shared VPC
 resource "google_compute_instance" "bastion_eu_w1" {
-  name         = "${var.name}bastion-eu-w1"
-  machine_type = "g1-small"
-  zone         = "europe-west1-b"
-  tags = ["gce","bastion"]
+  name                      = "${var.name}bastion-eu-w1"
+  machine_type              = "g1-small"
+  zone                      = "europe-west1-b"
+  tags                      = ["gce", "bastion"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -14,6 +14,7 @@ resource "google_compute_instance" "bastion_eu_w1" {
 
   network_interface {
     subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
+
     access_config {
       // ephemeral nat ip
     }
@@ -31,10 +32,10 @@ resource "google_compute_instance" "bastion_eu_w1" {
 }
 
 resource "google_compute_instance" "vm_eu_w2" {
-  name         = "${var.name}vm-eu-w2"
-  machine_type = "g1-small"
-  zone         = "europe-west2-b"
-  tags = ["gce","nat-europe-west2"]
+  name                      = "${var.name}vm-eu-w2"
+  machine_type              = "g1-small"
+  zone                      = "europe-west2-b"
+  tags                      = ["gce", "nat-europe-west2"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -45,8 +46,9 @@ resource "google_compute_instance" "vm_eu_w2" {
 
   network_interface {
     subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w2_10_150_10}"
+
     #access_config {
-      // ephemeral nat ip
+    // ephemeral nat ip
     #}
   }
 
@@ -62,10 +64,10 @@ resource "google_compute_instance" "vm_eu_w2" {
 }
 
 resource "google_compute_instance" "vm_eu_w3" {
-  name         = "${var.name}vm-eu-w3"
-  machine_type = "g1-small"
-  zone         = "europe-west3-b"
-  tags = ["gce","nat-europe-west3"]
+  name                      = "${var.name}vm-eu-w3"
+  machine_type              = "g1-small"
+  zone                      = "europe-west3-b"
+  tags                      = ["gce", "nat-europe-west3"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -75,9 +77,10 @@ resource "google_compute_instance" "vm_eu_w3" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w3_10_250_10}"
+    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w3_10_200_10}"
+
     #access_config {
-      // ephemeral nat ip
+    // ephemeral nat ip
     #}
   }
 

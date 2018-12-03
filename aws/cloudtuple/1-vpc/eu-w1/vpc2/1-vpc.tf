@@ -30,7 +30,7 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
 #==============================
 # public subnets
 resource "aws_subnet" "public_172_17_0" {
-  availability_zone       = "eu-west-1c"
+  availability_zone       = "eu-west-1a"
   vpc_id                  = "${aws_vpc.vpc2.id}"
   cidr_block              = "${var.public_172_17_0}"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc2.ipv6_cidr_block, 8, 0)}"
@@ -44,7 +44,7 @@ resource "aws_subnet" "public_172_17_0" {
 
 # private subnets
 resource "aws_subnet" "private_172_17_10" {
-  availability_zone       = "eu-west-1c"
+  availability_zone       = "eu-west-1a"
   vpc_id                  = "${aws_vpc.vpc2.id}"
   cidr_block              = "${var.private_172_17_10}"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc2.ipv6_cidr_block, 8, 10)}"
@@ -52,6 +52,19 @@ resource "aws_subnet" "private_172_17_10" {
 
   tags {
     Name  = "${var.name}private-172-17-10"
+    Scope = "private"
+  }
+}
+
+resource "aws_subnet" "private_172_17_12" {
+  availability_zone       = "eu-west-1b"
+  vpc_id                  = "${aws_vpc.vpc2.id}"
+  cidr_block              = "${var.private_172_17_12}"
+  ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc2.ipv6_cidr_block, 8, 12)}"
+  map_public_ip_on_launch = false
+
+  tags {
+    Name  = "${var.name}private-172-17-12"
     Scope = "private"
   }
 }

@@ -18,8 +18,8 @@ resource "google_compute_shared_vpc_service_project" "gke_service_project" {
   depends_on = ["google_compute_shared_vpc_host_project.host_project"]
 }
 
-# host project policies
-#-------------------
+# host PROJECT policies
+#======================
 resource "google_project_iam_policy" "host_project" {
   project    = "${data.terraform_remote_state.host.host_project_id}"
   policy_data = "${data.google_iam_policy.host_project_policy.policy_data}"
@@ -46,10 +46,19 @@ data "google_iam_policy" "host_project_policy" {
       "serviceAccount:service-${data.terraform_remote_state.gke.gke_service_project_number}@container-engine-robot.iam.gserviceaccount.com",
     ]
   }
+
+  # apple engine service account: DNS admin (to configure zone records)
+  binding {
+    role  = "roles/dns.admin"
+    members = [
+      "group:apple-grp@cloudtuple.com",
+      "serviceAccount:${data.terraform_remote_state.apple.tf_apple_service_project_service_account_email}"
+    ]
+  }
 }
 
-# host project network policies
-#-------------------
+# host project NETWORK policies
+#======================
 resource "google_compute_subnetwork_iam_policy" "gke_eu_w1_10_0_4" {
   subnetwork = "${google_compute_subnetwork.gke_eu_w1_10_0_4.name}"
   region = "europe-west1"

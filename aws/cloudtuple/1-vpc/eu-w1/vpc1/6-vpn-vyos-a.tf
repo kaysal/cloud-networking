@@ -6,7 +6,7 @@ resource "aws_eip_association" "vyos_a" {
 }
 
 resource "aws_instance" "vyos_a" {
-  instance_type          = "t2.medium"
+  instance_type          = "t2.micro"
   availability_zone      = "eu-west-1a"
   ami                    = "ami-99a70de0"
   key_name               = "${var.key_name_eu_west1}"

@@ -2,7 +2,7 @@
 #==============================
 resource "aws_instance" "appliance" {
   instance_type          = "t2.medium"
-  availability_zone      = "eu-west-1c"
+  availability_zone      = "eu-west-1a"
   ami                    = "ami-0ea87e2bfa81ca08a"
   key_name               = "${var.key_name_eu_west1}"
   subnet_id = "${data.terraform_remote_state.w1_vpc2.public_172_17_0}"
@@ -36,7 +36,7 @@ resource "aws_network_interface" "appliance_inside" {
 # Public Zone Record
 resource "aws_route53_record" "appliance_cloudtuples_public" {
   zone_id = "${data.aws_route53_zone.cloudtuples_public.zone_id}"
-  name    = "appliance.west.${data.aws_route53_zone.cloudtuples_public.name}"
+  name    = "appliance.west1.${data.aws_route53_zone.cloudtuples_public.name}"
   type    = "A"
   ttl     = "300"
   records = ["${aws_instance.appliance.public_ip}"]
@@ -56,7 +56,7 @@ output "--- appliance ---" {
 #==============================
 resource "aws_instance" "web" {
   instance_type               = "t2.micro"
-  availability_zone           = "eu-west-1c"
+  availability_zone           = "eu-west-1a"
   ami                         = "${data.aws_ami.ubuntu.id}"
   key_name                    = "${var.key_name_eu_west1}"
   vpc_security_group_ids      = ["${data.terraform_remote_state.w1_vpc2.ec2_prv_sg}"]

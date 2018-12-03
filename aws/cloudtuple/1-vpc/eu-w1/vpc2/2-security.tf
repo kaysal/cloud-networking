@@ -73,6 +73,79 @@ resource "aws_security_group_rule" "appliance_prv_egress" {
   security_group_id = "${aws_security_group.appliance_prv_sg.id}"
 }
 
+
+# NLB SG
+#==============================
+resource "aws_security_group" "nlb_pub_sg" {
+  name   = "${var.name}nlb-pub-sg"
+  vpc_id = "${aws_vpc.vpc2.id}"
+
+  tags {
+    Name  = "${var.name}nlb-pub-sg"
+    Scope = "public"
+  }
+}
+
+resource "aws_security_group_rule" "nlb_http_ingress" {
+  type             = "ingress"
+  from_port        = 80
+  to_port          = 80
+  protocol         = "tcp"
+  cidr_blocks      = ["0.0.0.0/0"]
+  ipv6_cidr_blocks = ["::/0"]
+  security_group_id = "${aws_security_group.nlb_pub_sg.id}"
+}
+
+resource "aws_security_group_rule" "nlb_egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+  security_group_id = "${aws_security_group.nlb_pub_sg.id}"
+}
+
+# LAUNCH TEMPLATE SG
+#==============================
+resource "aws_security_group" "launch_prv_sg" {
+  name   = "${var.name}launch-prv-sg"
+  vpc_id = "${aws_vpc.vpc2.id}"
+
+  tags {
+    Name  = "${var.name}launch-prv-sg"
+    Scope = "private"
+  }
+}
+
+resource "aws_security_group_rule" "launch_http_ingress" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = "${aws_security_group.nlb_pub_sg.id}"
+  security_group_id        = "${aws_security_group.launch_prv_sg.id}"
+}
+
+resource "aws_security_group_rule" "launch_appliance_ingress" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  source_security_group_id = "${aws_security_group.appliance_pub_sg.id}"
+  security_group_id        = "${aws_security_group.launch_prv_sg.id}"
+}
+
+resource "aws_security_group_rule" "launch_egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+  security_group_id = "${aws_security_group.launch_prv_sg.id}"
+}
+
 # EC2 INSTANCES SG
 #==============================
 resource "aws_security_group" "ec2_prv_sg" {
@@ -154,6 +227,14 @@ output "appliance_pub_sg" {
 
 output "appliance_prv_sg" {
   value = "${aws_security_group.appliance_prv_sg.id}"
+}
+
+output "nlb_pub_sg" {
+  value = "${aws_security_group.nlb_pub_sg.id}"
+}
+
+output "launch_prv_sg" {
+  value = "${aws_security_group.launch_prv_sg.id}"
 }
 
 output "ec2_prv_sg" {

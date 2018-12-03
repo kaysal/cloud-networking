@@ -254,8 +254,8 @@ resource "google_compute_firewall" "aws_gce" {
   }
 
   source_ranges = [
-    "172.16.10.0/24",
-    "172.18.10.0/24"
+    "172.16.0.0/16",
+    "172.18.0.0/16"
   ]
 
   target_tags = ["gce"]
@@ -289,8 +289,8 @@ resource "google_compute_firewall" "aws_gke" {
   }
 
   source_ranges = [
-    "172.16.10.0/24",
-    "172.18.10.0/24"
+    "172.16.0.0/16",
+    "172.18.0.0/16"
   ]
 
   target_tags = ["gke"]

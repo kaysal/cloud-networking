@@ -25,8 +25,8 @@ export LOCAL_ZONE_INV_FILE=/etc/bind/db.west1.cloudtuples.com.inv
 export GOOGLEAPIS_ZONE=googleapis.zone
 export GOOGLEAPIS_ZONE_FILE=/etc/bind/db.googleapis.zone
 export LOCAL_NAME_SERVER_IP=172.16.10.100
-export REMOTE_ZONE=gcp.cloudtuple.com
-export REMOTE_NAME_SERVER_IP=10.200.10.4
+export REMOTE_ZONE=cloudtuple.com
+export REMOTE_NAME_SERVER_IP='10.100.10.2;10.150.10.2;10.200.10.2;10.250.10.2'
 export REMOTE_AWS_ZONE=west2.cloudtuples.com
 export REMOTE_AWS_NAME_SERVER_IP=172.18.0.2
 

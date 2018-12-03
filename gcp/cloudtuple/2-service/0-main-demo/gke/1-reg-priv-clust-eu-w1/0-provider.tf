@@ -3,6 +3,11 @@ provider "google" {
   credentials = "${var.credentials_file_path}"
 }
 
+provider "google-beta" {
+  project = "${data.terraform_remote_state.gke.gke_service_project_id}"
+  credentials = "${var.credentials_file_path}"
+}
+
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"

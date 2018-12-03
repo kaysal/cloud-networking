@@ -12,8 +12,8 @@ output "apple_eu_w2_10_150_10" {
   value = "${google_compute_subnetwork.apple_eu_w2_10_150_10.self_link}"
 }
 
-output "apple_eu_w3_10_250_10" {
-  value = "${google_compute_subnetwork.apple_eu_w3_10_250_10.self_link}"
+output "apple_eu_w3_10_200_10" {
+  value = "${google_compute_subnetwork.apple_eu_w3_10_200_10.self_link}"
 }
 
 output "gke_eu_w1_10_0_4" {
@@ -34,21 +34,21 @@ output "gcp_eu_w1_vpn_gw2_ip" {
   value = "${google_compute_address.gcp_eu_w1_vpn_gw2_ip.address}"
 }
 
+output "gcp_us_e1_vpn_gw1_ip" {
+  value = "${google_compute_address.gcp_us_e1_vpn_gw1_ip.address}"
+}
+
+output "gcp_us_e1_vpn_gw2_ip" {
+  value = "${google_compute_address.gcp_us_e1_vpn_gw2_ip.address}"
+}
+
 output "gcp_eu_w2_vpn_gw1_ip" {
   value = "${google_compute_address.gcp_eu_w2_vpn_gw1_ip.address}"
 }
-
-output "gcp_eu_w2_vpn_gw2_ip" {
-  value = "${google_compute_address.gcp_eu_w2_vpn_gw2_ip.address}"
-}
-
-output "gcp_eu_w2_vpn_gw3_ip" {
-  value = "${google_compute_address.gcp_eu_w2_vpn_gw3_ip.address}"
-}
-
+/*
 output "gcp_eu_w3_vpn_gw1_ip" {
   value = "${google_compute_address.gcp_eu_w3_vpn_gw1_ip.address}"
-}
+}*/
 
 # public ip address of local machine
 output "onprem_ip" {

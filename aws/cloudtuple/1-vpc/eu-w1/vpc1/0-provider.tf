@@ -31,13 +31,13 @@ data "terraform_remote_state" "w1_vpc2" {
   }
 }
 
-# eu-west2 vpc1 remote state files
-data "terraform_remote_state" "w2_vpc1" {
+# us-east1 vpc1 remote state files
+data "terraform_remote_state" "e1_vpc1" {
   backend = "gcs"
 
   config {
     bucket      = "tf-shk"
-    prefix      = "states/aws/cloudtuple/1-vpc/eu-w2/vpc1"
+    prefix      = "states/aws/cloudtuple/1-vpc/us-e1/vpc1"
     credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }

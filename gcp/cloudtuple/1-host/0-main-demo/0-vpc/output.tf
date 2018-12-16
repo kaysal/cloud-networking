@@ -24,6 +24,9 @@ output "gke_eu_w2_10_0_8" {
   value = "${google_compute_subnetwork.gke_eu_w2_10_0_8.self_link}"
 }
 
+output "apple_us_e1_10_250_10" {
+  value = "${google_compute_subnetwork.apple_us_e1_10_250_10.self_link}"
+}
 
 # vpn gw external ip addresses
 output "gcp_eu_w1_vpn_gw1_ip" {

@@ -9,7 +9,7 @@ resource "google_compute_firewall" "gfe_gce_gclb" {
 
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports = ["80","8080"]
   }
 
   source_ranges = ["130.211.0.0/22","35.191.0.0/16"]
@@ -25,7 +25,7 @@ resource "google_compute_firewall" "gfe_gce_tcp" {
 
   allow {
     protocol = "tcp"
-    ports = ["110"]
+    ports = ["80","110"]
   }
 
   source_ranges = ["130.211.0.0/22","35.191.0.0/16"]
@@ -41,7 +41,7 @@ resource "google_compute_firewall" "gfe_gce_ilb" {
 
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports = ["80","8080"]
   }
 
   source_ranges = ["130.211.0.0/22","35.191.0.0/16"]
@@ -59,7 +59,7 @@ resource "google_compute_firewall" "web_gce_nlb" {
 
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports = ["80","8080"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -255,6 +255,7 @@ resource "google_compute_firewall" "aws_gce" {
 
   source_ranges = [
     "172.16.0.0/16",
+    "172.17.0.0/16",
     "172.18.0.0/16"
   ]
 
@@ -290,6 +291,7 @@ resource "google_compute_firewall" "aws_gke" {
 
   source_ranges = [
     "172.16.0.0/16",
+    "172.17.0.0/16",
     "172.18.0.0/16"
   ]
 
@@ -297,10 +299,10 @@ resource "google_compute_firewall" "aws_gke" {
 
 }
 
-# lzone2 to gce
+# Mango Project to gce
 # ===========================
-resource "google_compute_firewall" "lzone2_to_gce" {
-  name    = "${var.name}lzone2-to-gce"
+resource "google_compute_firewall" "mango_to_gce" {
+  name    = "${var.name}mango-to-gce"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {
@@ -313,8 +315,8 @@ resource "google_compute_firewall" "lzone2_to_gce" {
 
 # lzone2 to gke
 # ===========================
-resource "google_compute_firewall" "lzone2_to_gke" {
-  name    = "${var.name}lzone2-to-gke"
+resource "google_compute_firewall" "mango_to_gke" {
+  name    = "${var.name}mango-to-gke"
   network = "${google_compute_network.vpc.self_link}"
 
   allow {

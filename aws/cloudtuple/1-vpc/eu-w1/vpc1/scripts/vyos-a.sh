@@ -1,5 +1,5 @@
 #!/bin/vbash
-#source /opt/vyatta/etc/functions/script-template
+source /opt/vyatta/etc/functions/script-template
 
 export LOCAL_IP=$(curl 169.254.169.254/latest/meta-data/local-ipv4)
 export NAT_IP=$(curl 169.254.169.254/latest/meta-data/public-ipv4)

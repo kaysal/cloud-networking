@@ -17,7 +17,7 @@ variable "key_name" {
 
 variable "vpc1_cidr" {
   description = "vpc cidr block"
-  default     = "172.18.0.0/18"
+  default     = "172.18.0.0/16"
 }
 
 variable "public_172_18_0" {

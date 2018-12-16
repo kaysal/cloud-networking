@@ -83,21 +83,21 @@ resource "aws_security_group_rule" "vyos_udp_4500_ingress" {
 }
 
 resource "aws_security_group_rule" "vyos_all_ingress" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
   source_security_group_id = "${aws_security_group.vyos_pub_sg.id}"
-  security_group_id = "${aws_security_group.vyos_pub_sg.id}"
+  security_group_id        = "${aws_security_group.vyos_pub_sg.id}"
 }
 
 resource "aws_security_group_rule" "vpc_ec2_ingress" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
   source_security_group_id = "${aws_security_group.ec2_prv_sg.id}"
-  security_group_id = "${aws_security_group.vyos_pub_sg.id}"
+  security_group_id        = "${aws_security_group.vyos_pub_sg.id}"
 }
 
 resource "aws_security_group_rule" "vyos_egress" {

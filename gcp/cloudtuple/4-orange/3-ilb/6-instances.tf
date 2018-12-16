@@ -1,6 +1,6 @@
 # create bastion instance
-resource "google_compute_instance" "prod_bastion" {
-  name         = "${var.name}prod-bastion"
+resource "google_compute_instance" "bastion" {
+  name         = "${var.name}bastion"
   machine_type = "g1-small"
   zone         = "europe-west2-b"
   tags = ["bastion","gce"]
@@ -29,4 +29,12 @@ resource "google_compute_instance" "prod_bastion" {
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
+}
+
+resource "google_dns_record_set" "bastion" {
+  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
+  name         = "bastion.orange.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+  type         = "A"
+  ttl          = 300
+  rrdatas = ["${google_compute_instance.bastion.network_interface.0.access_config.0.nat_ip}"]
 }

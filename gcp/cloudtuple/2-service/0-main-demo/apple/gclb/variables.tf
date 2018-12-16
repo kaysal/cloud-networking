@@ -59,3 +59,8 @@ variable "oauth2_client_id" {
 variable "oauth2_client_secret" {
   description = "The client secret for use with OAuth 2.0"
 }
+
+variable "path"{
+  description = "The self link for backend services"
+  default = "https://www.googleapis.com/compute/v1/projects/apple-service-project-34/global/backendServices"
+}

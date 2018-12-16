@@ -23,3 +23,12 @@ resource "google_compute_forwarding_rule" "prod_ilb_fwd_rule" {
   ip_protocol = "TCP"
   ports = ["80"]
 }
+
+resource "google_dns_record_set" "ilb" {
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
+  name         = "app.ilb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  type         = "A"
+  ttl          = 300
+  rrdatas = ["${google_compute_forwarding_rule.prod_ilb_fwd_rule.ip_address}"]
+}

@@ -54,7 +54,7 @@ resource "google_compute_firewall" "vpn_to_gce" {
   source_ranges = ["10.0.0.0/8"]
 }
 
-# AWS to lzone1
+# AWS to VPC
 # ===========================
 resource "google_compute_firewall" "aws_gce" {
   name    = "${var.name}aws-gce"
@@ -82,7 +82,8 @@ resource "google_compute_firewall" "aws_gce" {
   }
 
   source_ranges = [
-    "172.16.10.0/24",
-    "172.18.10.0/24"
+    "172.16.0.0/16",
+    "172.17.0.0/16",
+    "172.18.0.0/16"
   ]
 }

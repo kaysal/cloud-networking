@@ -14,7 +14,7 @@ resource "google_compute_instance" "bastion_eu_w1" {
 
   network_interface {
     subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
-    network_ip = "10.100.10.77"
+    network_ip = "10.100.10.88"
     access_config {
       // ephemeral nat ip
     }
@@ -33,7 +33,7 @@ resource "google_compute_instance" "bastion_eu_w1" {
 
 resource "google_dns_record_set" "bastion" {
   managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "bastion.nlb.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+  name         = "bastion.tcp.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas = ["${google_compute_instance.bastion_eu_w1.network_interface.0.access_config.0.nat_ip}"]
@@ -42,7 +42,7 @@ resource "google_dns_record_set" "bastion" {
 resource "google_dns_record_set" "bastion_eu_w1" {
   project    = "${data.terraform_remote_state.host.host_project_id}"
   managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "bastion.nlb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  name         = "bastion.tcp.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas = ["${google_compute_instance.bastion_eu_w1.network_interface.0.address}"]

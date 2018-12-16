@@ -33,6 +33,11 @@ resource "google_compute_subnetwork" "apple_eu_w3_10_200_10" {
   network       = "${google_compute_network.vpc.self_link}"
   region        = "europe-west3"
   enable_flow_logs = true
+
+  secondary_ip_range {
+    range_name = "neg-range"
+    ip_cidr_range= "10.0.80.0/22"
+  }
 }
 
 resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
@@ -40,6 +45,7 @@ resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
   ip_cidr_range = "10.250.10.0/24"
   network       = "${google_compute_network.vpc.self_link}"
   region        = "us-east1"
+  private_ip_google_access = true
   enable_flow_logs = true
 }
 

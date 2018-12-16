@@ -81,7 +81,7 @@ resource "google_compute_backend_service" "dev-be-svc" {
   }
   health_checks = ["${google_compute_health_check.http_hc.self_link}"]
 }
-
+/*
 resource "google_compute_backend_service" "dev-neg-be-svc" {
   name        = "${var.name}dev-neg-be-svc"
   port_name   = "http"
@@ -98,5 +98,4 @@ resource "google_compute_backend_service" "dev-neg-be-svc" {
     "X-TLS-Version:{tls_version}",
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
-  health_checks = ["${google_compute_health_check.http_hc.self_link}"]
-}
+}*/

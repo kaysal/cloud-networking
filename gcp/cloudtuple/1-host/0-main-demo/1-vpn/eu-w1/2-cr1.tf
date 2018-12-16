@@ -1,11 +1,12 @@
-# Cloud routers
-resource "google_compute_router" "us_e1_cr1" {
-  name    = "${var.name}us-e1-cr1"
+# Cloud Router 1
+#------------------------------
+resource "google_compute_router" "eu_w1_cr1" {
+  name    = "${var.name}eu-w1-cr1"
   network = "${data.terraform_remote_state.vpc.vpc}"
-  region = "us-east1"
+  region  = "europe-west1"
 
   bgp {
-    asn = 65000
+    asn               = 65000
     advertise_mode    = "CUSTOM"
     advertised_groups = ["ALL_SUBNETS"]
 
@@ -19,12 +20,12 @@ resource "google_compute_router" "us_e1_cr1" {
       range = "199.36.153.4/30"
     }
 
-    # Orange Project Subnet
+    # lzone1 ip range
     advertised_ip_ranges {
       range = "10.200.20.0/24"
     }
 
-    # Mango Project Subnet
+    # lzone2 ip range
     advertised_ip_ranges {
       range = "10.200.30.0/24"
     }

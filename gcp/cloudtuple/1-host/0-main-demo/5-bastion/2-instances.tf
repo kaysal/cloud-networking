@@ -34,9 +34,9 @@ resource "google_compute_instance" "bastion_eu_w1" {
   }
 }
 
-resource "google_dns_record_set" "bastion" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public_host.name}"
-  name         = "bastion.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+resource "google_dns_record_set" "bastion_public" {
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  name         = "bastion.host.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.bastion_eu_w1.network_interface.0.access_config.0.nat_ip}"]
@@ -44,8 +44,8 @@ resource "google_dns_record_set" "bastion" {
 
 resource "google_dns_record_set" "bastion_private" {
   project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private_host.name}"
-  name         = "bastion.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.private_host_cloudtuple.name}"
+  name         = "bastion.${data.google_dns_managed_zone.private_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.bastion_eu_w1.network_interface.0.address}"]

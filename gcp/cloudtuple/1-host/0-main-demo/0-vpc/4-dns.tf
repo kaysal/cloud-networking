@@ -28,7 +28,7 @@ resource "google_dns_managed_zone" "orange_public_cloudtuple" {
 
 resource "google_dns_managed_zone" "mango_public_cloudtuple" {
   project    = "${data.terraform_remote_state.mango.mango_service_project_id}"
-  name        = "host-public-cloudtuple"
+  name        = "mango-public-cloudtuple"
   dns_name    = "cloudtuple.com."
   description = "Mango Public Second Level Domain"
 }

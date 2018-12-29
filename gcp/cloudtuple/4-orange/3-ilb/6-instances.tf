@@ -30,11 +30,11 @@ resource "google_compute_instance" "bastion" {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
-/*
+
 resource "google_dns_record_set" "bastion" {
   managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
   name         = "bastion.orange.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas = ["${google_compute_instance.bastion.network_interface.0.access_config.0.nat_ip}"]
-}*/
+}

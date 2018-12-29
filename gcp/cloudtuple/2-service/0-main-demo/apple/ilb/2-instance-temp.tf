@@ -24,4 +24,8 @@ resource "google_compute_instance_template" "prod_template" {
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

@@ -27,6 +27,10 @@ resource "google_compute_instance_template" "blue_template_eu_w1" {
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_instance_template" "blue_template_eu_w2" {
@@ -56,6 +60,10 @@ resource "google_compute_instance_template" "blue_template_eu_w2" {
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -87,6 +95,10 @@ resource "google_compute_instance_template" "green_template_eu_w1" {
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_instance_template" "green_template_eu_w2" {
@@ -117,6 +129,10 @@ resource "google_compute_instance_template" "green_template_eu_w2" {
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_instance_template" "dev_template_eu_w3" {
@@ -146,5 +162,9 @@ resource "google_compute_instance_template" "dev_template_eu_w3" {
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }

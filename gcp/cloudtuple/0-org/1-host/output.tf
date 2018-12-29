@@ -13,6 +13,11 @@ output "host_project_number" {
   value = "${google_project.host_project.number}"
 }
 
+# vm service accounts
+output "vm_host_project_service_account_email" {
+  value = "${google_service_account.vm_host_project.email}"
+}
+
 # terraform service accounts
 output "tf_host_project_service_account_email" {
   value = "${google_service_account.tf_host_project.email}"

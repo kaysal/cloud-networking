@@ -24,7 +24,8 @@ data "google_iam_policy" "host_project_policy" {
   binding {
     role = "roles/owner"
     members = [
-      "serviceAccount:${google_service_account.tf_host_project.email}"
+      "serviceAccount:${google_service_account.tf_host_project.email}",
+      "serviceAccount:${google_service_account.vm_host_project.email}",
     ]
   }
 }

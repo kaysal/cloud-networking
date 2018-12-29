@@ -2,9 +2,15 @@
 
 export PROJECT=host-project-f0
 
-gcloud beta dns managed-zones create cloudtuple-private \
+gcloud beta dns managed-zones create cloudtuple-private-host \
   --project=$PROJECT \
-  --description="local vpc zone" \
+  --description="private zone for host project gce" \
+  --dns-name=host.cloudtuple.com. \
+  --visibility=private --networks vpc
+
+gcloud beta dns managed-zones create cloudtuple-private-apple \
+  --project=$PROJECT \
+  --description="private zone for apple project gce" \
   --dns-name=apple.cloudtuple.com. \
   --visibility=private --networks vpc
 

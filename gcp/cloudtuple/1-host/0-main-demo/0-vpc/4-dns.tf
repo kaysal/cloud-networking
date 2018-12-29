@@ -12,23 +12,23 @@ resource "google_dns_managed_zone" "cloudtuple_private" {
   description = "Private Second Level Domain"
 }*/
 
-resource "google_dns_managed_zone" "host_public_cloudtuple" {
+resource "google_dns_managed_zone" "public_host_cloudtuple" {
   project    = "${data.terraform_remote_state.host.host_project_id}"
-  name        = "host-public-cloudtuple"
+  name        = "public-host-cloudtuple"
   dns_name    = "cloudtuple.com."
   description = "Host Public Second Level Domain"
 }
 
-resource "google_dns_managed_zone" "orange_public_cloudtuple" {
+resource "google_dns_managed_zone" "public_orange_cloudtuple" {
   project    = "${data.terraform_remote_state.orange.orange_service_project_id}"
-  name        = "orange-public-cloudtuple"
+  name        = "public-orange-cloudtuple"
   dns_name    = "cloudtuple.com."
   description = "Orange Public Second Level Domain"
 }
 
-resource "google_dns_managed_zone" "mango_public_cloudtuple" {
+resource "google_dns_managed_zone" "public_mango_cloudtuple" {
   project    = "${data.terraform_remote_state.mango.mango_service_project_id}"
-  name        = "mango-public-cloudtuple"
+  name        = "public-mango-cloudtuple"
   dns_name    = "cloudtuple.com."
   description = "Mango Public Second Level Domain"
 }

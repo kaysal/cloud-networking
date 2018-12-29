@@ -9,11 +9,11 @@ resource "google_compute_backend_service" "prod_be_svc" {
   security_policy = "${google_compute_security_policy.prod_app_policy.name}"
 
   /*
-    iap {
-      oauth2_client_id="${var.oauth2_client_id}"
-      oauth2_client_secret="${var.oauth2_client_secret}"
-    }
-  */
+      iap {
+        oauth2_client_id="${var.oauth2_client_id}"
+        oauth2_client_secret="${var.oauth2_client_secret}"
+      }
+    */
   custom_request_headers = [
     "X-Client-RTT-msec:{client_rtt_msec}",
     "X-Client-Geo-Location:{client_region},{client_city}",
@@ -81,6 +81,7 @@ resource "google_compute_backend_service" "dev-be-svc" {
   }
   health_checks = ["${google_compute_health_check.http_hc.self_link}"]
 }
+
 /*
 resource "google_compute_backend_service" "dev-neg-be-svc" {
   name        = "${var.name}dev-neg-be-svc"
@@ -99,3 +100,4 @@ resource "google_compute_backend_service" "dev-neg-be-svc" {
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
 }*/
+

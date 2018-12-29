@@ -32,7 +32,7 @@ export REMOTE_NS_GCP_APPLE_PROJECT='10.100.10.2;10.150.10.2;10.200.10.2;10.250.1
 export REMOTE_NS_GCP_ORANGE_PROJECT='10.200.20.3'
 export REMOTE_NS_GCP_MANGO_PROJECT='10.200.30.3'
 export REMOTE_ZONE_AWS_EAST1=east1.cloudtuples.com
-export REMOTE_NS_AWS_EAST1=172.18.0.2
+export REMOTE_NS_AWS_EAST1=172.'18.11.51;172.18.10.200'
 
 wget https://storage.googleapis.com/salawu-gcs/aws/bind9/named.conf.options.text
 cp named.conf.options.text /etc/bind/named.conf.options

@@ -60,3 +60,29 @@ output "--- server ---" {
     "priv dns:  ${aws_instance.server.private_dns} ",
   ]
 }
+
+# Test aws-eu-west1
+#==============================
+resource "aws_instance" "aws_eu_west1" {
+  instance_type               = "t2.micro"
+  availability_zone           = "eu-west-1b"
+  ami                         = "${data.aws_ami.ubuntu.id}"
+  key_name                    = "${var.key_name_eu_west1}"
+  vpc_security_group_ids      = ["${data.terraform_remote_state.w1_vpc1.ec2_prv_sg}"]
+  subnet_id                   = "${data.terraform_remote_state.w1_vpc1.private_172_16_11}"
+  #private_ip                  = ""
+  associate_public_ip_address = false
+  user_data                   = "${file("./scripts/client.sh")}"
+  tags {
+    Name = "${var.name}aws-eu-west1"
+  }
+}
+
+output "--- aws-eu-west1 ---" {
+  value = [
+    "az:        ${aws_instance.aws_eu_west1.availability_zone } ",
+    "priv ip:   ${aws_instance.aws_eu_west1.private_ip} ",
+    "pub ip:    ${aws_instance.aws_eu_west1.public_ip} ",
+    "priv dns:  ${aws_instance.aws_eu_west1.private_dns} ",
+  ]
+}

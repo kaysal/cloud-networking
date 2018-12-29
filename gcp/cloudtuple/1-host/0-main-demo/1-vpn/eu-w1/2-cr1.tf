@@ -20,12 +20,12 @@ resource "google_compute_router" "eu_w1_cr1" {
       range = "199.36.153.4/30"
     }
 
-    # lzone1 ip range
+    # Orange Project Subnet
     advertised_ip_ranges {
       range = "10.200.20.0/24"
     }
 
-    # lzone2 ip range
+    # Mango Project Subnet
     advertised_ip_ranges {
       range = "10.200.30.0/24"
     }

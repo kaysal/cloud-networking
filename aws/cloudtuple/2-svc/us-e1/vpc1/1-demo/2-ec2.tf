@@ -157,3 +157,13 @@ output "--- sandbox ---" {
     "priv dns:  ${aws_instance.sandbox.private_dns} ",
   ]
 }
+
+# Test Alias
+#==============================
+resource "aws_route53_record" "test_alias_server" {
+  zone_id = "${data.aws_route53_zone.cloudtuples_private.zone_id}"
+  name    = "aws.east1.${data.aws_route53_zone.cloudtuples_private.name}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${aws_route53_record.server_cloudtuples_private.name}"]
+}

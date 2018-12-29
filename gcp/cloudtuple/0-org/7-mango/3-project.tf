@@ -25,6 +25,7 @@ data "google_iam_policy" "mango_service_project_policy" {
     role = "roles/owner"
     members = [
       "serviceAccount:${google_service_account.tf_mango_service_project.email}",
+      "serviceAccount:${google_service_account.vm_mango_service_project.email}",
     ]
   }
 

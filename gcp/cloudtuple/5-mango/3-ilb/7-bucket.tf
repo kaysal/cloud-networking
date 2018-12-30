@@ -1,7 +1,7 @@
 # create a regional bucket in us
 resource "google_storage_bucket" "bucket" {
-  name     = "${var.name}${var.project_name}"
-  location = "europe-west2"
+  name          = "${var.name}${var.project_name}"
+  location      = "europe-west2"
   force_destroy = true
   storage_class = "REGIONAL"
 }
@@ -15,7 +15,7 @@ resource "google_storage_bucket_object" "picture" {
 
 resource "google_storage_bucket_iam_binding" "binding" {
   bucket = "${google_storage_bucket.bucket.name}"
-  role  = "roles/storage.objectViewer"
+  role   = "roles/storage.objectViewer"
 
   members = [
     "allUsers",

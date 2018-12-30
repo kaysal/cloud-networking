@@ -34,9 +34,10 @@ resource "google_compute_instance" "bastion_eu_w1" {
   }
 }
 
-resource "google_dns_record_set" "bastion" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "bastion.gclb.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+resource "google_dns_record_set" "bastion_public" {
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  name         = "bastion.gclb.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.bastion_eu_w1.network_interface.0.access_config.0.nat_ip}"]
@@ -44,8 +45,8 @@ resource "google_dns_record_set" "bastion" {
 
 resource "google_dns_record_set" "bastion_private" {
   project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "bastion.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  name         = "bastion.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.bastion_eu_w1.network_interface.0.address}"]
@@ -95,8 +96,8 @@ resource "google_compute_instance" "neg_eu_w3_vm1" {
 
 resource "google_dns_record_set" "neg_eu_w3_vm1" {
   project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "neg1.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  name         = "neg1.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.neg_eu_w3_vm1.network_interface.0.address}"]
@@ -140,8 +141,8 @@ resource "google_compute_instance" "neg_eu_w3_vm2" {
 
 resource "google_dns_record_set" "neg_eu_w3_vm2" {
   project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "neg2.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  name         = "neg2.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.neg_eu_w3_vm2.network_interface.0.address}"]
@@ -185,8 +186,8 @@ resource "google_compute_instance" "neg_eu_w3_vm3" {
 
 resource "google_dns_record_set" "neg_eu_w3_vm3" {
   project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "neg3.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  name         = "neg3.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.neg_eu_w3_vm3.network_interface.0.address}"]
@@ -223,29 +224,9 @@ resource "google_compute_instance" "sandbox_us_e1_vm" {
 
 resource "google_dns_record_set" "sandbox_us_e1_vm" {
   project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "sandbox.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  name         = "sandbox.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.sandbox_us_e1_vm.network_interface.0.address}"]
-}
-
-# Test Aliases
-#=============
-resource "google_dns_record_set" "test_alias_eu_west1" {
-  project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "gcpw.west.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
-  type         = "CNAME"
-  ttl          = 300
-  rrdatas      = ["bastion.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"]
-}
-
-resource "google_dns_record_set" "test_alias_us_east1" {
-  project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_private.name}"
-  name         = "gcp.east.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"
-  type         = "CNAME"
-  ttl          = 300
-  rrdatas      = ["sandbox.gclb.${data.google_dns_managed_zone.cloudtuple_private.dns_name}"]
 }

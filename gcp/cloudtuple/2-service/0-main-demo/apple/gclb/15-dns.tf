@@ -1,16 +1,18 @@
-data "google_dns_managed_zone" "cloudtuple_public" {
-  name = "cloudtuple"
+data "google_dns_managed_zone" "public_host_cloudtuple" {
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  name        = "public-host-cloudtuple"
 }
 
-data "google_dns_managed_zone" "cloudtuple_private" {
+data "google_dns_managed_zone" "private_apple_cloudtuple" {
   project = "${data.terraform_remote_state.host.host_project_id}"
-  name    = "cloudtuple-private"
+  name    = "private-apple-cloudtuple"
 }
 
 # GCLB Prod IPv4 VIP
 resource "google_dns_record_set" "prod" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "gclb.prod.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  name         = "gclb.prod.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_global_address.ipv4.address}"]
@@ -18,8 +20,9 @@ resource "google_dns_record_set" "prod" {
 
 # GCLB Prod IPv6 VIP
 resource "google_dns_record_set" "prod6" {
-  name         = "gclb6.prod.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  name         = "gclb6.prod.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
   type         = "AAAA"
   ttl          = 300
   rrdatas      = ["${google_compute_global_address.ipv6.address}"]
@@ -27,8 +30,9 @@ resource "google_dns_record_set" "prod6" {
 
 # GCLB Dev IPv4 VIP
 resource "google_dns_record_set" "dev" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "gclb.dev.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  name         = "gclb.dev.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_global_address.ipv4.address}"]
@@ -36,8 +40,9 @@ resource "google_dns_record_set" "dev" {
 
 # GCLB Dev IPv6 VIP
 resource "google_dns_record_set" "dev6" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "gclb6.dev.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+  project    = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  name         = "gclb6.dev.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "AAAA"
   ttl          = 300
   rrdatas      = ["${google_compute_global_address.ipv6.address}"]

@@ -1,10 +1,9 @@
-
 resource "google_compute_instance_template" "prod_template" {
-  name         = "${var.name}prod-template"
-  region       = "europe-west1"
-  machine_type = "n1-standard-1"
+  name           = "${var.name}prod-template"
+  region         = "europe-west1"
+  machine_type   = "n1-standard-1"
   can_ip_forward = true
-  tags = ["gce","gce-mig-ilb","nat-europe-west1"]
+  tags           = ["gce", "gce-mig-ilb", "nat-europe-west1"]
 
   disk {
     source_image = "debian-cloud/debian-9"

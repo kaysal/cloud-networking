@@ -1,26 +1,9 @@
-data "google_dns_managed_zone" "cloudtuple_public" {
-  name = "cloudtuple"
-}
-
-data "google_dns_managed_zone" "cloudtuple_private" {
+data "google_dns_managed_zone" "public_host_cloudtuple" {
   project    = "${data.terraform_remote_state.host.host_project_id}"
-  name        = "cloudtuple-private"
+  name        = "public-host-cloudtuple"
 }
 
-# TCP IPv4 VIP
-resource "google_dns_record_set" "tcp" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "tcp.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
-  type         = "A"
-  ttl          = 300
-  rrdatas      = ["${google_compute_global_address.ipv4.address}"]
-}
-
-# TCP IPv6 VIP
-resource "google_dns_record_set" "tcp6" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "tcp6.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
-  type         = "AAAA"
-  ttl          = 300
-  rrdatas      = ["${google_compute_global_address.ipv6.address}"]
+data "google_dns_managed_zone" "private_apple_cloudtuple" {
+  project = "${data.terraform_remote_state.host.host_project_id}"
+  name    = "private-apple-cloudtuple"
 }

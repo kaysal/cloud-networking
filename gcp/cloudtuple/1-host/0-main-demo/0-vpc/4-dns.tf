@@ -2,7 +2,7 @@
 # netsec-grp@ has DNS admin role for Organisation
 # and can create DNS zones in any Org Project
 # so you can run 'terraform destroy' on service project without
-# deleting the zones and risk getting new name servers
+# deleting the zones and risk getting new name server shards
 #============================
 # Terraform resource N/A
 /*

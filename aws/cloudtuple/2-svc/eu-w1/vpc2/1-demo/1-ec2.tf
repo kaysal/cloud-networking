@@ -42,6 +42,14 @@ resource "aws_route53_record" "appliance_cloudtuples_public" {
   records = ["${aws_instance.appliance.public_ip}"]
 }
 
+resource "aws_route53_record" "bastion_cloudtuples_private" {
+  zone_id = "${data.aws_route53_zone.cloudtuples_private.zone_id}"
+  name    = "appliance.west.${data.aws_route53_zone.cloudtuples_private.name}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.appliance.private_ip}"]
+}
+
 output "--- appliance ---" {
   value = [
     "az:        ${aws_instance.appliance.availability_zone } ",
@@ -71,6 +79,15 @@ resource "aws_instance" "web" {
 
   depends_on = ["aws_instance.appliance"]
 }
+
+resource "aws_route53_record" "web_cloudtuples_private" {
+  zone_id = "${data.aws_route53_zone.cloudtuples_private.zone_id}"
+  name    = "web.west.${data.aws_route53_zone.cloudtuples_private.name}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.web.private_ip}"]
+}
+
 
 output "--- web ---" {
   value = [

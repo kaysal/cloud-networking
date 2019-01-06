@@ -1,6 +1,6 @@
 # create a regional bucket in europe-west1
 resource "google_storage_bucket" "bucket" {
-  name          = "${var.project_name}-gclb"
+  name          = "${data.terraform_remote_state.host.host_project_id}-gclb"
   location      = "europe-west1"
   force_destroy = true
   storage_class = "REGIONAL"
@@ -15,15 +15,15 @@ resource "google_storage_bucket_object" "picture" {
 
 # acl to give prod and prod service accounts admin access
 # to prod bucket
-resource "google_storage_bucket_iam_binding" "service_accounts_access_to_apple_bucket" {
+resource "google_storage_bucket_iam_binding" "service_accounts_access_to_host_bucket" {
   bucket = "${google_storage_bucket.bucket.name}"
   role   = "roles/storage.objectAdmin"
 
   members = [
-    "serviceAccount:${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
   ]
 }
-/*
+
 # acl to give allUsers view access to prod bucket
 resource "google_storage_bucket_iam_binding" "binding" {
   bucket = "${google_storage_bucket.bucket.name}"
@@ -32,4 +32,4 @@ resource "google_storage_bucket_iam_binding" "binding" {
   members = [
     "allUsers",
   ]
-}*/
+}

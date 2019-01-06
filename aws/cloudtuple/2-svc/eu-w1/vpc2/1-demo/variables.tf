@@ -22,3 +22,7 @@ variable "name" {
 variable "key_name_eu_west1" {
   description = "Name of the SSH keypair to use in aws us-east1"
 }
+
+variable "domain_name" {
+  default = "cloudtuples.com"
+}

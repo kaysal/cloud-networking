@@ -5,7 +5,7 @@ export PROJECT=orange-service-project-74
 gcloud beta dns managed-zones create private-orange-cloudtuple \
   --project=$PROJECT \
   --description="private zone for orange project gce" \
-  --dns-name=cloudtuple.com. \
+  --dns-name=orange.cloudtuple.com. \
   --visibility=private --networks vpc
 
 gcloud beta dns managed-zones create private-aws-west1-cloudtuples \

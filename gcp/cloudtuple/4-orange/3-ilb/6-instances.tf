@@ -32,10 +32,18 @@ resource "google_compute_instance" "bastion" {
   }
 }
 
-resource "google_dns_record_set" "bastion" {
-  managed_zone = "${data.google_dns_managed_zone.cloudtuple_public.name}"
-  name         = "bastion.${data.google_dns_managed_zone.cloudtuple_public.dns_name}"
+resource "google_dns_record_set" "bastion_public" {
+  managed_zone = "${data.google_dns_managed_zone.public_orange_cloudtuple.name}"
+  name         = "bastion.${data.google_dns_managed_zone.public_orange_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_instance.bastion.network_interface.0.access_config.0.nat_ip}"]
+}
+
+resource "google_dns_record_set" "bastion_private" {
+  managed_zone = "${data.google_dns_managed_zone.private_orange_cloudtuple.name}"
+  name         = "bastion.${data.google_dns_managed_zone.private_orange_cloudtuple.dns_name}"
+  type         = "A"
+  ttl          = 300
+  rrdatas = ["${google_compute_instance.bastion.network_interface.0.address}"]
 }

@@ -37,3 +37,9 @@ data "aws_route53_zone" "cloudtuples_public" {
   name         = "cloudtuples.com."
   private_zone = false
 }
+
+data "aws_route53_zone" "cloudtuples_private" {
+  name         = "${var.domain_name}."
+  vpc_id       = "${data.terraform_remote_state.w1_vpc2.vpc2}"
+  private_zone = true
+}

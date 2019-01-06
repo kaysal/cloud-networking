@@ -5,7 +5,7 @@ export PROJECT=mango-service-project-b4
 gcloud beta dns managed-zones create private-mango-cloudtuple \
   --project=$PROJECT \
   --description="private zone for mango project gce" \
-  --dns-name=cloudtuple.com. \
+  --dns-name=mango.cloudtuple.com. \
   --visibility=private --networks vpc
 
 gcloud beta dns managed-zones create private-aws-west1-cloudtuples \
@@ -23,6 +23,6 @@ gcloud beta dns managed-zones create private-aws-east1-cloudtuples \
   --forwarding-targets=172.18.11.51,172.18.10.200
 
 gcloud beta dns policies create inbound-policy \
-  --description=”inbound from onprem” \
+  --description='inbound from onprem' \
   --networks=vpc \
-  --enable-inbound-forwarding=true
+  --enable-inbound-forwarding

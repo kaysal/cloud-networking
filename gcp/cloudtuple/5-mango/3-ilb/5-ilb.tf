@@ -25,7 +25,7 @@ resource "google_compute_forwarding_rule" "prod_ilb_fwd_rule" {
 
 resource "google_dns_record_set" "ilb" {
   managed_zone = "${data.google_dns_managed_zone.private_mango_cloudtuple.name}"
-  name         = "app.ilb.mango.${data.google_dns_managed_zone.private_mango_cloudtuple.dns_name}"
+  name         = "app.ilb.${data.google_dns_managed_zone.private_mango_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
   rrdatas      = ["${google_compute_forwarding_rule.prod_ilb_fwd_rule.ip_address}"]

@@ -62,6 +62,15 @@ resource "aws_security_group_rule" "vyos_ssh_ingress" {
   security_group_id = "${aws_security_group.vyos_pub_sg.id}"
 }
 
+resource "aws_security_group_rule" "bastion_ingress" {
+  type                     = "ingress"
+  from_port                = "0"
+  to_port                  = "0"
+  protocol                 = "-1"
+  source_security_group_id = "${aws_security_group.bastion_pub_sg.id}"
+  security_group_id        = "${aws_security_group.vyos_pub_sg.id}"
+}
+
 resource "aws_security_group_rule" "vyos_udp_500_ingress" {
   type              = "ingress"
   from_port         = 500

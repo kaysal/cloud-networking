@@ -7,9 +7,9 @@ resource "google_storage_bucket" "bucket" {
 }
 
 # add objects to bucket
-resource "google_storage_bucket_object" "picture" {
-  name   = "9999-layer2.svg"
-  source = "./objects/9999-layer2.svg"
+resource "google_storage_bucket_object" "file" {
+  name   = "apple-service-project-gcs-bucket-file.txt"
+  source = "./objects/apple-service-project-gcs-bucket-file.txt"
   bucket = "${google_storage_bucket.bucket.name}"
 }
 

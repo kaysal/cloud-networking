@@ -58,6 +58,12 @@ resource "aws_route" "private_gcp_vpn_route3_a" {
   instance_id            = "${aws_instance.vyos_a.id}"
 }
 
+resource "aws_route" "public_gcp_vpn_route3_a" {
+  route_table_id         = "${aws_route_table.public_rtb_a.id}"
+  destination_cidr_block = "199.36.153.4/30"
+  instance_id            = "${aws_instance.vyos_a.id}"
+}
+
 # OUTPUTS
 #==============================
 # vpn connection: vyos-a to gcp

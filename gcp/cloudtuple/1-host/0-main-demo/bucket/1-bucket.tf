@@ -8,8 +8,8 @@ resource "google_storage_bucket" "bucket" {
 
 # add objects to bucket
 resource "google_storage_bucket_object" "file" {
-  name   = "host-project-gcs-bucket-file.txt"
-  source = "./objects/host-project-gcs-bucket-file.txt"
+  name   = "host-project-gcs-file.txt"
+  source = "./objects/host-project-gcs-file.txt"
   bucket = "${google_storage_bucket.bucket.name}"
 }
 

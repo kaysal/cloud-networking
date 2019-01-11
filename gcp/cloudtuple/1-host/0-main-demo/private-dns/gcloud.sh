@@ -2,6 +2,12 @@
 
 export PROJECT=host-project-f0
 
+gcloud beta dns managed-zones create private-googleapis \
+  --project=$PROJECT \
+  --description="private zone for googleapis" \
+  --dns-name=googleapis.com. \
+  --visibility=private --networks vpc
+
 gcloud beta dns managed-zones create private-host-cloudtuple \
   --project=$PROJECT \
   --description="private zone for host project gce" \

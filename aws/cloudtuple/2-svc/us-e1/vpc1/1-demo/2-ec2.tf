@@ -118,7 +118,7 @@ output "--- server ---" {
     "priv dns:  ${aws_instance.server.private_dns} ",
   ]
 }
-/*
+
 # Sandbox
 #==============================
 resource "aws_instance" "sandbox" {
@@ -156,4 +156,4 @@ output "--- sandbox ---" {
     "pub ip:    ${aws_instance.sandbox.public_ip} ",
     "priv dns:  ${aws_instance.sandbox.private_dns} ",
   ]
-}*/
+}

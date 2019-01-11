@@ -1,9 +1,9 @@
 #! /bin/bash
 
 export ORGANIZATION_ID='605735072113'
-export PROJECTS= projects/host-project-f0
+export PROJECTS=projects/523293824833
 export PERIMETER_NAME=hostPerimiter
-export SERVICES=storage.googleapis.com,bigquery.googleapis.com
+export SERVICES=bigquery.googleapis.com,storage.googleapis.com
 
 # Create access policy object
 gcloud beta access-context-manager policies create \
@@ -15,7 +15,7 @@ gcloud beta access-context-manager policies list \
     --organization=$ORGANIZATION_ID
 
 # Cache the policy value instead of adding it explicitly to each command
-export POLICY='187724119650'
+export POLICY='48863083382'
 gcloud config set access_context_manager/policy $POLICY
 
 # Create service perimiter

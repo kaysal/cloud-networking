@@ -51,3 +51,9 @@ data "aws_route53_zone" "cloudtuples_private" {
   vpc_id       = "${data.terraform_remote_state.e1_vpc1.vpc1}"
   private_zone = true
 }
+
+data "aws_route53_zone" "googleapis" {
+  name         = "googleapis.com"
+  vpc_id       = "${data.terraform_remote_state.e1_vpc1.vpc1}"
+  private_zone = true
+}

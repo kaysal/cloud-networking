@@ -21,6 +21,7 @@ resource "google_storage_bucket_iam_binding" "service_accounts_access_to_host_bu
 
   members = [
     "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.host.tf_host_project_service_account_email}"
   ]
 }
 
@@ -30,6 +31,6 @@ resource "google_storage_bucket_iam_binding" "binding" {
   role   = "roles/storage.objectViewer"
 
   members = [
-    "allUsers",
+    "allAuthenticatedUsers",
   ]
 }

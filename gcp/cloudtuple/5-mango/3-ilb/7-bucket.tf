@@ -8,8 +8,8 @@ resource "google_storage_bucket" "bucket" {
 
 # add objects to bucket
 resource "google_storage_bucket_object" "picture" {
-  name   = "9999-layer2.svg"
-  source = "./objects/9999-layer2.svg"
+  name   = "orange-project-gcs-file.txt"
+  source = "./objects/orange-project-gcs-file.txt"
   bucket = "${google_storage_bucket.bucket.name}"
 }
 

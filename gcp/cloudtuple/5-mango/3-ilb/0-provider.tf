@@ -22,6 +22,17 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+# org admin remote state files
+data "terraform_remote_state" "host" {
+  backend = "gcs"
+
+  config {
+    bucket      = "tf-shk"
+    prefix      = "states/gcp/cloudtuple/0-org/1-host"
+    credentials = "~/tf/credentials/gcp-credentials-tf.json"
+  }
+}
+
 data "terraform_remote_state" "apple" {
   backend = "gcs"
 

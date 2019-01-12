@@ -28,7 +28,8 @@ resource "google_compute_instance" "bastion_eu_w1" {
   metadata_startup_script = "${file("scripts/bastion-startup.sh")}"
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+    scopes = ["cloud-platform"]
+    email = "${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}"
   }
 }
 

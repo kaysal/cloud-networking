@@ -15,7 +15,7 @@ gcloud beta access-context-manager policies list \
     --organization=$ORGANIZATION_ID
 
 # Cache the policy value instead of adding it explicitly to each command
-export POLICY='48863083382'
+export POLICY='8434395649'
 gcloud config set access_context_manager/policy $POLICY
 
 # Create service perimiter

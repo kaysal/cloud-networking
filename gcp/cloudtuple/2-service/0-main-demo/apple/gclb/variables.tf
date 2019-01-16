@@ -1,7 +1,3 @@
-variable "project_name" {
-  description = "The ID of the Google Cloud project"
-}
-
 variable "name" {
   description = "prefix to be appended to some resources"
   default     = "gclb-"
@@ -62,5 +58,5 @@ variable "oauth2_client_secret" {
 
 variable "path" {
   description = "The self link for backend services"
-  default     = "https://www.googleapis.com/compute/v1/projects/apple-service-project-34/global/backendServices"
+  default     = "https://www.googleapis.com/compute/v1/projects/apple-service-project-b5/global/backendServices"
 }

@@ -4,19 +4,21 @@
 # It will override defaults created on Cloud console
 # and your Org Admin account can lock itself out
 #-------------------------------
-resource "google_organization_iam_binding" "shared_vpc_admin" {
+resource "google_organization_iam_member" "shared_vpc_admin_netsec" {
   org_id = "${var.org_id}"
   role    = "roles/compute.xpnAdmin"
-  members = [
-    "group:netsec-grp@cloudtuple.com",
-  ]
+  member  = "group:netsec-grp@cloudtuple.com"
+}
+
+resource "google_organization_iam_member" "shared_vpc_admin_salawu" {
+  org_id = "${var.org_id}"
+  role    = "roles/compute.xpnAdmin"
+  member  = "user:salawu@google.com"
 }
 
 # give netsec-grp@ dns admin role
-resource "google_organization_iam_binding" "dns_admin" {
+resource "google_organization_iam_member" "dns_admin" {
   org_id = "${var.org_id}"
   role    = "roles/dns.admin"
-  members = [
-    "group:netsec-grp@cloudtuple.com",
-  ]
+  member  = "group:netsec-grp@cloudtuple.com"
 }

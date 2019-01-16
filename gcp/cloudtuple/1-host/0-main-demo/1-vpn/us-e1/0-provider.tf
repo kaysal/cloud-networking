@@ -10,7 +10,6 @@ terraform {
   backend "gcs" {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/1-host/0-main-demo/1-vpn/us-e1"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -20,7 +19,6 @@ data "terraform_remote_state" "host" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/0-org/1-host"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -30,7 +28,6 @@ data "terraform_remote_state" "vpc" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/1-host/0-main-demo/0-vpc"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -40,7 +37,6 @@ data "terraform_remote_state" "aws_us_e1_vpc1" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/aws/cloudtuple/1-vpc/us-e1/vpc1"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -50,6 +46,5 @@ data "terraform_remote_state" "lzone2" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/5-mango/lzone2/0-vpc"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

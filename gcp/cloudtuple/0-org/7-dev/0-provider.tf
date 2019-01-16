@@ -7,7 +7,7 @@ provider random {}
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/0-org/4-gke/"
+    prefix  = "states/gcp/cloudtuple/0-org/7-dev"
     credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }

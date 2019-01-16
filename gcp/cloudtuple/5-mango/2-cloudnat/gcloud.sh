@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT=mango-service-project-b4
+export PROJECT=mango-project-87
 export NETWORK=vpc
 export REGION=europe-west2
 export CLOUD_ROUTER=eu-w2-cr1

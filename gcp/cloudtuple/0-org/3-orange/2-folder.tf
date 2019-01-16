@@ -8,30 +8,20 @@ resource "google_folder" "orange_folder" {
 # folder project owner role to allow authorized groups
 # to be project owners on all projects in the folder
 #-------------------------------
-resource "google_folder_iam_policy" "orange_folder" {
+resource "google_folder_iam_member" "folder_owner_orange" {
   folder  = "${google_folder.orange_folder.name}"
-  policy_data = "${data.google_iam_policy.orange_folder_policy.policy_data}"
+  role    = "roles/owner"
+  member  = "group:orange-grp@cloudtuple.com"
 }
 
-data "google_iam_policy" "orange_folder_policy" {
-  binding {
-    role = "roles/owner"
-    members = [
-      "group:orange-grp@cloudtuple.com",
-    ]
-  }
+resource "google_folder_iam_member" "folder_resource_mgr_orange" {
+  folder  = "${google_folder.orange_folder.name}"
+  role    = "roles/resourcemanager.folderAdmin"
+  member  = "group:orange-grp@cloudtuple.com"
+}
 
-  binding {
-    role    = "roles/resourcemanager.folderAdmin"
-    members = [
-      "group:orange-grp@cloudtuple.com",
-    ]
-  }
-
-  binding {
-    role    = "roles/resourcemanager.projectCreator"
-    members = [
-      "group:orange-grp@cloudtuple.com",
-    ]
-  }
+resource "google_folder_iam_member" "folder_project_creator_orange" {
+  folder  = "${google_folder.orange_folder.name}"
+  role    = "roles/resourcemanager.projectCreator"
+  member  = "group:orange-grp@cloudtuple.com"
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT=orange-service-project-74
+export PROJECT=orange-service-project-c3
 export NETWORK=vpc
 export REGION=europe-west2
 export CLOUD_ROUTER=eu-w2-cr1

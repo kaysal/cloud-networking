@@ -1,7 +1,3 @@
-variable "project_name" {
-  description = "The ID of the Google Cloud project"
-}
-
 variable "name" {
   description = "prefix to be appended to some resources"
   default     = "nlb-"

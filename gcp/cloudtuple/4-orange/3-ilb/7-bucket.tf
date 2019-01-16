@@ -21,7 +21,7 @@ resource "google_storage_bucket_iam_binding" "binding" {
     "user:salawu@google.com",
     "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
     "serviceAccount:${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.orange.vm_orange_service_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_service_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.orange.vm_orange_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_project_service_account_email}",
   ]
 }

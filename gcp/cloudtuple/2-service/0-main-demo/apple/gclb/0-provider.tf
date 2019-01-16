@@ -1,5 +1,5 @@
 provider "google" {
-  project     = "${var.project_name}"
+  project    = "${data.terraform_remote_state.apple.apple_service_project_id}"
   credentials = "${var.credentials_file_path}"
 }
 
@@ -9,7 +9,6 @@ terraform {
   backend "gcs" {
     bucket      = "tf-shk"
     prefix      = "states/gcp/cloudtuple/2-service/0-main-demo/apple/gclb"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -20,7 +19,6 @@ data "terraform_remote_state" "host" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/gcp/cloudtuple/0-org/1-host"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -30,7 +28,6 @@ data "terraform_remote_state" "apple" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/gcp/cloudtuple/0-org/2-apple"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -39,7 +36,6 @@ data "terraform_remote_state" "orange" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/0-org/3-orange"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -47,8 +43,7 @@ data "terraform_remote_state" "mango" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/0-org/7-mango"
-    credentials ="~/tf/credentials/gcp-credentials-tf.json"
+    prefix  = "states/gcp/cloudtuple/0-org/4-mango"
   }
 }
 
@@ -59,6 +54,5 @@ data "terraform_remote_state" "vpc" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/gcp/cloudtuple/1-host/0-main-demo/0-vpc"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }

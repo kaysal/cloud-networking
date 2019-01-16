@@ -1,21 +1,22 @@
 #!/bin/bash
 
-export PROJECT=apple-service-project-34
+export APPLE_PROJECT=apple-service-project-b5
+export HOST_PROJECT=host-project-39
 export EPG_APP1_EU_W3A=app1-eu-w3a
 export EPG_APP1_EU_W3B=app1-eu-w3b
 export EPG_APP2_EU_W3A=app2-eu-w3a
 export ZONE_APP1_EU_W3A=europe-west3-a
 export ZONE_APP1_EU_W3B=europe-west3-b
 export ZONE_APP2_EU_W3A=europe-west3-a
-export NETWORK=projects/host-project-f0/global/networks/vpc
-export SUBNET=projects/host-project-f0/regions/europe-west3/subnetworks/apple-eu-w3-10-200-10
+export NETWORK=projects/$HOST_PROJECT/global/networks/vpc
+export SUBNET=projects/$HOST_PROJECT/regions/europe-west3/subnetworks/apple-eu-w3-10-200-10
 export DEV_NEG_APP1_BE_SVC=gclb-dev-neg-app1-be-svc
 export DEV_NEG_APP2_BE_SVC=gclb-dev-neg-app2-be-svc
 export APP1_NEG_HC=gclb-app1-neg-hc
 export APP2_NEG_HC=gclb-app2-neg-hc
 
 gcloud beta compute  network-endpoint-groups create $EPG_APP1_EU_W3A \
-  --project=$PROJECT \
+  --project=$APPLE_PROJECT \
   --zone=$ZONE_APP1_EU_W3A \
   --network=$NETWORK \
   --subnet=$SUBNET \
@@ -23,7 +24,7 @@ gcloud beta compute  network-endpoint-groups create $EPG_APP1_EU_W3A \
   --default-port=80
 
 gcloud beta compute  network-endpoint-groups create $EPG_APP1_EU_W3B \
-  --project=$PROJECT \
+  --project=$APPLE_PROJECT \
   --zone=$ZONE_APP1_EU_W3B \
   --network=$NETWORK \
   --subnet=$SUBNET \
@@ -31,7 +32,7 @@ gcloud beta compute  network-endpoint-groups create $EPG_APP1_EU_W3B \
   --default-port=80
 
 gcloud beta compute  network-endpoint-groups create $EPG_APP2_EU_W3A \
-  --project=$PROJECT \
+  --project=$APPLE_PROJECT \
   --zone=$ZONE_APP2_EU_W3A \
   --network=$NETWORK \
   --subnet=$SUBNET \

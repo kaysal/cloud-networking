@@ -13,18 +13,16 @@ resource "google_project" "gke_service_project" {
   billing_account = "${var.billing_account_id}"
 }
 
-# Give the terraform service accounts project owner roles
+# Give the terraform and vm service account projects owner role
 #----------------------------------------------------
-resource "google_project_iam_policy" "gke_service_project" {
+resource "google_project_iam_member" "gke_service_project_node_svc_acct" {
   project = "${google_project.gke_service_project.name}"
-  policy_data = "${data.google_iam_policy.gke_service_project_policy.policy_data}"
+  role = "roles/owner"
+  member  = "serviceAccount:${google_service_account.node_gke_service_project.email}"
 }
 
-data "google_iam_policy" "gke_service_project_policy" {
-  binding {
-    role = "roles/owner"
-    members = [
-      "serviceAccount:${google_service_account.tf_gke_service_project.email}",
-    ]
-  }
+resource "google_project_iam_member" "gke_service_project_tf_svc_acct" {
+  project = "${google_project.gke_service_project.name}"
+  role = "roles/owner"
+  member  = "serviceAccount:${google_service_account.tf_gke_service_project.email}"
 }

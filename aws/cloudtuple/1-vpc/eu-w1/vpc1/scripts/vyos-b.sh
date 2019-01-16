@@ -3,7 +3,7 @@ source /opt/vyatta/etc/functions/script-template
 
 export LOCAL_IP=$(curl 169.254.169.254/latest/meta-data/local-ipv4)
 export NAT_IP=$(curl 169.254.169.254/latest/meta-data/public-ipv4)
-export PEER_IP=35.189.197.53
+export PEER_IP=34.76.72.119
 export IBGP_PEER_IP=172.16.0.100
 export LOCAL_VTI_IP=169.254.100.5/30
 export PEER_VTI_IP=169.254.100.6

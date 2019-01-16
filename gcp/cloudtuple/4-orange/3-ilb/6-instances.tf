@@ -29,7 +29,7 @@ resource "google_compute_instance" "bastion" {
 
   service_account {
     scopes = ["cloud-platform"]
-    email = "${data.terraform_remote_state.orange.vm_orange_service_project_service_account_email}"
+    email = "${data.terraform_remote_state.orange.vm_orange_project_service_account_email}"
   }
 }
 

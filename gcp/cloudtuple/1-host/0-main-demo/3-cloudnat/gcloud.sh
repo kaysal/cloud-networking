@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT=host-project-f0
+export PROJECT=host-project-39
 export NETWORK=vpc
 
 export EU_W1=\

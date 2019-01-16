@@ -8,30 +8,20 @@ resource "google_folder" "host_folder" {
 # folder project owner role to allow authorized groups
 # to be project owners on all projects in the folder
 #-------------------------------
-resource "google_folder_iam_policy" "host_folder" {
+resource "google_folder_iam_member" "folder_owner_netsec" {
   folder  = "${google_folder.host_folder.name}"
-  policy_data = "${data.google_iam_policy.host_folder_policy.policy_data}"
+  role    = "roles/owner"
+  member  = "group:netsec-grp@cloudtuple.com"
 }
 
-data "google_iam_policy" "host_folder_policy" {
-  binding {
-    role = "roles/owner"
-    members = [
-      "group:netsec-grp@cloudtuple.com",
-    ]
-  }
+resource "google_folder_iam_member" "folder_resource_mgr_netsec" {
+  folder  = "${google_folder.host_folder.name}"
+  role    = "roles/resourcemanager.folderAdmin"
+  member  = "group:netsec-grp@cloudtuple.com"
+}
 
-  binding {
-    role    = "roles/resourcemanager.folderAdmin"
-    members = [
-      "group:netsec-grp@cloudtuple.com",
-    ]
-  }
-
-  binding {
-    role    = "roles/resourcemanager.projectCreator"
-    members = [
-      "group:netsec-grp@cloudtuple.com",
-    ]
-  }
+resource "google_folder_iam_member" "folder_project_creator_netsec" {
+  folder  = "${google_folder.host_folder.name}"
+  role    = "roles/resourcemanager.projectCreator"
+  member  = "group:netsec-grp@cloudtuple.com"
 }

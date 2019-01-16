@@ -20,14 +20,14 @@ resource "google_dns_managed_zone" "public_host_cloudtuple" {
 }
 
 resource "google_dns_managed_zone" "public_orange_cloudtuple" {
-  project    = "${data.terraform_remote_state.orange.orange_service_project_id}"
+  project    = "${data.terraform_remote_state.orange.orange_project_id}"
   name        = "public-orange-cloudtuple"
   dns_name    = "orange.cloudtuple.com."
   description = "Orange Public Second Level Domain"
 }
 
 resource "google_dns_managed_zone" "public_mango_cloudtuple" {
-  project    = "${data.terraform_remote_state.mango.mango_service_project_id}"
+  project    = "${data.terraform_remote_state.mango.mango_project_id}"
   name        = "public-mango-cloudtuple"
   dns_name    = "mango.cloudtuple.com."
   description = "Mango Public Second Level Domain"

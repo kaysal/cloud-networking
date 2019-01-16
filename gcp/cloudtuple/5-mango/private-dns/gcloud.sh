@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT=mango-service-project-b4
+export PROJECT=mango-project-87
 
 gcloud beta dns managed-zones create private-mango-cloudtuple \
   --project=$PROJECT \

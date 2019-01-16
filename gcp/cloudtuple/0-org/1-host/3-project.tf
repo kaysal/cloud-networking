@@ -15,17 +15,14 @@ resource "google_project" "host_project" {
 
 # Give service accounts project owner roles
 #----------------------------------------------------
-resource "google_project_iam_policy" "host_project" {
+resource "google_project_iam_member" "project_owner_tf_svc_acct" {
   project = "${google_project.host_project.name}"
-  policy_data = "${data.google_iam_policy.host_project_policy.policy_data}"
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.tf_host_project.email}"
 }
 
-data "google_iam_policy" "host_project_policy" {
-  binding {
-    role = "roles/owner"
-    members = [
-      "serviceAccount:${google_service_account.tf_host_project.email}",
-      "serviceAccount:${google_service_account.vm_host_project.email}",
-    ]
-  }
+resource "google_project_iam_member" "project_owner_vm_svc_acct" {
+  project = "${google_project.host_project.name}"
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.vm_host_project.email}"
 }

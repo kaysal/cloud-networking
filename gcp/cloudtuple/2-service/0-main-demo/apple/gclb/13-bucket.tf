@@ -1,6 +1,6 @@
 # create a regional bucket in europe-west1
 resource "google_storage_bucket" "bucket" {
-  name          = "${var.project_name}-gclb"
+  name          = "${data.terraform_remote_state.apple.apple_service_project_id}-gclb"
   location      = "europe-west1"
   force_destroy = true
   storage_class = "REGIONAL"
@@ -34,7 +34,7 @@ resource "google_storage_bucket_iam_binding" "binding" {
     "user:salawu@google.com",
     "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
     "serviceAccount:${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.orange.vm_orange_service_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_service_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.orange.vm_orange_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_project_service_account_email}",
   ]
 }

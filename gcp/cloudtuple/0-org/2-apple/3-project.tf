@@ -13,21 +13,18 @@ resource "google_project" "apple_service_project" {
   billing_account = "${var.billing_account_id}"
 }
 
-# Give the terraform service account project owner role
+# Give the terraform and vm service account projects owner role
 #----------------------------------------------------
-resource "google_project_iam_policy" "apple_service_project" {
+resource "google_project_iam_member" "apple_service_project_vm_svc_acct" {
   project = "${google_project.apple_service_project.name}"
-  policy_data = "${data.google_iam_policy.apple_service_project_policy.policy_data}"
+  role = "roles/owner"
+  member  = "serviceAccount:${google_service_account.vm_apple_service_project.email}"
 }
 
-data "google_iam_policy" "apple_service_project_policy" {
-  binding {
-    role = "roles/owner"
-    members = [
-      "serviceAccount:${google_service_account.tf_apple_service_project.email}",
-      "serviceAccount:${google_service_account.vm_apple_service_project.email}",
-    ]
-  }
+resource "google_project_iam_member" "apple_service_project_tf_svc_acct" {
+  project = "${google_project.apple_service_project.name}"
+  role = "roles/owner"
+  member  = "serviceAccount:${google_service_account.tf_apple_service_project.email}"
 }
 
 # project metadata

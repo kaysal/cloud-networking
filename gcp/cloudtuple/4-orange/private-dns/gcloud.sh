@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT=orange-service-project-74
+export PROJECT=orange-project-c3
 
 gcloud beta dns managed-zones create private-orange-cloudtuple \
   --project=$PROJECT \

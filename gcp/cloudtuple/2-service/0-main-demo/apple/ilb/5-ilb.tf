@@ -21,6 +21,7 @@ resource "google_compute_forwarding_rule" "prod_ilb_fwd_rule" {
   ip_address            = "10.100.10.99"
   ip_protocol           = "TCP"
   ports                 = ["80"]
+  # all ports
 }
 
 resource "google_dns_record_set" "ilb" {

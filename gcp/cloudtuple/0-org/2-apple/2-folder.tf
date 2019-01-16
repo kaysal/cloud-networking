@@ -8,30 +8,20 @@ resource "google_folder" "apple_folder" {
 # folder project owner role to allow authorized groups
 # to be project owners on all projects in the folder
 #-------------------------------
-resource "google_folder_iam_policy" "apple_folder" {
+resource "google_folder_iam_member" "folder_owner_apple" {
   folder  = "${google_folder.apple_folder.name}"
-  policy_data = "${data.google_iam_policy.apple_folder_policy.policy_data}"
+  role    = "roles/owner"
+  member  = "group:apple-grp@cloudtuple.com"
 }
 
-data "google_iam_policy" "apple_folder_policy" {
-  binding {
-    role = "roles/owner"
-    members = [
-      "group:apple-grp@cloudtuple.com",
-    ]
-  }
+resource "google_folder_iam_member" "folder_resource_mgr_apple" {
+  folder  = "${google_folder.apple_folder.name}"
+  role    = "roles/resourcemanager.folderAdmin"
+  member  = "group:apple-grp@cloudtuple.com"
+}
 
-  binding {
-    role    = "roles/resourcemanager.folderAdmin"
-    members = [
-      "group:apple-grp@cloudtuple.com",
-    ]
-  }
-
-  binding {
-    role    = "roles/resourcemanager.projectCreator"
-    members = [
-      "group:apple-grp@cloudtuple.com",
-    ]
-  }
+resource "google_folder_iam_member" "folder_project_creator_apple" {
+  folder  = "${google_folder.apple_folder.name}"
+  role    = "roles/resourcemanager.projectCreator"
+  member  = "group:apple-grp@cloudtuple.com"
 }

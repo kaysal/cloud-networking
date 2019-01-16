@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT=host-project-f0
+export PROJECT=host-project-39
 
 gcloud beta dns managed-zones create private-googleapis \
   --project=$PROJECT \

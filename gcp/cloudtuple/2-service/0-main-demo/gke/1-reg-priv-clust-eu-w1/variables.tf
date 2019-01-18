@@ -1,6 +1,6 @@
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "reg-eu-w1-"
+  default     = ""
 }
 
 variable "credentials_file_path" {

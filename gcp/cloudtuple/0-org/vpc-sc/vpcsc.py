@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+
+import requests
+
+googleapis = {
+ u'APIs Discovery Service': u'https://www.googleapis.com/discovery/v1/apis/discovery/v1/rest',
+ u'Abusive Experience Report API': u'https://abusiveexperiencereport.googleapis.com/$discovery/rest?version=v1',
+ u'Accelerated Mobile Pages (AMP) URL API': u'https://acceleratedmobilepageurl.googleapis.com/$discovery/rest?version=v1',
+ u'Ad Exchange Buyer API': u'https://www.googleapis.com/discovery/v1/apis/adexchangebuyer/v1.4/rest',
+ u'Ad Exchange Buyer API II': u'https://adexchangebuyer.googleapis.com/$discovery/rest?version=v2beta1',
+ u'Ad Exchange Seller API': u'https://www.googleapis.com/discovery/v1/apis/adexchangeseller/v2.0/rest',
+ u'Ad Experience Report API': u'https://adexperiencereport.googleapis.com/$discovery/rest?version=v1',
+ u'AdSense Host API': u'https://www.googleapis.com/discovery/v1/apis/adsensehost/v4.1/rest',
+ u'AdSense Management API': u'https://www.googleapis.com/discovery/v1/apis/adsense/v1.4/rest',
+ u'Admin Reports API': u'https://www.googleapis.com/discovery/v1/apis/admin/reports_v1/rest',
+ u'Android Device Provisioning Partner API': u'https://androiddeviceprovisioning.googleapis.com/$discovery/rest?version=v1',
+ u'Android Management API': u'https://androidmanagement.googleapis.com/$discovery/rest?version=v1',
+ u'Apps Script API': u'https://script.googleapis.com/$discovery/rest?version=v1',
+ u'BigQuery API': u'https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest',
+ u'BigQuery Data Transfer API': u'https://bigquerydatatransfer.googleapis.com/$discovery/rest?version=v1',
+ u'Blogger API': u'https://www.googleapis.com/discovery/v1/apis/blogger/v3/rest',
+ u'Books API': u'https://www.googleapis.com/discovery/v1/apis/books/v1/rest',
+ u'Calendar API': u'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+ u'Cloud Billing API': u'https://cloudbilling.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Composer API': u'https://composer.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Cloud Container Builder API': u'https://cloudbuild.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Data Loss Prevention (DLP) API': u'https://dlp.googleapis.com/$discovery/rest?version=v2',
+ u'Cloud Dataproc API': u'https://dataproc.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Datastore API': u'https://datastore.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Firestore API': u'https://firestore.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Cloud Functions API': u'https://cloudfunctions.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud IoT API': u'https://cloudiot.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Job Discovery': u'https://jobs.googleapis.com/$discovery/rest?version=v2',
+ u'Cloud Key Management Service (KMS) API': u'https://cloudkms.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Machine Learning Engine': u'https://ml.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Memorystore for Redis API': u'https://redis.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Cloud Natural Language API': u'https://language.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud OS Login API': u'https://oslogin.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Pub/Sub API': u'https://pubsub.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Resource Manager API': u'https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v2',
+ u'Cloud Runtime Configuration API': u'https://runtimeconfig.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud SQL Administration API': u'https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest',
+ u'Cloud Shell API': u'https://cloudshell.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Source Repositories API': u'https://sourcerepo.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Spanner API': u'https://spanner.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Speech API': u'https://speech.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Storage JSON API': u'https://www.googleapis.com/discovery/v1/apis/storage/v1/rest',
+ u'Cloud TPU API': u'https://tpu.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Tasks API': u'https://cloudtasks.googleapis.com/$discovery/rest?version=v2beta2',
+ u'Cloud Testing API': u'https://testing.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Text-to-Speech API': u'https://texttospeech.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Cloud Tool Results API': u'https://www.googleapis.com/discovery/v1/apis/toolresults/v1beta3/rest',
+ u'Cloud Translation API': u'https://translation.googleapis.com/$discovery/rest?version=v2',
+ u'Cloud Video Intelligence API': u'https://videointelligence.googleapis.com/$discovery/rest?version=v1',
+ u'Cloud Vision API': u'https://vision.googleapis.com/$discovery/rest?version=v1',
+ u'Compute Engine API': u'https://www.googleapis.com/discovery/v1/apis/compute/v1/rest',
+ u'Content API for Shopping': u'https://www.googleapis.com/discovery/v1/apis/content/v2/rest',
+ u'CustomSearch API': u'https://www.googleapis.com/discovery/v1/apis/customsearch/v1/rest',
+ u'DCM/DFA Reporting And Trafficking API': u'https://www.googleapis.com/discovery/v1/apis/dfareporting/v3.1/rest',
+ u'Dataflow API': u'https://dataflow.googleapis.com/$discovery/rest?version=v1b3',
+ u'Dialogflow API': u'https://dialogflow.googleapis.com/$discovery/rest?version=v2',
+ u'Digital Asset Links API': u'https://digitalassetlinks.googleapis.com/$discovery/rest?version=v1',
+ u'DoubleClick Bid Manager API': u'https://www.googleapis.com/discovery/v1/apis/doubleclickbidmanager/v1/rest',
+ u'DoubleClick Search API': u'https://www.googleapis.com/discovery/v1/apis/doubleclicksearch/v2/rest',
+ u'Drive API': u'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+ u'Enterprise Apps Reseller API': u'https://www.googleapis.com/discovery/v1/apis/reseller/v1/rest',
+ u'Enterprise License Manager API': u'https://www.googleapis.com/discovery/v1/apis/licensing/v1/rest',
+ u'Firebase Dynamic Links API': u'https://firebasedynamiclinks.googleapis.com/$discovery/rest?version=v1',
+ u'Firebase Rules API': u'https://firebaserules.googleapis.com/$discovery/rest?version=v1',
+ u'Fitness': u'https://www.googleapis.com/discovery/v1/apis/fitness/v1/rest',
+ u'Fusion Tables API': u'https://www.googleapis.com/discovery/v1/apis/fusiontables/v2/rest',
+ u'G Suite Activity API': u'https://www.googleapis.com/discovery/v1/apis/appsactivity/v1/rest',
+ u'G Suite Vault API': u'https://vault.googleapis.com/$discovery/rest?version=v1',
+ u'Genomics API': u'https://genomics.googleapis.com/$discovery/rest?version=v1',
+ u'Gmail API': u'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest',
+ u'Google Analytics API': u'https://www.googleapis.com/discovery/v1/apis/analytics/v3/rest',
+ u'Google Analytics Reporting API': u'https://analyticsreporting.googleapis.com/$discovery/rest?version=v4',
+ u'Google App Engine Admin API': u'https://appengine.googleapis.com/$discovery/rest?version=v1',
+ u'Google App State API': u'https://www.googleapis.com/discovery/v1/apis/appstate/v1/rest',
+ u'Google Civic Information API': u'https://www.googleapis.com/discovery/v1/apis/civicinfo/v2/rest',
+ u'Google Classroom API': u'https://classroom.googleapis.com/$discovetablery/rest?version=v1',
+ u'Google Cloud DNS API': u'https://www.googleapis.com/discovery/v1/apis/dns/v1/rest',
+ u'Google Cloud Deployment Manager API': u'https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2/rest',
+ u'Google Compute Engine Instance Group Updater API': u'https://www.googleapis.com/discovery/v1/apis/replicapoolupdater/v1beta1/rest',
+ u'Google Fonts Developer API': u'https://www.googleapis.com/discovery/v1/apis/webfonts/v1/rest',
+ u'Google Identity Toolkit API': u'https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v3/rest',
+ u'Google Mirror API': u'https://www.googleapis.com/discovery/v1/apis/mirror/v1/rest',
+ u'Google OAuth2 API': u'https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest',
+ u'Google Partners API': u'https://partners.googleapis.com/$discovery/rest?version=v2',
+ u'Google Play Custom App Publishing API': u'https://www.googleapis.com/discovery/v1/apis/playcustomapp/v1/rest',
+ u'Google Play Developer API': u'https://www.googleapis.com/discovery/v1/apis/androidpublisher/v3/rest',
+ u'Google Play EMM API': u'https://www.googleapis.com/discovery/v1/apis/androidenterprise/v1/rest',
+ u'Google Play Game Services API': u'https://www.googleapis.com/discovery/v1/apis/games/v1/rest',
+ u'Google Play Game Services Management API': u'https://www.googleapis.com/discovery/v1/apis/gamesManagement/v1management/rest',
+ u'Google Play Game Services Publishing API': u'https://www.googleapis.com/discovery/v1/apis/gamesConfiguration/v1configuration/rest',
+ u'Google Proximity Beacon API': u'https://proximitybeacon.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Google Search Console URL Testing Tools API': u'https://searchconsole.googleapis.com/$discovery/rest?version=v1',
+ u'Google Service User API': u'https://serviceuser.googleapis.com/$discovery/rest?version=v1',
+ u'Google Sheets API': u'https://sheets.googleapis.com/$discovery/rest?version=v4',
+ u'Google Site Verification API': u'https://www.googleapis.com/discovery/v1/apis/siteVerification/v1/rest',
+ u'Google Slides API': u'https://slides.googleapis.com/$discovery/rest?version=v1',
+ u'Google Spectrum Database API': u'https://www.googleapis.com/discovery/v1/apis/spectrum/v1explorer/rest',
+ u'Google+ API': u'https://www.googleapis.com/discovery/v1/apis/plus/v1/rest',
+ u'Google+ Domains API': u'https://www.googleapis.com/discovery/v1/apis/plusDomains/v1/rest',
+ u'Groups Migration API': u'https://www.googleapis.com/discovery/v1/apis/groupsmigration/v1/rest',
+ u'Groups Settings API': u'https://www.googleapis.com/discovery/v1/apis/groupssettings/v1/rest',
+ u'Hangouts Chat API': u'https://chat.googleapis.com/$discovery/rest?version=v1',
+ u'Identity and Access Management (IAM) API': u'https://iam.googleapis.com/$discovery/rest?version=v1',
+ u'Knowledge Graph Search API': u'https://kgsearch.googleapis.com/$discovery/rest?version=v1',
+ u'Kubernetes Engine API': u'https://container.googleapis.com/$discovery/rest?version=v1',
+ u'Manufacturer Center API': u'https://manufacturers.googleapis.com/$discovery/rest?version=v1',
+ u'PageSpeed Insights API': u'https://www.googleapis.com/discovery/v1/apis/pagespeedonline/v4/rest',
+ u'People API': u'https://people.googleapis.com/$discovery/rest?version=v1',
+ u'Poly API': u'https://poly.googleapis.com/$discovery/rest?version=v1',
+ u'Replica Pool API': u'https://www.googleapis.com/discovery/v1/apis/replicapool/v1beta1/rest',
+ u'Safe Browsing API': u'https://safebrowsing.googleapis.com/$discovery/rest?version=v4',
+ u'Search Console API': u'https://www.googleapis.com/discovery/v1/apis/webmasters/v3/rest',
+ u'Service Broker API': u'https://servicebroker.googleapis.com/$discovery/rest?version=v1',
+ u'Service Consumer Management API': u'https://serviceconsumermanagement.googleapis.com/$discovery/rest?version=v1',
+ u'Service Control API': u'https://servicecontrol.googleapis.com/$discovery/rest?version=v1',
+ u'Service Management API': u'https://servicemanagement.googleapis.com/$discovery/rest?version=v1',
+ u'Service Usage API': u'https://serviceusage.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Stackdriver Debugger API': u'https://clouddebugger.googleapis.com/$discovery/rest?version=v2',
+ u'Stackdriver Error Reporting API': u'https://clouderrorreporting.googleapis.com/$discovery/rest?version=v1beta1',
+ u'Stackdriver Logging API': u'https://logging.googleapis.com/$discovery/rest?version=v2',
+ u'Stackdriver Monitoring API': u'https://monitoring.googleapis.com/$discovery/rest?version=v3',
+ u'Stackdriver Trace API': u'https://cloudtrace.googleapis.com/$discovery/rest?version=v2',
+ u'Storage Transfer API': u'https://storagetransfer.googleapis.com/$discovery/rest?version=v1',
+ u'Street View Publish API': u'https://streetviewpublish.googleapis.com/$discovery/rest?version=v1',
+ u'Surveys API': u'https://www.googleapis.com/discovery/v1/apis/surveys/v2/rest',
+ u'Tag Manager API': u'https://www.googleapis.com/discovery/v1/apis/tagmanager/v2/rest',
+ u'Tasks API': u'https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest',
+ u'URL Shortener API': u'https://www.googleapis.com/discovery/v1/apis/urlshortener/v1/rest',
+ u'Web Security Scanner API': u'https://websecurityscanner.googleapis.com/$discovery/rest?version=v1alpha',
+ u'YouTube Analytics API': u'https://youtubeanalytics.googleapis.com/$discovery/rest?version=v2',
+ u'YouTube Data API': u'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
+ u'YouTube Reporting API': u'https://youtubereporting.googleapis.com/$discovery/rest?version=v1'
+}
+
+hit = []
+miss = []
+
+for k, v in googleapis.items():
+    try:
+        r = requests.get(v, timeout=3)
+        if r.status_code == 200:
+            hit.append([r.status_code, k, v])
+            print("{} : {}".format(r.status_code, k))
+        else:
+            miss.append([r.status_code, k, v])
+            print("{} : {}".format(r.status_code, k))
+
+    except Exception as e:
+        print("{} : {} : __Exception__:  {}".format(r.status_code, k, e))
+
+print("\n===== Reachable APIs=====")
+for code, api, url in sorted(hit):
+    print("{} : {}:  {}".format(code, api, url))
+
+print("\n===== Unreachable APIs =====")
+for code, api, url in sorted(miss):
+    print("{} : {}:  {}".format(code, api, url))

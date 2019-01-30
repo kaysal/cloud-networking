@@ -15,19 +15,17 @@ resource "google_project" "apple_service_project" {
 
 # Give the terraform and vm service account projects owner role
 #----------------------------------------------------
-resource "google_project_iam_member" "apple_service_project_vm_svc_acct" {
+resource "google_project_iam_binding" "apple_service_project_owner" {
   project = "${google_project.apple_service_project.name}"
   role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.vm_apple_service_project.email}"
-}
-
-resource "google_project_iam_member" "apple_service_project_tf_svc_acct" {
-  project = "${google_project.apple_service_project.name}"
-  role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.tf_apple_service_project.email}"
+  members  = [
+    "serviceAccount:${google_service_account.vm_apple_service_project.email}",
+    "serviceAccount:${google_service_account.tf_apple_service_project.email}"
+    ]
 }
 
 # project metadata
+#----------------------------------------------------
 resource "google_compute_project_metadata" "zonal_dns" {
   project = "${google_project.apple_service_project.name}"
   metadata {

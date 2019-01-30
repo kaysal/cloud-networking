@@ -20,6 +20,12 @@ gcloud beta dns managed-zones create private-apple-cloudtuple \
   --dns-name=apple.cloudtuple.com. \
   --visibility=private --networks vpc
 
+gcloud beta dns managed-zones create private-gke-cloudtuple \
+  --project=$PROJECT \
+  --description="private zone for gke project" \
+  --dns-name=gke.cloudtuple.com. \
+  --visibility=private --networks vpc
+
 gcloud beta dns managed-zones create private-aws-west1-cloudtuples \
   --project=$PROJECT \
   --description="zone queries to aws west1 region" \

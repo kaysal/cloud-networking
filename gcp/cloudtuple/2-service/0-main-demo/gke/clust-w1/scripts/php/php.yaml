@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: php-ns
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: php-deploy
+  namespace: php-ns
+  labels:
+    app: php-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php-app
+  template:
+    metadata:
+      labels:
+        app: php-app
+    spec:
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: php-key
+      containers:
+      - image: gcr.io/gke-service-project-1b/php:v1
+        name: php-container
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        #- name: POD_LABELS
+        #  valueFrom:
+        #    fieldRef:
+        #      fieldPath: metadata.labels
+        #- name: POD_ANNOTATIONS
+        #  valueFrom:
+        #    fieldRef:
+        #      fieldPath: metadata.annotations
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: POD_SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.serviceAccountName
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        #- name: CPU_REQUEST
+        #  valueFrom:
+        #    resourceFieldRef:
+        #      containerName: php-container
+        #      resource: requests.cpu
+        #- name: CPU_LIMIT
+        #  valueFrom:
+        #    resourceFieldRef:
+        #      containerName: php-container
+        #      resource: limits.cpu
+        #- name: MEM_REQUEST
+        #  valueFrom:
+        #    resourceFieldRef:
+        #      containerName: php-container
+        #      resource: requests.memory
+        #- name: MEM_LIMIT
+        #  valueFrom:
+        #    resourceFieldRef:
+        #      containerName: php-container
+        #      resource: limits.memory
+      dnsPolicy: ClusterFirst
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-ilb
+  namespace: php-ns
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
+  labels:
+    app: php-app
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.0.4.99
+  ports:
+  - nodePort: 30011
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: php-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-nodeport
+  namespace: php
+  labels:
+    app: php-app
+spec:
+  ports:
+  - nodePort: 30022
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: php-app
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: php-app
+  name: php-ingress
+spec:
+  backend:
+    serviceName: php-nodeport
+    servicePort: 80
+---

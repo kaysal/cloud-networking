@@ -11,7 +11,7 @@ provider "google-beta" {
 terraform {
   backend "gcs" {
     bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/2-service/0-main-demo/gke/1-reg-priv-clust-eu-w1"
+    prefix  = "states/gcp/cloudtuple/2-service/0-main-demo/gke/clust-w1"
   }
 }
 
@@ -29,6 +29,30 @@ data "terraform_remote_state" "gke" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/0-org/5-gke"
+  }
+}
+
+data "terraform_remote_state" "apple" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/gcp/cloudtuple/0-org/2-apple/"
+  }
+}
+
+data "terraform_remote_state" "orange" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/gcp/cloudtuple/0-org/3-orange"
+  }
+}
+
+data "terraform_remote_state" "mango" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/gcp/cloudtuple/0-org/4-mango"
   }
 }
 

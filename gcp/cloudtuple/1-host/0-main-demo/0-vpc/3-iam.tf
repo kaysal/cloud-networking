@@ -60,7 +60,10 @@ resource "google_project_iam_binding" "project_dns_admin" {
     "serviceAccount:${data.terraform_remote_state.orange.tf_orange_project_service_account_email}",
     "group:mango-grp@cloudtuple.com",
     "serviceAccount:${data.terraform_remote_state.mango.tf_mango_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_project_service_account_email}"
+    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_project_service_account_email}",
+    "group:gke-grp@cloudtuple.com",
+    "serviceAccount:${data.terraform_remote_state.gke.tf_gke_service_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.gke.node_gke_service_project_service_account_email}",
   ]
 }
 

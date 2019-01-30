@@ -15,14 +15,24 @@ resource "google_project" "mango_project" {
 
 # Give the terraform and vm service account projects owner role
 #----------------------------------------------------
-resource "google_project_iam_member" "mango_project_vm_svc_acct" {
-  project = "${google_project.mango_project.name}"
+resource "google_project_iam_binding" "mango_project_owner" {
+  project    = "${google_project.mango_project.id}"
   role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.vm_mango_project.email}"
+
+  members = [
+    "serviceAccount:${google_service_account.vm_mango_project.email}",
+    "serviceAccount:${google_service_account.tf_mango_project.email}"
+  ]
 }
 
-resource "google_project_iam_member" "mango_project_tf_svc_acct" {
-  project = "${google_project.mango_project.name}"
-  role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.tf_mango_project.email}"
+# Give the terraform and vm service account dns admin role
+#===================================
+resource "google_project_iam_binding" "mango_project_dns_admin" {
+  project    = "${google_project.mango_project.id}"
+  role  = "roles/dns.admin"
+
+  members = [
+    "group:mango-grp@cloudtuple.com",
+    "serviceAccount:${google_service_account.tf_mango_project.email}"
+  ]
 }

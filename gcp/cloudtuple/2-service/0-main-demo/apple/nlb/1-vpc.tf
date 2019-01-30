@@ -1,4 +1,4 @@
-# tcp proxy global static ip address
+# tcp proxy regional static ip address
 #--------------------------------------
 resource "google_compute_address" "ipv4" {
   name = "${var.name}ipv4"

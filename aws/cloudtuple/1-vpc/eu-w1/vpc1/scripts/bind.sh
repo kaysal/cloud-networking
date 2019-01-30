@@ -27,6 +27,7 @@ export GOOGLEAPIS_ZONE=googleapis.zone
 export GOOGLEAPIS_ZONE_FILE=/etc/bind/db.googleapis.zone
 export REMOTE_ZONE_GCP_HOST_PROJECT=host.cloudtuple.com
 export REMOTE_ZONE_GCP_APPLE_PROJECT=apple.cloudtuple.com
+export REMOTE_ZONE_GCP_GKE_PROJECT=gke.cloudtuple.com
 export REMOTE_ZONE_GCP_ORANGE_PROJECT=orange.cloudtuple.com
 export REMOTE_ZONE_GCP_MANGO_PROJECT=mango.cloudtuple.com
 export REMOTE_NS_GCP_HOST_PROJECT='10.100.10.2;10.150.10.2;10.200.10.2;10.250.10.2'
@@ -51,6 +52,7 @@ sed -i "s|\<GOOGLEAPIS_ZONE\>|$GOOGLEAPIS_ZONE|" /etc/bind/named.conf.local
 sed -i "s|\<GOOGLEAPIS_ZONE_FILE\>|$GOOGLEAPIS_ZONE_FILE|" /etc/bind/named.conf.local
 sed -i "s|\<REMOTE_ZONE_GCP_HOST_PROJECT\>|$REMOTE_ZONE_GCP_HOST_PROJECT|" /etc/bind/named.conf.local
 sed -i "s|\<REMOTE_ZONE_GCP_APPLE_PROJECT\>|$REMOTE_ZONE_GCP_APPLE_PROJECT|" /etc/bind/named.conf.local
+sed -i "s|\<REMOTE_ZONE_GCP_GKE_PROJECT\>|$REMOTE_ZONE_GCP_GKE_PROJECT|" /etc/bind/named.conf.local
 sed -i "s|\<REMOTE_ZONE_GCP_ORANGE_PROJECT\>|$REMOTE_ZONE_GCP_ORANGE_PROJECT|" /etc/bind/named.conf.local
 sed -i "s|\<REMOTE_ZONE_GCP_MANGO_PROJECT\>|$REMOTE_ZONE_GCP_MANGO_PROJECT|" /etc/bind/named.conf.local
 sed -i "s|\<REMOTE_NS_GCP_HOST_PROJECT\>|$REMOTE_NS_GCP_HOST_PROJECT|" /etc/bind/named.conf.local

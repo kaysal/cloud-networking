@@ -15,14 +15,21 @@ resource "google_project" "gke_service_project" {
 
 # Give the terraform and vm service account projects owner role
 #----------------------------------------------------
-resource "google_project_iam_member" "gke_service_project_node_svc_acct" {
-  project = "${google_project.gke_service_project.name}"
+resource "google_project_iam_binding" "gke_service_project_owner" {
+  project    = "${google_project.gke_service_project.id}"
   role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.node_gke_service_project.email}"
+
+  members = [
+    "serviceAccount:${google_service_account.node_gke_service_project.email}",
+    "serviceAccount:${google_service_account.tf_gke_service_project.email}"
+  ]
 }
 
-resource "google_project_iam_member" "gke_service_project_tf_svc_acct" {
-  project = "${google_project.gke_service_project.name}"
+resource "google_project_iam_binding" "gke_service_project_k8s_app" {
+  project    = "${google_project.gke_service_project.id}"
   role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.tf_gke_service_project.email}"
+
+  members = [
+    "serviceAccount:${google_service_account.k8s_app_gke_service_project.email}",
+  ]
 }

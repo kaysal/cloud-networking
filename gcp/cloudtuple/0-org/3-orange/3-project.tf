@@ -13,30 +13,26 @@ resource "google_project" "orange_project" {
   billing_account = "${var.billing_account_id}"
 }
 
-# Give the terraform and vm service account project owner role
+# Give the terraform and vm service account projects owner role
 #----------------------------------------------------
-resource "google_project_iam_member" "orange_project_vm_svc_acct" {
-  project = "${google_project.orange_project.name}"
+resource "google_project_iam_binding" "orange_project_owner" {
+  project    = "${google_project.orange_project.id}"
   role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.vm_orange_project.email}"
-}
 
-resource "google_project_iam_member" "orange_project_tf_svc_acct" {
-  project = "${google_project.orange_project.name}"
-  role = "roles/owner"
-  member  = "serviceAccount:${google_service_account.tf_orange_project.email}"
+  members = [
+    "serviceAccount:${google_service_account.vm_orange_project.email}",
+    "serviceAccount:${google_service_account.tf_orange_project.email}"
+  ]
 }
 
 # Give the terraform and vm service account dns admin role
 #===================================
-resource "google_project_iam_member" "dns_admin_orange_grp" {
-  project = "${google_project.orange_project.name}"
+resource "google_project_iam_binding" "orange_project_dns_admin" {
+  project    = "${google_project.orange_project.id}"
   role  = "roles/dns.admin"
-  member  = "group:orange-grp@cloudtuple.com"
-}
 
-resource "google_project_iam_member" "dns_admin_tf_svc_acct" {
-  project = "${google_project.orange_project.name}"
-  role  = "roles/dns.admin"
-  member  = "serviceAccount:${google_service_account.tf_orange_project.email}"
+  members = [
+    "group:orange-grp@cloudtuple.com",
+    "serviceAccount:${google_service_account.tf_orange_project.email}"
+  ]
 }

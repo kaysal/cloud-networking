@@ -29,6 +29,6 @@ data "terraform_remote_state" "host" {
   backend = "gcs"
   config {
     bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/1-host/0-main-demo/0-vpc"
+    prefix  = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
 }

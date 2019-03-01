@@ -1,0 +1,11 @@
+#!/bin/bash
+
+gcloud alpha compute networks peerings create host-to-orange \
+  --network vpc \
+  --peer-network vpc \
+  --peer-project orange-project-c3 \
+  --import-custom-routes \
+  --export-custom-routes \
+  --auto-create-routes
+
+gcloud alpha compute networks peerings list --network=vpc

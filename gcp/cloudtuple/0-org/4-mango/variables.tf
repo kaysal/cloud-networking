@@ -10,3 +10,7 @@ variable "billing_account_id" {
 variable "org_id" {
   description = "organization ID for personal domain"
 }
+
+variable "public_key_path" {
+  description = "Path to SSH public key to be attached to cloud instances"
+}

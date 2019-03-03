@@ -5,10 +5,3 @@ resource "google_compute_health_check" "ilb_health_chk_80" {
     port = 80
   }
 }
-
-resource "google_compute_health_check" "ilb_health_chk_8080" {
-  name              = "${var.name}-hc-8080"
-  http_health_check = {
-    port = 8080
-  }
-}

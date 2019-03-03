@@ -4,13 +4,8 @@ resource "google_compute_instance_group" "ig_b" {
   instances = ["${google_compute_instance.web_b.*.self_link}"]
 
   named_port {
-    name = "http-80"
+    name = "tcp-80"
     port = "80"
-  }
-
-  named_port {
-    name = "http-8080"
-    port = "8080"
   }
 }
 
@@ -20,12 +15,7 @@ resource "google_compute_instance_group" "ig_c" {
   instances = ["${google_compute_instance.web_c.*.self_link}"]
 
   named_port {
-    name = "http-80"
+    name = "tcp-80"
     port = "80"
-  }
-
-  named_port {
-    name = "http-8080"
-    port = "8080"
   }
 }

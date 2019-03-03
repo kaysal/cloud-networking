@@ -24,7 +24,7 @@ resource "google_compute_forwarding_rule" "ilb_fwd_rule" {
   subnetwork            = "${data.terraform_remote_state.vpc.subnet_trust}"
   ip_address            = "10.0.2.99"
   ip_protocol           = "TCP"
-  ports                 = ["80","8080"]
+  ports                 = ["80"]
 
   # all ports
 }

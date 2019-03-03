@@ -6,5 +6,6 @@ resource "google_compute_project_metadata" "host_project_metadata" {
     x-type  = "StandardVpc"
     ssh-keys = "user:${file("${var.public_key_path}")}"
     VmDnsSetting = "ZonalPreferred"
+    enable-oslogin = true
   }
 }

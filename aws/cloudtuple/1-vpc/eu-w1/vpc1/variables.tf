@@ -36,22 +36,6 @@ variable "private_172_16_11" {
   default     = "172.16.11.0/24"
 }
 
-variable "vyosa_aws_tunnel_inside_address" {
-  default = "169.254.100.1"
-}
-
-variable "vyosa_gcp_tunnel_inside_address" {
-  default = "169.254.100.2/30"
-}
-
-variable "vyosb_aws_tunnel_inside_address" {
-  default = "169.254.100.5"
-}
-
-variable "vyosb_gcp_tunnel_inside_address" {
-  default = "169.254.100.6/30"
-}
-
 variable "preshared_key" {
   description = "preshared key used for tunnels 1 and 2"
 }
@@ -74,4 +58,38 @@ variable "key_name_eu_west1" {
 
 variable "domain_name" {
   default = "cloudtuples.com"
+}
+
+# for 'vpc' gcp vpc
+variable "vyosa_aws_tunnel_inside_address" {
+  default = "169.254.100.1"
+}
+
+variable "vyosa_gcp_tunnel_inside_address" {
+  default = "169.254.100.2/30"
+}
+
+variable "vyosb_aws_tunnel_inside_address" {
+  default = "169.254.100.5"
+}
+
+variable "vyosb_gcp_tunnel_inside_address" {
+  default = "169.254.100.6/30"
+}
+
+# for 'untrust' gcp vpc
+variable "vyosa_aws_tunnel_inside_address2" {
+  default = "169.254.100.9"
+}
+
+variable "vyosa_gcp_tunnel_inside_address2" {
+  default = "169.254.100.10/30"
+}
+
+variable "vyosb_aws_tunnel_inside_address2" {
+  default = "169.254.100.13"
+}
+
+variable "vyosb_gcp_tunnel_inside_address2" {
+  default = "169.254.100.14/30"
 }

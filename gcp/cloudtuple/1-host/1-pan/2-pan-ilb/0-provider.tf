@@ -11,7 +11,7 @@ provider "random" {}
 terraform {
   backend "gcs" {
     bucket = "tf-shk"
-    prefix = "states/gcp/cloudtuple/1-host/1-pan/3-pan-gclb"
+    prefix = "states/gcp/cloudtuple/1-host/1-pan/2-pan-ilb"
   }
 }
 

@@ -23,3 +23,11 @@ output "subnet_trust" {
 output "subnet_untrust" {
   value = "${google_compute_subnetwork.untrust.self_link}"
 }
+
+output "eu_w1_vpn_gw1_ip" {
+  value = "${google_compute_address.eu_w1_vpn_gw1_ip.address}"
+}
+
+output "eu_w1_vpn_gw2_ip" {
+  value = "${google_compute_address.eu_w1_vpn_gw2_ip.address}"
+}

@@ -68,6 +68,7 @@ resource "aws_route" "public_gcp_vpn_route3_a" {
 #==============================
 # vpn connection: vyos-a to gcp
 #------------------------------
+# to 'vpc' gcp vpc
 output "vyosa_tunnel_address" {
   value = "${aws_eip.vyos_a.public_ip}"
 }
@@ -78,4 +79,13 @@ output "vyosa_aws_tunnel_inside_address" {
 
 output "vyosa_gcp_tunnel_inside_address" {
   value = "${var.vyosa_gcp_tunnel_inside_address}"
+}
+
+# to 'untrust' gcp vpc
+output "vyosa_aws_tunnel_inside_address2" {
+  value = "${var.vyosa_aws_tunnel_inside_address2}"
+}
+
+output "vyosa_gcp_tunnel_inside_address2" {
+  value = "${var.vyosa_gcp_tunnel_inside_address2}"
 }

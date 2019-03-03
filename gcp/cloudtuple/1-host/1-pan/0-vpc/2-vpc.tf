@@ -41,3 +41,16 @@ resource "google_compute_subnetwork" "trust" {
   region           = "europe-west1"
   enable_flow_logs = true
 }
+
+
+# VPN GW external IPs
+#--------------------------------------
+resource "google_compute_address" "eu_w1_vpn_gw1_ip" {
+  name = "${var.name}eu-w1-vpn-gw1-ip"
+  region = "europe-west1"
+}
+
+resource "google_compute_address" "eu_w1_vpn_gw2_ip" {
+  name = "${var.name}eu-w1-vpn-gw2-ip"
+  region = "europe-west1"
+}

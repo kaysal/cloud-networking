@@ -1,6 +1,6 @@
 variable "name" {
   description = "prefix to be appended to some resources"
-  default     = "pan-gclb"
+  default     = "pan-ilb"
 }
 
 variable "public_key_path" {
@@ -23,9 +23,4 @@ variable "machine_cpu_fw" {
   default = "Intel Skylake"
 }
 
-variable "pan_count" {
-  default = "2"
-}
-
 ##################
-

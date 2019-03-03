@@ -14,7 +14,6 @@ terraform {
   backend "gcs" {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -27,7 +26,6 @@ data "terraform_remote_state" "w1_vpc2" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc2"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -38,7 +36,6 @@ data "terraform_remote_state" "e1_vpc1" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/1-vpc/us-e1/vpc1"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -49,7 +46,16 @@ data "terraform_remote_state" "vpc" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/gcp/cloudtuple/1-host/0-main-demo/0-vpc"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
+  }
+}
+
+# gcp untrust vpc remote state files
+data "terraform_remote_state" "untrust" {
+  backend = "gcs"
+
+  config {
+    bucket      = "tf-shk"
+    prefix      = "states/gcp/cloudtuple/1-host/1-pan/0-vpc"
   }
 }
 
@@ -60,7 +66,6 @@ data "terraform_remote_state" "vpcuser16" {
   config {
     bucket      = "tf-shk"
     prefix      = "states/gcp/vpcuser16/private-dns/0-vpc"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 

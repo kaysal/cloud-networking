@@ -2,7 +2,7 @@
 
 cd
 export GO_HELLO_MAIN=https://storage.googleapis.com/salawu-gcs/gcp/instances/gke/go/1tier/main.go
-export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main-demo/gke/clust-w1/scripts/hello
+export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main/gke/clust-w1/scripts/hello
 export HELLO_APP_DIRECTORY=~/kubernetes-engine-samples/hello-app
 export PROJECT_ID=gke-service-project-1b
 export GCR_IMAGE_REPO_1=gcr.io/${PROJECT_ID}/hello-app:v1

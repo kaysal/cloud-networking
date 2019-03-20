@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main-demo/gke/clust-w1/scripts/hello
+export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main/gke/clust-w1/scripts/hello
 
 cd ~/tf/credentials
 

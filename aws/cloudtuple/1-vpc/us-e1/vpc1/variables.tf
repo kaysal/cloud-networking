@@ -45,7 +45,6 @@ variable "private_172_18_12" {
   default     = "172.18.12.0/24"
 }
 
-
 variable "preshared_key" {
   description = "preshared key used for tunnels 1 and 2"
 }
@@ -60,4 +59,8 @@ variable "customer_side_asn" {
 
 variable "peer_owner_id" {
   description = "AWS account ID of the owner of the peer VPC"
+}
+
+variable "domain_name" {
+  default = "cloudtuples.com"
 }

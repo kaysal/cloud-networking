@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 cd
-export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main-demo/gke/clust-w1/scripts/php
+export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main/gke/clust-w1/scripts/php
 export PROJECT_ID=gke-service-project-1b
 export UBUNTU_WEB=gcr.io/${PROJECT_ID}/php:v1
 export REGION=europe-west1

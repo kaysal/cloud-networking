@@ -1,17 +1,17 @@
 #!/bin/vbash
-source /opt/vyatta/etc/functions/script-template
+#source /opt/vyatta/etc/functions/script-template
 
 #! Router IP Addresses
 export LOCAL_IP=$(curl 169.254.169.254/latest/meta-data/local-ipv4)
 export NAT_IP=$(curl 169.254.169.254/latest/meta-data/public-ipv4)
 
 #! gcp 'vpc' vpc
-export PEER_IP=34.76.43.166
+export PEER_IP=34.76.208.118
 export LOCAL_VTI_IP=169.254.100.5/30
 export PEER_VTI_IP=169.254.100.6
 
 #gcp 'untrust' vpc
-export PEER_IP2=34.76.22.177
+export PEER_IP2=34.76.52.80
 export LOCAL_VTI_IP2=169.254.100.13/30
 export PEER_VTI_IP2=169.254.100.14
 

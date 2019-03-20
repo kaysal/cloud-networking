@@ -48,5 +48,5 @@ resource "google_dns_record_set" "bastion_eu_w1" {
   name         = "bastion.ilb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
-  rrdatas      = ["${google_compute_instance.bastion_eu_w1.network_interface.0.address}"]
+  rrdatas      = ["${google_compute_instance.bastion_eu_w1.network_interface.0.network_ip}"]
 }

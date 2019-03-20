@@ -8,8 +8,8 @@ provider "google-beta" {
 
 terraform {
   backend "gcs" {
-    bucket      = "tf-shk"
-    prefix      = "states/gcp/cloudtuple/1-host/0-main/1-vpn/eu-w1"
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/1-host/0-main/1-vpn/eu-w1"
   }
 }
 
@@ -18,8 +18,8 @@ data "terraform_remote_state" "host" {
   backend = "gcs"
 
   config {
-    bucket      = "tf-shk"
-    prefix      = "states/gcp/cloudtuple/0-org/1-host"
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/0-org/1-host"
   }
 }
 
@@ -28,8 +28,8 @@ data "terraform_remote_state" "vpc" {
   backend = "gcs"
 
   config {
-    bucket      = "tf-shk"
-    prefix      = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
 }
 
@@ -38,7 +38,7 @@ data "terraform_remote_state" "aws_eu_w1_vpc1" {
   backend = "gcs"
 
   config {
-    bucket      = "tf-shk"
-    prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
+    bucket = "tf-shk"
+    prefix = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
   }
 }

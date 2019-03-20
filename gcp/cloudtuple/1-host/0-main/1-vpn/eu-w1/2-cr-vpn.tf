@@ -2,7 +2,7 @@
 #------------------------------
 resource "google_compute_router" "eu_w1_cr_vpn_vpc" {
   name    = "${var.name}eu-w1-cr-vpn-vpc"
-  network = "${data.terraform_remote_state.vpc.vpc}"
+  network = "${data.google_compute_network.vpc.self_link}"
   region  = "europe-west1"
 
   bgp {

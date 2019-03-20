@@ -1,11 +1,9 @@
 provider "google" {
-  project    = "${var.project_name}"
-  credentials = "${var.credentials_file_path}"
+  project = "${data.terraform_remote_state.mango.mango_project_id}"
 }
 
 provider "google-beta" {
-  project    = "${var.project_name}"
-  credentials = "${var.credentials_file_path}"
+  project = "${data.terraform_remote_state.mango.mango_project_id}"
 }
 
 provider "random" {}

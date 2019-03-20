@@ -19,5 +19,5 @@ RUN IMAGE=https://storage.googleapis.com/salawu-gcs/gcp/images/prod_blue_app.png
 RUN sed -i "s/image-here/$IMAGE/g" index.php
 RUN sed -i '/Listen 80/c\Listen 8080' /etc/apache2/ports.conf
 RUN apt-get clean
-EXPOSE 80
+EXPOSE 80 8080
 CMD ["apache2ctl", "-D", "FOREGROUND"]

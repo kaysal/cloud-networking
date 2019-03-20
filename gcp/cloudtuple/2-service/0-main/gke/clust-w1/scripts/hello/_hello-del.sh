@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 export PROJECT_ID=gke-service-project-1b
-export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main-demo/gke/clust-w1/scripts/hello
+export GKE_DIRECTORY=~/tf/gcp/cloudtuple/2-service/0-main/gke/clust-w1/scripts/hello
 export GCR_IMAGE_REPO_1=gcr.io/${PROJECT_ID}/hello-app:v1
 export GCR_IMAGE_REPO_2=gcr.io/${PROJECT_ID}/hello-app:v2
 export GCR_IMAGE_REPO_3=gcr.io/${PROJECT_ID}/hello-app:v3

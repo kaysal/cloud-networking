@@ -3,10 +3,6 @@ variable "name" {
   default     = ""
 }
 
-variable "credentials_file_path" {
-  description = "Path to the JSON file used to describe your account credentials"
-}
-
 variable "onprem_ip_range" {
   description = "IP range for kubernetes master authorized networks"
 }

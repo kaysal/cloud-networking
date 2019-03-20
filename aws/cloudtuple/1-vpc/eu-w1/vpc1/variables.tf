@@ -66,7 +66,7 @@ variable "vyosa_aws_tunnel_inside_address" {
 }
 
 variable "vyosa_gcp_tunnel_inside_address" {
-  default = "169.254.100.2/30"
+  default = "169.254.100.2"
 }
 
 variable "vyosb_aws_tunnel_inside_address" {
@@ -74,7 +74,7 @@ variable "vyosb_aws_tunnel_inside_address" {
 }
 
 variable "vyosb_gcp_tunnel_inside_address" {
-  default = "169.254.100.6/30"
+  default = "169.254.100.6"
 }
 
 # for 'untrust' gcp vpc
@@ -83,7 +83,7 @@ variable "vyosa_aws_tunnel_inside_address2" {
 }
 
 variable "vyosa_gcp_tunnel_inside_address2" {
-  default = "169.254.100.10/30"
+  default = "169.254.100.10"
 }
 
 variable "vyosb_aws_tunnel_inside_address2" {
@@ -91,5 +91,11 @@ variable "vyosb_aws_tunnel_inside_address2" {
 }
 
 variable "vyosb_gcp_tunnel_inside_address2" {
-  default = "169.254.100.14/30"
+  default = "169.254.100.14"
+}
+
+variable "client_instance_metadata" {
+  description = "Metadata key/value pairs to make available from within the client instance."
+  type        = "map"
+  default     = {}
 }

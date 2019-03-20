@@ -1,11 +1,9 @@
 provider "google" {
   project    = "${var.project_name}"
-  credentials = "${var.credentials_file_path}"
 }
 
 provider "google-beta" {
   project    = "${var.project_name}"
-  credentials = "${var.credentials_file_path}"
 }
 
 terraform {
@@ -30,5 +28,14 @@ data "terraform_remote_state" "host" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
+  }
+}
+
+# AWS remote state
+data "terraform_remote_state" "aws" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/aws/cloudtuple/1-vpc/us-e1/vpc1"
   }
 }

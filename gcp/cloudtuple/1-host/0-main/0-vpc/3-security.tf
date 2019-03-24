@@ -136,6 +136,43 @@ resource "google_compute_firewall" "web_gke_nlb" {
   target_tags   = ["gke"]
 }
 
+# GKE to GKE
+# ===============================
+resource "google_compute_firewall" "gke_gke" {
+  provider       = "google-beta"
+  name           = "${var.name}gke-gke"
+  description    = "allow all traffic between GKE clusters"
+  network        = "${google_compute_network.vpc.self_link}"
+  enable_logging = true
+
+  allow {
+    protocol = "tcp"
+  }
+
+  allow {
+    protocol = "udp"
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "esp"
+  }
+
+  allow {
+    protocol = "ah"
+  }
+
+  allow {
+    protocol = "sctp"
+  }
+
+  source_tags = ["gke"]
+  target_tags = ["gke"]
+}
+
 # Onprem access
 # ======================
 resource "google_compute_firewall" "onprem_bastion" {
@@ -168,7 +205,7 @@ resource "google_compute_firewall" "onprem_elk" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22","5601"]
+    ports    = ["22", "5601"]
   }
 
   source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
@@ -248,7 +285,6 @@ resource "google_compute_firewall" "gke_gce" {
   source_tags = ["gke"]
   target_tags = ["gce"]
 }
-
 
 # AWS to GCE
 # ===========================

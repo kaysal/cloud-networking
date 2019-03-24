@@ -8,7 +8,7 @@ provider "google-beta" {
 
 terraform {
   backend "gcs" {
-    bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/2-service/0-main/gke/clust-w1"
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/2-service/0-main/gke/clust-w1"
   }
 }

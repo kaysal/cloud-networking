@@ -14,8 +14,9 @@ resource "google_service_account" "tf_gke_service_project" {
   project = "${google_project.gke_service_project.name}"
 }
 
-resource "google_service_account" "k8s_app_gke_service_project" {
-  account_id   = "k8sapp"
-  display_name = "k8s cluster App Service Account"
+
+resource "google_service_account" "gke_php_app_service_account" {
+  account_id   = "php-app"
+  display_name = "gke php app service account"
   project = "${google_project.gke_service_project.name}"
 }

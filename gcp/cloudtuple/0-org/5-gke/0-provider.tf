@@ -1,6 +1,4 @@
-provider "google" {
-  // gcloud auth application-default login
-}
+provider "google" {}
 
 provider random {}
 

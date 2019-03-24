@@ -36,7 +36,7 @@ resource "google_dns_record_set" "googleapis_cname" {
   ttl  = 300
 
   managed_zone = "${google_dns_managed_zone.private_googleapis.name}"
-  rrdatas = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
+  rrdatas      = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
 }
 
 resource "google_dns_record_set" "restricted_googleapis" {
@@ -50,7 +50,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
     "199.36.153.4",
     "199.36.153.5",
     "199.36.153.6",
-    "199.36.153.7"
+    "199.36.153.7",
   ]
 }
 

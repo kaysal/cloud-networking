@@ -1,6 +1,6 @@
-# create a regional bucket in us
+# create a regional bucket
 resource "google_storage_bucket" "bucket" {
-  name          = "${data.terraform_remote_state.gke.gke_service_project_id}"
+  name          = "${data.terraform_remote_state.gke.gke_service_project_id}-w1"
   location      = "europe-west1"
   force_destroy = true
   storage_class = "REGIONAL"

@@ -9,7 +9,7 @@ resource "google_compute_router" "eu_w1_cr_nat_trust" {
 # Cloud NAT
 #------------------------------
 resource "google_compute_router_nat" "eu_w1_nat_trust" {
-  name                               = "${var.nva}eu-w2-nat-trust"
+  name                               = "${var.nva}eu-w1-nat-trust"
   router                             = "${google_compute_router.eu_w1_cr_nat_trust.name}"
   region                             = "europe-west1"
   nat_ip_allocate_option             = "AUTO_ONLY"

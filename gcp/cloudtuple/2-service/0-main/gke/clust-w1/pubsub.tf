@@ -5,7 +5,8 @@ resource "google_pubsub_topic" "echo" {
 resource "google_pubsub_subscription" "echo-read" {
   name  = "echo-subscription"
   topic = "${google_pubsub_topic.echo.name}"
-/*
+
+  /*
   ack_deadline_seconds = 20
 
   push_config {

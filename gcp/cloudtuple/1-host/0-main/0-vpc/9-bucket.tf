@@ -22,7 +22,7 @@ resource "google_storage_bucket_iam_binding" "service_accounts_access_to_host_bu
 
   members = [
     "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.host.tf_host_project_service_account_email}"
+    "serviceAccount:${data.terraform_remote_state.host.tf_host_project_service_account_email}",
   ]
 }
 
@@ -50,6 +50,6 @@ resource "google_storage_bucket" "bucket_usage_export" {
 }
 
 resource "google_project_usage_export_bucket" "usage_export" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
-  bucket_name  = "${google_storage_bucket.bucket_usage_export.name}"
+  project     = "${data.terraform_remote_state.host.host_project_id}"
+  bucket_name = "${google_storage_bucket.bucket_usage_export.name}"
 }

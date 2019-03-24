@@ -22,6 +22,6 @@ resource "google_project_iam_binding" "gke_service_project_owner" {
   members = [
     "serviceAccount:${google_service_account.node_gke_service_project.email}",
     "serviceAccount:${google_service_account.tf_gke_service_project.email}",
-    "serviceAccount:${google_service_account.k8s_app_gke_service_project.email}"
+    "serviceAccount:${google_service_account.gke_php_app_service_account.email}",
   ]
 }

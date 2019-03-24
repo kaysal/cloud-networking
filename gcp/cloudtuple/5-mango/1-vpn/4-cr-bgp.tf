@@ -1,6 +1,6 @@
 # cloud router interface to host project
 resource "google_compute_router_interface" "to_host" {
-  name       = "${var.name}to-host"
+  name       = "${var.main}to-host"
   router     = "${google_compute_router.eu_w2_cr.name}"
   vpn_tunnel = "${google_compute_vpn_tunnel.to_host.name}"
   ip_range   = "169.254.200.2/30"
@@ -9,7 +9,7 @@ resource "google_compute_router_interface" "to_host" {
 
 # bgp peer session to host project
 resource "google_compute_router_peer" "to_host" {
-  name            = "${var.name}to-host"
+  name            = "${var.main}to-host"
   router          = "${google_compute_router.eu_w2_cr.name}"
   peer_ip_address = "169.254.200.1"
   peer_asn        = 65000

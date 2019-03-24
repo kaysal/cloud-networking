@@ -1,9 +1,9 @@
 provider "google" {
-  project    = "${var.project_name}"
+  project = "${data.terraform_remote_state.mango.mango_project_id}"
 }
 
 provider "google-beta" {
-  project    = "${var.project_name}"
+  project = "${data.terraform_remote_state.mango.mango_project_id}"
 }
 
 terraform {
@@ -28,6 +28,14 @@ data "terraform_remote_state" "host" {
   config {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
+  }
+}
+
+data "terraform_remote_state" "mango" {
+  backend = "gcs"
+  config {
+    bucket  = "tf-shk"
+    prefix  = "states/gcp/cloudtuple/0-org/4-mango"
   }
 }
 

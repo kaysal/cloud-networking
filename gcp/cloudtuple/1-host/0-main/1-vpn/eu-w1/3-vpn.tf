@@ -11,16 +11,18 @@ locals {
 }
 
 module "vpn-aws-eu-w1-vpc1" {
-  source             = "github.com/kaysal/cloud-networking/modules/gcp/network/hybrid/vpn"
+  source             = "terraform-google-modules/vpn/google"
   project_id         = "${data.terraform_remote_state.host.host_project_id}"
   network            = "${data.google_compute_network.vpc.name}"
   region             = "europe-west1"
   gateway_name       = "${var.main}eu-w1-vpn-gw1"
-  tunnel_name_prefix = "test"
+  tunnel_name_prefix = "to-aws-eu-w1-vpc1-tunnel"
   shared_secret      = "${var.preshared_key}"
   tunnel_count       = 2
   cr_name            = "${google_compute_router.eu_w1_cr_vpn.name}"
-  peer_asn = ["65010", "65010"]
+  peer_asn           = ["65010", "65010"]
+  remote_subnet      = [""]
+  ike_version        = 1
 
   peer_ips = [
     "${local.peer1_tunnel_ip}",
@@ -29,11 +31,11 @@ module "vpn-aws-eu-w1-vpc1" {
 
   bgp_cr_session_range = [
     "${local.vyosa_tunnel_gcp_vti}/30",
-    "${local.vyosb_tunnel_gcp_vti}/30"
+    "${local.vyosb_tunnel_gcp_vti}/30",
   ]
 
   bgp_remote_session_range = [
     "${local.vyosa_tunnel_aws_vti}",
-    "${local.vyosb_tunnel_aws_vti}"
+    "${local.vyosb_tunnel_aws_vti}",
   ]
 }

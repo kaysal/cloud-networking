@@ -43,7 +43,7 @@ resource "google_compute_router_interface" "router_interface" {
   name       = "interface-${local.tunnel_name_prefix}-${count.index}"
   router     = "${var.cr_name}"
   region     = "${var.region}"
-  ip_range   = "${element(var.bgp_cr_range, count.index)}"
+  ip_range   = "${element(var.bgp_cr_session_range, count.index)}"
   vpn_tunnel = "${google_compute_vpn_tunnel.tunnel-dynamic.*.name[count.index]}"
   project    = "${var.project_id}"
 

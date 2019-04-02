@@ -91,7 +91,7 @@ variable "peer_asn" {
   default     = ["65101"]
 }
 
-variable "bgp_cr_range" {
+variable "bgp_cr_session_range" {
   type        = "list"
   description = "Please enter the cloud-router interface IP/Session IP"
   default     = ["169.254.1.1/30", "169.254.1.5/30"]

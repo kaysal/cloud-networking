@@ -31,7 +31,7 @@ resource "google_compute_instance" "elk_stack" {
   }
 
   network_interface {
-    subnetwork_project = "${var.network_project}"
+    network_project = "${var.network_project}"
     subnetwork         = "${var.subnetwork}"
     access_config {}
   }

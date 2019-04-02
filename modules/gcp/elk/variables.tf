@@ -3,6 +3,14 @@ variable "name" {
   default     = ""
 }
 
+variable "project" {
+  description = "Project where the elk stack instance will be created"
+}
+
+variable "project" {
+  description = "Project where the elk stack subnetwork will be created"
+}
+
 variable "machine_type" {
   default = "n1-standard-4"
 }

@@ -1,6 +1,6 @@
 # network
-output "vpc" {
-  value = "${google_compute_network.vpc.self_link}"
+output "vpc_name" {
+  value = "${google_compute_network.vpc.name}"
 }
 
 output "eu_w2_10_200_30" {

@@ -17,25 +17,23 @@ data "template_file" "elk_init" {
 
 resource "google_compute_instance" "elk_stack" {
   name                      = "${var.name}elk-stack"
-  machine_type              = "n1-standard-4"
-  zone                      = "europe-west1-c"
-  tags                      = ["elk"]
+  machine_type              = "${var.machine_type}"
+  zone                      = "${var.zone}"
+  tags                      = "${var.list_of_tags}"
   allow_stopping_for_update = true
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9"
-      type  = "pd-ssd"
-      size  = "100"
+      image = "${var.image}"
+      type  = "${var.type}"
+      size  = "${var.size}"
     }
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
-
-    access_config {
-      // ephemeral nat ip
-    }
+    subnetwork_project = "${var.network_project}"
+    subnetwork         = "${var.subnetwork}"
+    access_config {}
   }
 
   metadata_startup_script = "${data.template_file.elk_init.rendered}"

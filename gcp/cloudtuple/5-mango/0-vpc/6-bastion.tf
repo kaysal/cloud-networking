@@ -36,7 +36,7 @@ resource "google_compute_instance" "bastion" {
 
   service_account {
     scopes = ["cloud-platform"]
-    email  = "${data.terraform_remote_state.mango.vm_mango_project_service_account_email}"
+    #email  = "${data.terraform_remote_state.mango.vm_mango_project_service_account_email}"
   }
 }
 

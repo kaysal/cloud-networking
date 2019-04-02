@@ -1,57 +1,24 @@
 locals {
-  peer_ip = "${data.terraform_remote_state.mango.vpn_gw_ip_eu_w2}"
+  peer_ip   = "${data.terraform_remote_state.mango.eu_w2_vpn_gw_ip}"
+  local_vti = "169.254.200.1/30"
+  peer_vti  = "169.254.200.2"
+  peer_asn  = 65030
 }
 
-# vpn configuration
-# Attach the VPN gateways to the VPC.
-resource "google_compute_vpn_gateway" "eu_w2_vpn_gw" {
-  name    = "${var.name}eu-w2-vpn-gw"
-  network = "${data.google_compute_network.vpc.self_link}"
-  region  = "europe-west2"
-}
-
-# europe-west2 vpn gw
-# --------------------------------------------
-# Forwarding rules for ESP, UDP500 and UDP4500
-resource "google_compute_forwarding_rule" "fr_esp" {
-  name        = "${var.name}fr-esp"
-  ip_protocol = "ESP"
-  ip_address  = "${data.google_compute_address.vpn_gw_ip_eu_w2.address}"
-  target      = "${google_compute_vpn_gateway.eu_w2_vpn_gw.self_link}"
-  region      = "europe-west2"
-}
-
-resource "google_compute_forwarding_rule" "fr_udp500" {
-  name        = "${var.name}fr-udp500"
-  ip_protocol = "UDP"
-  port_range  = "500"
-  ip_address  = "${data.google_compute_address.vpn_gw_ip_eu_w2.address}"
-  target      = "${google_compute_vpn_gateway.eu_w2_vpn_gw.self_link}"
-  region      = "europe-west2"
-}
-
-resource "google_compute_forwarding_rule" "fr_udp4500" {
-  name        = "${var.name}fr-udp4500"
-  ip_protocol = "UDP"
-  port_range  = "4500"
-  ip_address  = "${data.google_compute_address.vpn_gw_ip_eu_w2.address}"
-  target      = "${google_compute_vpn_gateway.eu_w2_vpn_gw.self_link}"
-  region      = "europe-west2"
-}
-
-# vpn tunnels
-resource "google_compute_vpn_tunnel" "to_mango" {
-  name               = "${var.name}to-mango"
-  region             = "europe-west2"
-  peer_ip            = "${local.peer_ip}"
-  ike_version        = "2"
-  shared_secret      = "${var.preshared_key}"
-  target_vpn_gateway = "${google_compute_vpn_gateway.eu_w2_vpn_gw.self_link}"
-  router = "${google_compute_router.eu_w2_cr_vpn_vpc.name}"
-
-  depends_on = [
-    "google_compute_forwarding_rule.fr_udp500",
-    "google_compute_forwarding_rule.fr_udp4500",
-    "google_compute_forwarding_rule.fr_esp",
-  ]
+module "vpn-to-mango" {
+  source                   = "terraform-google-modules/vpn/google"
+  project_id               = "${data.terraform_remote_state.host.host_project_id}"
+  network                  = "${data.google_compute_network.vpc.name}"
+  region                   = "europe-west2"
+  gateway_name             = "${var.main}eu-w2-vpn-gw"
+  tunnel_name_prefix       = "${var.main}to-mango"
+  shared_secret            = "${var.preshared_key}"
+  tunnel_count             = 1
+  cr_name                  = "${google_compute_router.eu_w2_cr_vpn_vpc.name}"
+  peer_asn                 = ["${local.peer_asn}"]
+  remote_subnet            = [""]
+  ike_version              = 2
+  peer_ips                 = ["${local.peer_ip}"]
+  bgp_cr_session_range     = ["${local.local_vti}"]
+  bgp_remote_session_range = ["${local.peer_vti}"]
 }

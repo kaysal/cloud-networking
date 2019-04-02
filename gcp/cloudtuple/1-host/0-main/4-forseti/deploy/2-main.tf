@@ -1,6 +1,6 @@
 module "forseti" {
   source  = "git::https://github.com/terraform-google-modules/terraform-google-forseti"
-  version = "v1.1.0"
+  version = "~> 1.2"
 
   project_id         = "${data.terraform_remote_state.netsec.forseti_project_id}"
   gsuite_admin_email = "${var.gsuite_admin_email}"
@@ -21,7 +21,7 @@ module "forseti" {
   #bucket_cai_location     = "locals.region"
   #storage_bucket_location = "locals.region"
 }
-
+/*
 locals {
   region = "europe-west1"
-}
+}*/

@@ -1,9 +1,6 @@
 locals {
   peer1_tunnel_ip = "${data.terraform_remote_state.aws.vyosa_tunnel_address}"
   peer2_tunnel_ip = "${data.terraform_remote_state.aws.vyosb_tunnel_address}"
-}
-
-locals {
   vyosa_tunnel_gcp_vti = "${data.terraform_remote_state.aws.vyosa_gcp_tunnel_inside_address}"
   vyosb_tunnel_gcp_vti = "${data.terraform_remote_state.aws.vyosb_gcp_tunnel_inside_address}"
   vyosa_tunnel_aws_vti = "${data.terraform_remote_state.aws.vyosa_aws_tunnel_inside_address}"

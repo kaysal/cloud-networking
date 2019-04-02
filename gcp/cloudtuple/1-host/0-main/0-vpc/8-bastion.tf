@@ -32,7 +32,6 @@ resource "google_compute_instance" "bastion" {
 
   service_account {
     scopes = ["cloud-platform"]
-    email  = "${data.google_service_account.vm_host_project.email}"
   }
 }
 

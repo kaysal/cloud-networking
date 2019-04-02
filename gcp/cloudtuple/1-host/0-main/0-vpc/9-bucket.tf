@@ -13,6 +13,7 @@ resource "google_storage_bucket_object" "file" {
   bucket = "${google_storage_bucket.bucket.name}"
 }
 
+/*
 # acl to give prod and prod service accounts admin access
 # to prod bucket
 #-----------------------------------
@@ -37,7 +38,7 @@ resource "google_storage_bucket_iam_binding" "binding" {
     "serviceAccount:${data.terraform_remote_state.orange.vm_orange_project_service_account_email}",
     "serviceAccount:${data.terraform_remote_state.mango.vm_mango_project_service_account_email}",
   ]
-}
+}*/
 
 # create a multi-regional bucket in europe-west1
 # to store google project usage reports

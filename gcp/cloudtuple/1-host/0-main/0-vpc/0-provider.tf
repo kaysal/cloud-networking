@@ -60,3 +60,12 @@ data "terraform_remote_state" "gke" {
     prefix = "states/gcp/cloudtuple/0-org/5-gke"
   }
 }
+
+data "terraform_remote_state" "netsec" {
+  backend = "gcs"
+
+  config {
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/0-org/6-netsec"
+  }
+}

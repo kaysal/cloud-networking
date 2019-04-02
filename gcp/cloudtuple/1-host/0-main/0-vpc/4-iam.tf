@@ -30,7 +30,6 @@ resource "google_project_iam_binding" "project_network_user" {
 
   members = [
     "group:apple-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.vm_apple_service_project.email}",
     "serviceAccount:${data.terraform_remote_state.apple.apple_service_project_number}@cloudservices.gserviceaccount.com",
   ]
 }
@@ -51,17 +50,9 @@ resource "google_project_iam_binding" "project_dns_admin" {
 
   members = [
     "group:apple-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.tf_apple_service_project.email}",
-    "serviceAccount:${data.google_service_account.vm_apple_service_project.email}",
     "group:orange-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.tf_orange_project.email}",
-    "serviceAccount:${data.google_service_account.vm_orange_project.email}",
     "group:mango-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.tf_mango_project.email}",
-    "serviceAccount:${data.google_service_account.vm_mango_project.email}",
     "group:gke-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.tf_gke_service_project.email}",
-    "serviceAccount:${data.google_service_account.node_gke_service_project.email}",
   ]
 }
 
@@ -82,7 +73,6 @@ resource "google_compute_subnetwork_iam_binding" "gke_eu_w1_10_0_4" {
 
   members = [
     "group:gke-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.tf_gke_service_project.email}",
     "serviceAccount:${data.terraform_remote_state.gke.gke_service_project_number}@cloudservices.gserviceaccount.com",
     "serviceAccount:service-${data.terraform_remote_state.gke.gke_service_project_number}@container-engine-robot.iam.gserviceaccount.com",
   ]
@@ -103,7 +93,6 @@ resource "google_compute_subnetwork_iam_binding" "gke_eu_w2_10_0_8" {
 
   members = [
     "group:gke-grp@cloudtuple.com",
-    "serviceAccount:${data.google_service_account.tf_gke_service_project.email}",
     "serviceAccount:${data.terraform_remote_state.gke.gke_service_project_number}@cloudservices.gserviceaccount.com",
     "serviceAccount:service-${data.terraform_remote_state.gke.gke_service_project_number}@container-engine-robot.iam.gserviceaccount.com",
   ]

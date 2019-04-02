@@ -6,14 +6,16 @@ resource "google_compute_firewall" "allow_mgmt" {
   network = "${google_compute_network.mgt.self_link}"
 
   allow {
+    /*
     protocol = "tcp"
     ports    = ["443", "22"]
   }
 
   allow {
     protocol = "icmp"
+    */
+    protocol = "all"
   }
-
   source_ranges = ["0.0.0.0/0"]
 }
 

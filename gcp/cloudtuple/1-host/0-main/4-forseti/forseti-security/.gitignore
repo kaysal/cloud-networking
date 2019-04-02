@@ -1,0 +1,52 @@
+# Eclipse metafiles
+.project
+.pydevproject
+
+# Pycharm metafiles
+.idea/*
+
+# Visual Studio Code metafiles
+.vscode/*
+
+# Compiled python
+*.pyc
+
+# Compiled protobuf
+*_pb2.py
+*_pb2_grpc.py
+
+# Miscellaneous
+.DS_Store
+.*swp
+
+# Possible credentials. Don't ignore all json files
+# though, because some are used for schema definitions.
+/*.json
+install/gcp/*.json
+
+# Scripts we don't want to commit
+scripts/dev*.sh
+grant_forseti_roles.sh
+run_server.sh
+run_client.sh
+
+# User-edited configs
+deployment-templates/*.yaml
+configs/*.yaml
+configs/server/*.yaml
+configs/client/*.yaml
+
+# Build/dist
+.eggs/
+*.egg/
+*.egg-info*
+build/
+dist/
+out/
+
+# Coverage
+.coverage
+htmlcov/
+
+# VSCode Metadata
+.vscode/

@@ -1,0 +1,53 @@
+#!/bin/bash
+# Copyright 2017 The Forseti Security Authors. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# A git pre-commit hook to perform linter checks to catch errors locally
+
+# Check if the user is in a virtual environment
+echo -n "Checking for a virtual env..."
+if [ -z $VIRTUAL_ENV ]; then
+    echo " Oops, need to be in a virtual env."
+    exit 1
+fi
+echo " ok."
+
+# Check if pylintrc exists and user is in the top repository directory
+if [ -e "./pylintrc" ]; then
+    echo -n "Executing pylint..."
+    pylint -s n --rcfile=pylintrc --output-format=text google || exit 1
+    if [ $? -ne 0 ]; then
+        echo " Oops, need to commit from top level repository dir."
+        exit 1
+    fi
+fi
+echo " ok."
+
+# Check for TODOs
+TODO_MATCH=false
+echo "Checking for TODOs..."
+for FILE in $(git diff --name-only --cached); do
+    if [ -a "$FILE" ]; then
+      if grep -qEi "'#\s*TODO(\([a-z0-9_-]+\))?\:'" "$FILE"; then
+          TODO_MATCH=true
+          echo "${FILE} contains a TODO"
+      fi
+    fi
+done
+if $TODO_MATCH; then
+    echo " Oops, there are some TODOs to fix. If you really must you can
+    pass in --no-verify."
+    exit 1
+fi
+echo " ok."

@@ -12,13 +12,3 @@ output "gke_service_project_id" {
 output "gke_service_project_number" {
   value = "${google_project.gke_service_project.number}"
 }
-
-# terraform service accounts
-output "tf_gke_service_project_service_account_email" {
-  value = "${google_service_account.tf_gke_service_project.email}"
-}
-
-# instances service accounts
-output "node_gke_service_project_service_account_email" {
-  value = "${google_service_account.node_gke_service_project.email}"
-}

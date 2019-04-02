@@ -20,6 +20,5 @@ resource "google_project_iam_binding" "apple_service_project_owner" {
   role = "roles/owner"
   members  = [
     "serviceAccount:${google_service_account.vm_apple_service_project.email}",
-    "serviceAccount:${google_service_account.tf_apple_service_project.email}"
     ]
 }

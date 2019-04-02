@@ -13,11 +13,6 @@ output "apple_service_project_number" {
   value = "${google_project.apple_service_project.number}"
 }
 
-# terraform service accounts
-output "tf_apple_service_project_service_account_email" {
-  value = "${google_service_account.tf_apple_service_project.email}"
-}
-
 # instances service accounts
 output "vm_apple_service_project_service_account_email" {
   value = "${google_service_account.vm_apple_service_project.email}"

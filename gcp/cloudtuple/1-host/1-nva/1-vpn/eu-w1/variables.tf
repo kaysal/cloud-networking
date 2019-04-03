@@ -3,6 +3,6 @@ variable "nva" {
   default     = "nva-"
 }
 
-variable "preshared_key" {
+variable "psk" {
   description = "ipsec vpn tunnel pre-shared key"
 }

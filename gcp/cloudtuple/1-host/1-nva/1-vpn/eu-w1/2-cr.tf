@@ -1,8 +1,8 @@
 # Cloud Router 1
 #------------------------------
-resource "google_compute_router" "eu_w1_cr_vpn" {
-  name    = "${var.nva}eu-w1-cr-vpn"
-  network = "${data.terraform_remote_state.nva.vpc_untrust}"
+resource "google_compute_router" "cr_eu_w1" {
+  name    = "${var.nva}cr-eu-w1"
+  network = "${data.google_compute_network.nva.self_link}"
   region  = "europe-west1"
 
   bgp {

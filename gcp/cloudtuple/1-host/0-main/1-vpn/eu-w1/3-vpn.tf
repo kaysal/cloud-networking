@@ -1,25 +1,28 @@
 locals {
-  peer1_tunnel_ip = "${data.terraform_remote_state.aws.vyosa_tunnel_address}"
-  peer2_tunnel_ip = "${data.terraform_remote_state.aws.vyosb_tunnel_address}"
+  peer1_tunnel_ip      = "${data.terraform_remote_state.aws.vyosa_tunnel_address}"
+  peer2_tunnel_ip      = "${data.terraform_remote_state.aws.vyosb_tunnel_address}"
   vyosa_tunnel_gcp_vti = "${data.terraform_remote_state.aws.vyosa_gcp_tunnel_inside_address}"
   vyosb_tunnel_gcp_vti = "${data.terraform_remote_state.aws.vyosb_gcp_tunnel_inside_address}"
   vyosa_tunnel_aws_vti = "${data.terraform_remote_state.aws.vyosa_aws_tunnel_inside_address}"
   vyosb_tunnel_aws_vti = "${data.terraform_remote_state.aws.vyosb_aws_tunnel_inside_address}"
+  peer_asn             = "65010"
 }
 
 module "vpn-aws-eu-w1-vpc1" {
-  source             = "terraform-google-modules/vpn/google"
-  project_id         = "${data.terraform_remote_state.host.host_project_id}"
-  network            = "${data.google_compute_network.vpc.name}"
-  region             = "europe-west1"
-  gateway_name       = "${var.main}eu-w1-vpn-gw1"
-  tunnel_name_prefix = "to-aws-eu-w1-vpc1-tunnel"
-  shared_secret      = "${var.preshared_key}"
-  tunnel_count       = 2
-  cr_name            = "${google_compute_router.eu_w1_cr_vpn.name}"
-  peer_asn           = ["65010", "65010"]
-  remote_subnet      = [""]
-  ike_version        = 1
+  source              = "../../../../../../modules/gcp/vpn"
+  project_id          = "${data.terraform_remote_state.host.host_project_id}"
+  network             = "${data.google_compute_network.vpc.name}"
+  region              = "europe-west1"
+  gateway_name        = "${var.main}vpn-gw-eu-w1"
+  reserved_gateway_ip = true
+  gateway_ip          = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
+  tunnel_name_prefix  = "${var.main}to-aws-eu-w1-vpc1-tunnel"
+  shared_secret       = "${var.psk}"
+  tunnel_count        = 2
+  cr_name             = "${google_compute_router.cr_eu_w1.name}"
+  peer_asn            = ["${local.peer_asn}", "${local.peer_asn}"]
+  remote_subnet       = [""]
+  ike_version         = 1
 
   peer_ips = [
     "${local.peer1_tunnel_ip}",

@@ -32,9 +32,3 @@ data "google_compute_network" "vpc" {
   name    = "${data.terraform_remote_state.vpc.vpc_name}"
   project = "${data.terraform_remote_state.host.host_project_id}"
 }
-
-data "google_compute_address" "vpn_gw_ip_eu_w1" {
-  name    = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1}"
-  project = "${data.terraform_remote_state.host.host_project_id}"
-  region  = "europe-west1"
-}

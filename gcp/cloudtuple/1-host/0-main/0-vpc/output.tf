@@ -28,23 +28,6 @@ output "apple_us_e1_10_250_10" {
   value = "${google_compute_subnetwork.apple_us_e1_10_250_10.self_link}"
 }
 
-# vpn gw external ip names
-output "vpn_gw_ip_eu_w1" {
-  value = "${google_compute_address.vpn_gw_ip_eu_w1.name}"
-}
-
-output "vpn_gw_ip_eu_w2" {
-  value = "${google_compute_address.vpn_gw_ip_eu_w2.name}"
-}
-
-output "vpn_gw1_ip_us_e1" {
-  value = "${google_compute_address.vpn_gw1_ip_us_e1.name}"
-}
-
-output "vpn_gw2_ip_us_e1" {
-  value = "${google_compute_address.vpn_gw2_ip_us_e1.name}"
-}
-
 # vpn gw external ip address values
 output "vpn_gw_ip_eu_w1_addr" {
   value = "${google_compute_address.vpn_gw_ip_eu_w1.address}"

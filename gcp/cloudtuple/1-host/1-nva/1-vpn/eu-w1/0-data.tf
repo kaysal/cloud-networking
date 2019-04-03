@@ -1,18 +1,3 @@
-provider "google" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
-}
-
-provider "google-beta" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
-}
-
-terraform {
-  backend "gcs" {
-    bucket      = "tf-shk"
-    prefix      = "states/gcp/cloudtuple/1-host/1-nva/1-vpn/eu-w1"
-  }
-}
-
 # org admin remote state files
 data "terraform_remote_state" "host" {
   backend = "gcs"
@@ -51,4 +36,9 @@ data "terraform_remote_state" "aws_eu_w1_vpc1" {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
   }
+}
+
+data "google_compute_network" "nva" {
+  name    = "${data.terraform_remote_state.nva.vpc_untrust_name}"
+  project = "${data.terraform_remote_state.host.host_project_id}"
 }

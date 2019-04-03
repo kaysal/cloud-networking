@@ -29,9 +29,15 @@ output "network" {
   value       = "${google_compute_vpn_gateway.vpn_gateway.network}"
 }
 
+/*
 output "gateway_ip" {
   description = "The VPN Gateway Public IP"
   value       = "${google_compute_address.vpn_gw_ip.address}"
+}*/
+
+output "gateway_ip" {
+  description = "The VPN Gateway Public IP"
+  value       = "${google_compute_forwarding_rule.vpn_esp.ip_address}"
 }
 
 output "vpn_tunnels_names-static" {

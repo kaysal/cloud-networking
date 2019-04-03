@@ -31,6 +31,15 @@ variable "gateway_name" {
   default     = "test-vpn"
 }
 
+variable "gateway_ip" {
+  description = "The IP of VPN gateway"
+}
+
+variable "reserved_gateway_ip" {
+  description = "Flag to specify if gateway IP should be created"
+  default     = false
+}
+
 variable "tunnel_count" {
   description = "The number of tunnels from each VPN gw (default is 1)"
   default     = 1
@@ -46,8 +55,9 @@ variable "local_traffic_selector" {
 Local traffic selector to use when establishing the VPN tunnel with peer VPN gateway.
 Value should be list of CIDR formatted strings and ranges should be disjoint.
 EOD
-  type        = "list"
-  default     = ["0.0.0.0/0"]
+
+  type    = "list"
+  default = ["0.0.0.0/0"]
 }
 
 variable "remote_traffic_selector" {
@@ -55,8 +65,9 @@ variable "remote_traffic_selector" {
 Remote traffic selector to use when establishing the VPN tunnel with peer VPN gateway.
 Value should be list of CIDR formatted strings and ranges should be disjoint.
 EOD
-  type        = "list"
-  default     = ["0.0.0.0/0"]
+
+  type    = "list"
+  default = ["0.0.0.0/0"]
 }
 
 variable "peer_ips" {
@@ -107,6 +118,7 @@ variable "advertised_route_priority" {
   description = "Please enter the priority for the advertised route to BGP peer(default is 100)"
   default     = 100
 }
+
 variable "ike_version" {
   description = "Please enter the IKE version used by this tunnel (default is IKEv2)"
   default     = 2

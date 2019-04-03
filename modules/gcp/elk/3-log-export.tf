@@ -3,9 +3,9 @@ resource "random_id" "suffix" {
 }
 
 resource "google_logging_project_sink" "vpc_flows" {
-  name                   = "vpc-flows-${random_id.suffix.hex}"
-  destination            = "pubsub.googleapis.com/projects/${data.terraform_remote_state.host.host_project_id}/topics/${google_pubsub_topic.logstash_input_dev.name}"
-  filter                 = "resource.type=\"gce_subnetwork\" logName=\"projects/${data.terraform_remote_state.host.host_project_id}/logs/compute.googleapis.com%2Fvpc_flows\""
+  name                   = "${var.vpc_flow_log_sink_name}"
+  destination            = "${var.vpc_flow_log_destination}"
+  filter                 = "${var.vpc_flow_log_filter}"
   unique_writer_identity = true
 }
 

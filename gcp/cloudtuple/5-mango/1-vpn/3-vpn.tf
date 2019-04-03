@@ -1,20 +1,22 @@
 locals {
-  peer_ip   = "${data.google_compute_address.eu_w2_vpn_gw_ip.address}"
+  peer_ip   = "${data.terraform_remote_state.host.vpn_gw_ip_eu_w2_addr}"
   local_vti = "169.254.200.2/30"
   peer_vti  = "169.254.200.1"
   peer_asn  = 65000
 }
 
 module "vpn-to-host" {
-  source                   = "terraform-google-modules/vpn/google"
+  source                   = "../../../../modules/gcp/vpn"
   project_id               = "${data.terraform_remote_state.mango.mango_project_id}"
   network                  = "${data.google_compute_network.vpc.name}"
   region                   = "europe-west2"
-  gateway_name             = "${var.main}eu-w2-vpn-gw"
+  gateway_name             = "${var.main}vpn-gw-eu-w2"
+  reserved_gateway_ip      = true
+  gateway_ip               = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w2_addr}"
   tunnel_name_prefix       = "${var.main}to-host"
   shared_secret            = "${var.psk}"
   tunnel_count             = 1
-  cr_name                  = "${google_compute_router.eu_w2_cr.name}"
+  cr_name                  = "${google_compute_router.cr_eu_w2.name}"
   peer_asn                 = ["${local.peer_asn}"]
   remote_subnet            = [""]
   ike_version              = 2

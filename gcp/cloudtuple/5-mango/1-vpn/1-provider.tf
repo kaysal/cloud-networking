@@ -8,7 +8,7 @@ provider "google-beta" {
 
 terraform {
   backend "gcs" {
-    bucket  = "tf-shk"
-    prefix  = "states/gcp/cloudtuple/5-mango/1-vpn"
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/5-mango/1-vpn"
   }
 }

@@ -18,8 +18,8 @@ resource "google_compute_subnetwork" "eu_w2_10_200_30" {
 
 # VPN GW external IP
 #--------------------------------------
-resource "google_compute_address" "eu_w2_vpn_gw_ip" {
-  name = "${var.main}eu-w2-vpn-gw-ip"
+resource "google_compute_address" "vpn_gw_ip_eu_w2" {
+  name = "${var.main}vpn-gw-ip-eu-w2"
   region = "europe-west2"
 }
 

@@ -1,7 +1,7 @@
 # elk host
 #============================
 data "template_file" "elk_init" {
-  template = "${file("scripts/elk.sh.tpl")}"
+  template = "${file("${path.module}/scripts/elk.sh.tpl")}"
 
   vars {
     HOST              = "0.0.0.0"
@@ -16,7 +16,7 @@ data "template_file" "elk_init" {
 }
 
 resource "google_compute_instance" "elk_stack" {
-  name                      = "${var.name}elk-stack"
+  name                      = "${var.name}"
   machine_type              = "${var.machine_type}"
   zone                      = "${var.zone}"
   tags                      = "${var.list_of_tags}"
@@ -25,13 +25,13 @@ resource "google_compute_instance" "elk_stack" {
   boot_disk {
     initialize_params {
       image = "${var.image}"
-      type  = "${var.type}"
-      size  = "${var.size}"
+      type  = "${var.disk_type}"
+      size  = "${var.disk_size}"
     }
   }
 
   network_interface {
-    network_project = "${var.network_project}"
+    subnetwork_project = "${var.network_project}"
     subnetwork         = "${var.subnetwork}"
     access_config {}
   }
@@ -41,13 +41,4 @@ resource "google_compute_instance" "elk_stack" {
   service_account {
     scopes = ["cloud-platform"]
   }
-}
-
-resource "google_dns_record_set" "elk_public" {
-  project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
-  name         = "elk.host.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
-  type         = "A"
-  ttl          = 300
-  rrdatas      = ["${google_compute_instance.elk_stack.network_interface.0.access_config.0.nat_ip}"]
 }

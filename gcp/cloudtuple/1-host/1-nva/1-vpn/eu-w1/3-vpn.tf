@@ -1,76 +1,41 @@
 locals {
   peer1_tunnel_ip = "${data.terraform_remote_state.aws_eu_w1_vpc1.vyosa_tunnel_address}"
   peer2_tunnel_ip = "${data.terraform_remote_state.aws_eu_w1_vpc1.vyosb_tunnel_address}"
+  vyosa_tunnel_gcp_vti = "${data.terraform_remote_state.aws_eu_w1_vpc1.vyosa_gcp_tunnel_inside_address2}"
+  vyosb_tunnel_gcp_vti = "${data.terraform_remote_state.aws_eu_w1_vpc1.vyosb_gcp_tunnel_inside_address2}"
+  vyosa_tunnel_aws_vti = "${data.terraform_remote_state.aws_eu_w1_vpc1.vyosa_aws_tunnel_inside_address2}"
+  vyosb_tunnel_aws_vti = "${data.terraform_remote_state.aws_eu_w1_vpc1.vyosb_aws_tunnel_inside_address2}"
+  peer_asn  = 65010
 }
 
-# VPN Gateway
-#------------------------------
-resource "google_compute_vpn_gateway" "vpn_gw_eu_w1" {
-  name    = "${var.nva}eu-w1-vpn-gw"
-  network = "${data.terraform_remote_state.nva.vpc_untrust}"
-  region  = "europe-west1"
-}
+module "vpn-aws-eu-w1-vpc1" {
+  source              = "../../../../../../modules/gcp/vpn"
+  project_id          = "${data.terraform_remote_state.host.host_project_id}"
+  network             = "${data.google_compute_network.nva.name}"
+  region              = "europe-west1"
+  gateway_name        = "${var.nva}vpn-gw-eu-w1"
+  reserved_gateway_ip = true
+  gateway_ip          = "${data.terraform_remote_state.nva.vpn_gw_ip_eu_w1_addr}"
+  tunnel_name_prefix  = "${var.nva}to-aws-eu-w1-vpc1-tunnel"
+  shared_secret       = "${var.psk}"
+  tunnel_count        = 2
+  cr_name             = "${google_compute_router.cr_eu_w1.name}"
+  peer_asn            = ["${local.peer_asn}", "${local.peer_asn}"]
+  remote_subnet       = [""]
+  ike_version         = 1
 
-# Forwarding rules for ESP, UDP500 and UDP4500
-#------------------------------
-resource "google_compute_forwarding_rule" "fr_esp" {
-  name        = "${var.nva}fr-esp"
-  ip_protocol = "ESP"
-  ip_address  = "${data.google_compute_address.vpn_gw_ip_eu_w1.address}"
-  target      = "${google_compute_vpn_gateway.vpn_gw_eu_w1.self_link}"
-  region      = "europe-west1"
-}
-
-resource "google_compute_forwarding_rule" "fr_udp500" {
-  name        = "${var.nva}fr-udp500"
-  ip_protocol = "UDP"
-  port_range  = "500"
-  ip_address  = "${data.google_compute_address.vpn_gw_ip_eu_w1.address}"
-  target      = "${google_compute_vpn_gateway.vpn_gw_eu_w1.self_link}"
-  region      = "europe-west1"
-}
-
-resource "google_compute_forwarding_rule" "fr_udp4500" {
-  name        = "${var.nva}fr-udp4500"
-  ip_protocol = "UDP"
-  port_range  = "4500"
-  ip_address  = "${data.google_compute_address.vpn_gw_ip_eu_w1.address}"
-  target      = "${google_compute_vpn_gateway.vpn_gw_eu_w1.self_link}"
-  region      = "europe-west1"
-}
-
-# VPN tunnel 1
-#------------------------------
-resource "google_compute_vpn_tunnel" "aws_eu_w1_vpc1_tunnel1" {
-  name               = "${var.nva}aws-eu-w1-vpc1-tunnel1"
-  peer_ip            = "${local.peer1_tunnel_ip}"
-  ike_version        = "1"
-  shared_secret      = "${var.preshared_key}"
-  target_vpn_gateway = "${google_compute_vpn_gateway.vpn_gw_eu_w1.self_link}"
-  router             = "${google_compute_router.eu_w1_cr_vpn.name}"
-  region             = "europe-west1"
-
-  depends_on = [
-    "google_compute_forwarding_rule.fr_esp",
-    "google_compute_forwarding_rule.fr_udp500",
-    "google_compute_forwarding_rule.fr_udp4500",
+  peer_ips = [
+    "${local.peer1_tunnel_ip}",
+    "${local.peer2_tunnel_ip}",
   ]
-}
 
-# VPN tunnel 2
-#------------------------------
-resource "google_compute_vpn_tunnel" "aws_eu_w1_vpc1_tunnel2" {
-  name               = "${var.nva}aws-eu-w1-vpc1-tunnel2"
-  peer_ip            = "${local.peer2_tunnel_ip}"
-  ike_version        = "1"
-  shared_secret      = "${var.preshared_key}"
-  target_vpn_gateway = "${google_compute_vpn_gateway.vpn_gw_eu_w1.self_link}"
-  router             = "${google_compute_router.eu_w1_cr_vpn.name}"
-  region             = "europe-west1"
+  bgp_cr_session_range = [
+    "${local.vyosa_tunnel_gcp_vti}/30",
+    "${local.vyosb_tunnel_gcp_vti}/30",
+  ]
 
-  depends_on = [
-    "google_compute_forwarding_rule.fr_esp",
-    "google_compute_forwarding_rule.fr_udp500",
-    "google_compute_forwarding_rule.fr_udp4500",
+  bgp_remote_session_range = [
+    "${local.vyosa_tunnel_aws_vti}",
+    "${local.vyosb_tunnel_aws_vti}",
   ]
 }

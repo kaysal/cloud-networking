@@ -6,7 +6,7 @@ export LOCAL_IP=$(curl 169.254.169.254/latest/meta-data/local-ipv4)
 export NAT_IP=$(curl 169.254.169.254/latest/meta-data/public-ipv4)
 
 #! gcp 'vpc' vpc
-export PEER_IP=35.240.9.86
+export PEER_IP=34.76.208.118
 export LOCAL_VTI_IP=169.254.100.5/30
 export PEER_VTI_IP=169.254.100.6
 

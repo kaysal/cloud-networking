@@ -1,4 +1,3 @@
-
 data "external" "onprem_ip" {
   program = ["sh", "scripts/onprem-ip.sh"]
 }
@@ -29,3 +28,4 @@ output "cidr_blocks_ipv4" {
 output "cidr_blocks_ipv6" {
   value = "${data.google_netblock_ip_ranges.netblock.cidr_blocks_ipv6}"
 }*/
+

@@ -6,7 +6,7 @@ locals {
 }
 
 module "vpn-to-mango" {
-  source                   = "../../../../../../modules/gcp/vpn"
+  source                   = "github.com/kaysal/modules.git//gcp/vpn?ref=v1.0"
   project_id               = "${data.terraform_remote_state.host.host_project_id}"
   network                  = "${data.google_compute_network.vpc.name}"
   region                   = "europe-west2"
@@ -17,7 +17,7 @@ module "vpn-to-mango" {
   shared_secret            = "${var.preshared_key}"
   tunnel_count             = 1
   cr_name                  = "${google_compute_router.cr_eu_w2.name}"
-  peer_asn                 = ["${local.peer_asn"]
+  peer_asn                 = ["${local.peer_asn}"]
   remote_subnet            = [""]
   ike_version              = 2
   peer_ips                 = ["${local.peer_ip}"]

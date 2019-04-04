@@ -1,6 +1,6 @@
 # http health check for internal LB
 resource "google_compute_health_check" "ilb_health" {
-  name = "${var.name}ilb-health"
+  name = "${var.main}ilb-health"
 
   http_health_check {
     port = "80"

@@ -1,6 +1,6 @@
 # internal load balancing - backend services
 resource "google_compute_region_backend_service" "prod_ilb" {
-  name     = "${var.name}prod-be-svc"
+  name     = "${var.main}prod-be-svc"
   region   = "europe-west1"
   protocol = "TCP"
 
@@ -13,7 +13,7 @@ resource "google_compute_region_backend_service" "prod_ilb" {
 
 # internal forwarding rules
 resource "google_compute_forwarding_rule" "prod_ilb_fwd_rule" {
-  name                  = "${var.name}fwd-rule-v4"
+  name                  = "${var.main}fwd-rule-v4"
   region                = "europe-west1"
   load_balancing_scheme = "INTERNAL"
   backend_service       = "${google_compute_region_backend_service.prod_ilb.self_link}"

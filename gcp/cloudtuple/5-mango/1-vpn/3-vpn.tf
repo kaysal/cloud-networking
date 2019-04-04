@@ -6,7 +6,7 @@ locals {
 }
 
 module "vpn-to-host" {
-  source                   = "../../../../modules/gcp/vpn"
+  source                   = "github.com/kaysal/modules.git//gcp/vpn?ref=v1.0"
   project_id               = "${data.terraform_remote_state.mango.mango_project_id}"
   network                  = "${data.google_compute_network.vpc.name}"
   region                   = "europe-west2"

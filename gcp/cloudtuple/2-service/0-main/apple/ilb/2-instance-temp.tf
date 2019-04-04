@@ -1,5 +1,5 @@
 resource "google_compute_instance_template" "prod_template" {
-  name           = "${var.name}prod-template"
+  name           = "${var.main}prod-template"
   region         = "europe-west1"
   machine_type   = "n1-standard-1"
   can_ip_forward = true

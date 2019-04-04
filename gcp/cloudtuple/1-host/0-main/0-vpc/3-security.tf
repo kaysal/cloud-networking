@@ -3,7 +3,7 @@
 # allow gfe to LBs - gclb
 resource "google_compute_firewall" "gfe_gce_gclb" {
   provider       = "google-beta"
-  name           = "${var.name}gfe-gce-gclb"
+  name           = "${var.main}gfe-gce-gclb"
   description    = "allow gfe to gclb MIG"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -19,7 +19,7 @@ resource "google_compute_firewall" "gfe_gce_gclb" {
 
 # allow gfe to gce tcp proxy LB on port 110
 resource "google_compute_firewall" "gfe_gce_tcp" {
-  name        = "${var.name}gfe-gce-tcp"
+  name        = "${var.main}gfe-gce-tcp"
   description = "allow gfe to gce tcp proxy lb"
   network     = "${google_compute_network.vpc.self_link}"
 
@@ -35,7 +35,7 @@ resource "google_compute_firewall" "gfe_gce_tcp" {
 
 # allow traffic to gce external ilb instances
 resource "google_compute_firewall" "gfe_gce_ilb" {
-  name        = "${var.name}gfe-gce-ilb"
+  name        = "${var.main}gfe-gce-ilb"
   description = "allow gfe to ilb"
   network     = "${google_compute_network.vpc.self_link}"
 
@@ -53,7 +53,7 @@ resource "google_compute_firewall" "gfe_gce_ilb" {
 # ======================
 # allow traffic to gce external nlb instances
 resource "google_compute_firewall" "web_gce_nlb" {
-  name        = "${var.name}web-gce-nlb"
+  name        = "${var.main}web-gce-nlb"
   description = "allow all traffic to nlb"
   network     = "${google_compute_network.vpc.self_link}"
 
@@ -71,7 +71,7 @@ resource "google_compute_firewall" "web_gce_nlb" {
 # ======================
 # allow gfe to gke ilb on tcp:10256
 resource "google_compute_firewall" "gfe_gke_ilb" {
-  name        = "${var.name}gfe-gke-ilb"
+  name        = "${var.main}gfe-gke-ilb"
   description = "allow gfe to GKE ILB nodes on tcp 10256"
   network     = "${google_compute_network.vpc.self_link}"
 
@@ -87,7 +87,7 @@ resource "google_compute_firewall" "gfe_gke_ilb" {
 
 # allow gfe to gke nlb on tcp:10256
 resource "google_compute_firewall" "gfe_gke_nlb" {
-  name        = "${var.name}gfe-gke-nlb"
+  name        = "${var.main}gfe-gke-nlb"
   description = "allow gfe to GKE NLB nodes on tcp 10256"
   network     = "${google_compute_network.vpc.self_link}"
 
@@ -104,7 +104,7 @@ resource "google_compute_firewall" "gfe_gke_nlb" {
 # allow gfe to gke ingress on NodePort range
 resource "google_compute_firewall" "gfe_gke_ing" {
   provider       = "google-beta"
-  name           = "${var.name}gfe-gke-ing"
+  name           = "${var.main}gfe-gke-ing"
   description    = "allow gfe to GKE ingress nodes on NodePort range"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -122,7 +122,7 @@ resource "google_compute_firewall" "gfe_gke_ing" {
 # ===============================
 resource "google_compute_firewall" "web_gke_nlb" {
   provider       = "google-beta"
-  name           = "${var.name}web-gke-nlb"
+  name           = "${var.main}web-gke-nlb"
   description    = "allow external web to GKE nodes using NLB"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -140,7 +140,7 @@ resource "google_compute_firewall" "web_gke_nlb" {
 # ===============================
 resource "google_compute_firewall" "gke_gke" {
   provider       = "google-beta"
-  name           = "${var.name}gke-gke"
+  name           = "${var.main}gke-gke"
   description    = "allow all traffic between GKE clusters"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -177,7 +177,7 @@ resource "google_compute_firewall" "gke_gke" {
 # ======================
 resource "google_compute_firewall" "onprem_bastion" {
   provider       = "google-beta"
-  name           = "${var.name}onprem-bastion"
+  name           = "${var.main}onprem-bastion"
   description    = "access to bastion"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -198,7 +198,7 @@ resource "google_compute_firewall" "onprem_bastion" {
 
 resource "google_compute_firewall" "onprem_elk" {
   provider       = "google-beta"
-  name           = "${var.name}onprem-elk"
+  name           = "${var.main}onprem-elk"
   description    = "access to elk"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -217,7 +217,7 @@ resource "google_compute_firewall" "onprem_elk" {
 # vm to vpc access
 resource "google_compute_firewall" "gce_vpc" {
   provider       = "google-beta"
-  name           = "${var.name}gce-vpc"
+  name           = "${var.main}gce-vpc"
   description    = "allowed connections from vm to vpc"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -233,7 +233,7 @@ resource "google_compute_firewall" "gce_vpc" {
 # gce to gke
 resource "google_compute_firewall" "gce_gke" {
   provider       = "google-beta"
-  name           = "${var.name}gce-gke"
+  name           = "${var.main}gce-gke"
   description    = "allow connections from gce to gke"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -254,7 +254,7 @@ resource "google_compute_firewall" "gce_gke" {
 # bastion to vpc
 resource "google_compute_firewall" "bastion_vpc" {
   provider       = "google-beta"
-  name           = "${var.name}bastion-vpc"
+  name           = "${var.main}bastion-vpc"
   description    = "allow connections from gce to gke"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -269,7 +269,7 @@ resource "google_compute_firewall" "bastion_vpc" {
 # gke to gce
 resource "google_compute_firewall" "gke_gce" {
   provider       = "google-beta"
-  name           = "${var.name}gke-gce"
+  name           = "${var.main}gke-gce"
   description    = "allow connections from gce to gke"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -290,7 +290,7 @@ resource "google_compute_firewall" "gke_gce" {
 # ===========================
 resource "google_compute_firewall" "aws_gce" {
   provider       = "google-beta"
-  name           = "${var.name}aws-gce"
+  name           = "${var.main}aws-gce"
   description    = "allowed connections from aws to gce"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -327,7 +327,7 @@ resource "google_compute_firewall" "aws_gce" {
 # ===========================
 resource "google_compute_firewall" "aws_gke" {
   provider       = "google-beta"
-  name           = "${var.name}aws-gke"
+  name           = "${var.main}aws-gke"
   description    = "allowed connections from aws to gce"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
@@ -364,7 +364,7 @@ resource "google_compute_firewall" "aws_gke" {
 # ===========================
 resource "google_compute_firewall" "mango_to_gce" {
   provider       = "google-beta"
-  name           = "${var.name}mango-to-gce"
+  name           = "${var.main}mango-to-gce"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
 
@@ -380,7 +380,7 @@ resource "google_compute_firewall" "mango_to_gce" {
 # ===========================
 resource "google_compute_firewall" "mango_to_gke" {
   provider       = "google-beta"
-  name           = "${var.name}mango-to-gke"
+  name           = "${var.main}mango-to-gke"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
 

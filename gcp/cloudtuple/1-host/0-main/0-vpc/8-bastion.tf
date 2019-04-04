@@ -1,38 +1,17 @@
-# Bastion host
-#============================
-data "template_file" "bastion_init" {
-  template = "${file("scripts/bastion.sh.tpl")}"
-
-  vars {}
-}
-
-resource "google_compute_instance" "bastion" {
-  name                      = "${var.name}bastion-eu-w1"
-  machine_type              = "f1-micro"
-  zone                      = "europe-west1-b"
-  tags                      = ["gce", "bastion"]
-  allow_stopping_for_update = true
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
-  network_interface {
-    subnetwork = "${google_compute_subnetwork.apple_eu_w1_10_100_10.self_link}"
-    network_ip = "10.100.10.253"
-
-    access_config {
-      // ephemeral nat ip
-    }
-  }
-
-  metadata_startup_script = "${data.template_file.bastion_init.rendered}"
-
-  service_account {
-    scopes = ["cloud-platform"]
-  }
+module "bastion" {
+  #source              = "github.com/kaysal/cloud-networking/modules/gcp/elk"
+  source                   = "/home/salawu/tf_modules/gcp/bastion"
+  name                     = "${var.main}bastion"
+  project                  = "${data.terraform_remote_state.host.host_project_id}"
+  network_project          = "${data.terraform_remote_state.host.host_project_id}"
+  network                  = "${google_compute_network.vpc.self_link}"
+  subnetwork               = "${google_compute_subnetwork.apple_eu_w1_10_100_10.self_link}"
+  zone                     = "europe-west1-c"
+  #machine_type             = "f1-micro"
+  #list_of_tags             = ["bastion", "gce"]
+  #image                    = "debian-cloud/debian-9"
+  #disk_type                = "pd-standard"
+  #disk_size                = "10"
 }
 
 resource "google_dns_record_set" "bastion_public" {
@@ -40,7 +19,7 @@ resource "google_dns_record_set" "bastion_public" {
   name         = "bastion.host.${google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
-  rrdatas      = ["${google_compute_instance.bastion.network_interface.0.access_config.0.nat_ip}"]
+  rrdatas      = ["${module.bastion.bastion_nat_ip}"]
 }
 
 resource "google_dns_record_set" "bastion_private" {
@@ -49,5 +28,5 @@ resource "google_dns_record_set" "bastion_private" {
   name         = "bastion.${google_dns_managed_zone.private_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
-  rrdatas      = ["${google_compute_instance.bastion.network_interface.0.network_ip}"]
+  rrdatas      = ["${module.bastion.bastion_private_ip}"]
 }

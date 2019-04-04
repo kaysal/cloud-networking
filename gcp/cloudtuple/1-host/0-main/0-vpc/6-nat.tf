@@ -1,25 +1,25 @@
 # Cloud Router
 #------------------------------
 resource "google_compute_router" "eu_w1_cr_nat_vpc" {
-  name    = "${var.name}eu-w1-cr-nat-vpc"
+  name    = "${var.main}eu-w1-cr-nat-vpc"
   network = "${google_compute_network.vpc.self_link}"
   region  = "europe-west1"
 }
 
 resource "google_compute_router" "eu_w2_cr_nat_vpc" {
-  name    = "${var.name}eu-w2-cr-nat-vpc"
+  name    = "${var.main}eu-w2-cr-nat-vpc"
   network = "${google_compute_network.vpc.self_link}"
   region  = "europe-west2"
 }
 
 resource "google_compute_router" "eu_w3_cr_nat_vpc" {
-  name    = "${var.name}eu-w3-cr-nat-vpc"
+  name    = "${var.main}eu-w3-cr-nat-vpc"
   network = "${google_compute_network.vpc.self_link}"
   region  = "europe-west3"
 }
 
 resource "google_compute_router" "us_e1_cr_nat_vpc" {
-  name    = "${var.name}us-e1-cr-nat-vpc"
+  name    = "${var.main}us-e1-cr-nat-vpc"
   network = "${google_compute_network.vpc.self_link}"
   region  = "us-east1"
 }

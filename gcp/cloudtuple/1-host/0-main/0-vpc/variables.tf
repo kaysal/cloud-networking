@@ -1,4 +1,4 @@
-variable "name" {
+variable "main" {
   description = "prefix for resources"
   default     = ""
 }

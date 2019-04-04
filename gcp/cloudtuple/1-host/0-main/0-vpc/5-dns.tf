@@ -18,7 +18,7 @@ resource "google_dns_managed_zone" "public_host_cloudtuple" {
 #-------------------------
 resource "google_dns_managed_zone" "private_googleapis" {
   provider    = "google-beta"
-  name        = "${var.name}private-googleapis"
+  name        = "${var.main}private-googleapis"
   dns_name    = "googleapis.com."
   description = "private zone for googleapis"
   visibility  = "private"
@@ -56,7 +56,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
 
 resource "google_dns_managed_zone" "private_host_cloudtuple" {
   provider    = "google-beta"
-  name        = "${var.name}private-host-cloudtuple"
+  name        = "${var.main}private-host-cloudtuple"
   dns_name    = "host.cloudtuple.com."
   description = "private zone for host project"
   visibility  = "private"
@@ -70,7 +70,7 @@ resource "google_dns_managed_zone" "private_host_cloudtuple" {
 
 resource "google_dns_managed_zone" "private_apple_cloudtuple" {
   provider    = "google-beta"
-  name        = "${var.name}private-apple-cloudtuple"
+  name        = "${var.main}private-apple-cloudtuple"
   dns_name    = "apple.cloudtuple.com."
   description = "private zone for apple project"
   visibility  = "private"
@@ -84,7 +84,7 @@ resource "google_dns_managed_zone" "private_apple_cloudtuple" {
 
 resource "google_dns_managed_zone" "private_gke_cloudtuple" {
   provider    = "google-beta"
-  name        = "${var.name}private-gke-cloudtuple"
+  name        = "${var.main}private-gke-cloudtuple"
   dns_name    = "gke.cloudtuple.com."
   description = "private zone for gke project"
   visibility  = "private"
@@ -98,7 +98,7 @@ resource "google_dns_managed_zone" "private_gke_cloudtuple" {
 
 resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   provider    = "google-beta"
-  name        = "${var.name}private-aws-west1-cloudtuples"
+  name        = "${var.main}private-aws-west1-cloudtuples"
   dns_name    = "west1.cloudtuples.com."
   description = "zone queries to aws west1 region"
   visibility  = "private"
@@ -118,7 +118,7 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
 
 resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
   provider    = "google-beta"
-  name        = "${var.name}private-aws-east1-cloudtuples"
+  name        = "${var.main}private-aws-east1-cloudtuples"
   dns_name    = "east1.cloudtuples.com."
   description = "zone queries to aws east1 region inbound endpoint"
   visibility  = "private"

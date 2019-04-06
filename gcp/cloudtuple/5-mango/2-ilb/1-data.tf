@@ -1,15 +1,3 @@
-provider "google" {
-  project     = "${var.project_name}"
-  credentials = "${var.credentials_file_path}"
-}
-
-terraform {
-  backend "gcs" {
-    bucket      = "tf-shk"
-    prefix      = "states/gcp/cloudtuple/5-mango/3-ilb"
-  }
-}
-
 # vpc remote state files
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
@@ -53,4 +41,10 @@ data "terraform_remote_state" "mango" {
     bucket  = "tf-shk"
     prefix  = "states/gcp/cloudtuple/0-org/4-mango"
   }
+}
+
+# dns data
+data "google_dns_managed_zone" "private_mango_cloudtuple" {
+  project = "${data.terraform_remote_state.mango.mango_project_id}"
+  name    = "${data.terraform_remote_state.vpc.private_mango_cloudtuple_name}"
 }

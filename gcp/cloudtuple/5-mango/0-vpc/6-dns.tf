@@ -1,6 +1,3 @@
-#=============================
-# Private DNS - Main VPC
-#=============================
 # private google api
 #--------------------------------
 resource "google_dns_managed_zone" "private_googleapis" {
@@ -55,10 +52,6 @@ resource "google_dns_managed_zone" "private_mango_cloudtuple" {
       network_url = "${google_compute_network.vpc.self_link}"
     }
   }
-}
-
-output "private_mango_cloudtuple_name" {
-  value = "${google_dns_managed_zone.private_mango_cloudtuple.name}"
 }
 
 # AWS Zones

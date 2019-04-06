@@ -1,7 +1,7 @@
 resource "google_compute_instance_template" "template" {
   name           = "${var.name}template"
   region         = "europe-west1"
-  machine_type   = "n1-standard-1"
+  machine_type   = "f1-micro"
   tags           = ["mig", "nat-europe-west1"]
   can_ip_forward = true
   tags           = ["mig", "gce"]

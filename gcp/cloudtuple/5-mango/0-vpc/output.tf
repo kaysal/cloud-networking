@@ -14,3 +14,7 @@ output "vpn_gw_ip_eu_w2_addr" {
 output "policy_based_vpn_gw_ip" {
   value = "${google_compute_address.policy_based_vpn_gw_ip.address}"
 }
+
+output "private_mango_cloudtuple_name" {
+  value = "${google_dns_managed_zone.private_mango_cloudtuple.name}"
+}

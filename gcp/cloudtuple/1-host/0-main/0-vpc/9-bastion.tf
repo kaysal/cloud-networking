@@ -1,23 +1,14 @@
-locals {
-  project               = "${data.terraform_remote_state.host.host_project_id}"
-  network_project       = "${data.terraform_remote_state.host.host_project_id}"
-  network               = "${google_compute_network.vpc.self_link}"
-  subnetwork            = "${google_compute_subnetwork.apple_eu_w1_10_100_10.self_link}"
-  service_account_email = "${data.terraform_remote_state.host.vm_host_project_service_account_email}"
-  zone                  = "europe-west1-c"
-}
-
 module "bastion" {
   source          = "github.com/kaysal/modules.git//gcp/bastion"
   #source                = "/home/salawu/tf_modules/gcp/bastion"
   name                  = "${var.main}bastion"
   hostname              = "bastion.host.cloudtuple.com"
-  project               = "${local.project}"
-  network_project       = "${local.network_project}"
-  network               = "${local.network}"
-  subnetwork            = "${local.subnetwork}"
-  zone                  = "${local.zone}"
-  service_account_email = "${local.service_account_email}"
+  project               = "${data.terraform_remote_state.host.host_project_id}"
+  network_project       = "${data.terraform_remote_state.host.host_project_id}"
+  network               = "${google_compute_network.vpc.self_link}"
+  subnetwork            = "${google_compute_subnetwork.apple_eu_w1_10_100_10.self_link}"
+  zone                  = "europe-west1-c"
+  service_account_email = "${data.terraform_remote_state.host.vm_host_project_service_account_email}"
 
   #machine_type             = "f1-micro"
   #list_of_tags             = ["bastion", "gce"]

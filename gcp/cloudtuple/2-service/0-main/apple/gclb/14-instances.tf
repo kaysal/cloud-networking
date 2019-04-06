@@ -10,8 +10,7 @@ locals {
 }
 
 module "bastion" {
-  source          = "/home/salawu/tf_modules/gcp/bastion"
-  #source = "github.com/kaysal/modules.git//gcp/bastion"
+  source                = "/home/salawu/tf_modules/gcp/bastion"
   name                  = "${var.main}bastion"
   hostname              = "bastion.host.cloudtuple.com"
   project               = "${local.project}"
@@ -191,3 +190,4 @@ resource "google_compute_instance" "sandbox_us_e1_vm" {
   }
 }
 */
+

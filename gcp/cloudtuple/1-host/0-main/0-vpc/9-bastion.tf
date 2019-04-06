@@ -8,8 +8,8 @@ locals {
 }
 
 module "bastion" {
-  #source          = "github.com/kaysal/modules.git//gcp/bastion"
-  source                = "/home/salawu/tf_modules/gcp/bastion"
+  source          = "github.com/kaysal/modules.git//gcp/bastion"
+  #source                = "/home/salawu/tf_modules/gcp/bastion"
   name                  = "${var.main}bastion"
   hostname              = "bastion.host.cloudtuple.com"
   project               = "${local.project}"

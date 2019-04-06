@@ -1,6 +1,3 @@
-#=============================
-# Private DNS - Main VPC
-#=============================
 # private google api
 #--------------------------------
 resource "google_dns_managed_zone" "private_googleapis" {
@@ -23,7 +20,7 @@ resource "google_dns_record_set" "googleapis_cname" {
   ttl  = 300
 
   managed_zone = "${google_dns_managed_zone.private_googleapis.name}"
-  rrdatas = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
+  rrdatas      = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
 }
 
 resource "google_dns_record_set" "restricted_googleapis" {
@@ -37,7 +34,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
     "199.36.153.4",
     "199.36.153.5",
     "199.36.153.6",
-    "199.36.153.7"
+    "199.36.153.7",
   ]
 }
 
@@ -83,7 +80,7 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   }
 }
 
-resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
+resource "google_dns_managed_zone" "private_aws_east1_cloudtuples" {
   provider    = "google-beta"
   name        = "${var.main}private-aws-east1-cloudtuples"
   dns_name    = "east1.cloudtuples.com."

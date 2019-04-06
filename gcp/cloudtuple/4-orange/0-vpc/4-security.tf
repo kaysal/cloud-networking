@@ -6,7 +6,7 @@ resource "google_compute_firewall" "gfe_to_gce" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80","8080"]
+    ports    = ["80", "8080"]
   }
 
   source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
@@ -47,7 +47,7 @@ resource "google_compute_firewall" "private_to_gce" {
 
   source_ranges = [
     "10.0.0.0/8",
-    "172.0.0.0/8"
+    "172.0.0.0/8",
   ]
 }
 

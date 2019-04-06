@@ -1,4 +1,4 @@
-resource "aws_route53_record" "googleapis" {
+/*resource "aws_route53_record" "googleapis" {
   zone_id = "${data.aws_route53_zone.googleapis.zone_id}"
   name    = "*.googleapis.com"
   type    = "CNAME"
@@ -17,4 +17,4 @@ resource "aws_route53_record" "restricted_googleapis" {
     "199.36.153.4",
     "199.36.153.5"
   ]
-}
+}*/

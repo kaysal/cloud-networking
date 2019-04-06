@@ -5,7 +5,7 @@ resource "random_id" "cert" {
 
 # certificate and private key for prod backend service
 resource "google_compute_ssl_certificate" "prod_cert" {
-  name        = "${var.name}prod-cert-${random_id.cert.hex}"
+  name        = "${var.main}prod-cert-${random_id.cert.hex}"
   private_key = "${file("${var.priv_key_path_prod}")}"
   certificate = "${file("${var.crt_path_prod}")}"
 
@@ -16,7 +16,7 @@ resource "google_compute_ssl_certificate" "prod_cert" {
 
 # certificate and private key for dev backend service
 resource "google_compute_ssl_certificate" "dev_cert" {
-  name        = "${var.name}dev-cert-${random_id.cert.hex}"
+  name        = "${var.main}dev-cert-${random_id.cert.hex}"
   private_key = "${file("${var.priv_key_path_dev}")}"
   certificate = "${file("${var.crt_path_dev}")}"
 

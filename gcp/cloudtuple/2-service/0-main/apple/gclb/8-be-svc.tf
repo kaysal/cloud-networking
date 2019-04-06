@@ -1,8 +1,8 @@
 # backend service
 #---------------------------------------
 resource "google_compute_backend_service" "prod_be_svc" {
-  provider = "google-beta"
-  name            = "${var.name}prod-be-svc"
+  provider        = "google-beta"
+  name            = "${var.main}prod-be-svc"
   port_name       = "http"
   protocol        = "HTTP"
   timeout_sec     = "30"
@@ -10,11 +10,11 @@ resource "google_compute_backend_service" "prod_be_svc" {
   security_policy = "${google_compute_security_policy.prod_app_policy.name}"
 
   /*
-      iap {
-        oauth2_client_id="${var.oauth2_client_id}"
-        oauth2_client_secret="${var.oauth2_client_secret}"
-      }
-    */
+            iap {
+              oauth2_client_id="${var.oauth2_client_id}"
+              oauth2_client_secret="${var.oauth2_client_secret}"
+            }
+          */
   custom_request_headers = [
     "X-Client-RTT-msec:{client_rtt_msec}",
     "X-Client-Geo-Location:{client_region},{client_city}",
@@ -57,8 +57,8 @@ resource "google_compute_backend_service" "prod_be_svc" {
 }
 
 resource "google_compute_backend_service" "dev-be-svc" {
-  provider = "google-beta"
-  name        = "${var.name}dev-be-svc"
+  provider    = "google-beta"
+  name        = "${var.main}dev-be-svc"
   port_name   = "http"
   protocol    = "HTTP"
   timeout_sec = "30"
@@ -75,7 +75,6 @@ resource "google_compute_backend_service" "dev-be-svc" {
     "X-TLS-Version:{tls_version}",
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
-
   backend {
     group           = "${google_compute_region_instance_group_manager.dev_eu_w3.instance_group}"
     balancing_mode  = "UTILIZATION"
@@ -88,7 +87,7 @@ resource "google_compute_backend_service" "dev-be-svc" {
 /*
 resource "google_compute_backend_service" "dev-neg-be-svc" {
   provider = "google-beta"
-  name        = "${var.name}dev-neg-be-svc"
+  name        = "${var.main}dev-neg-be-svc"
   port_name   = "http"
   protocol    = "HTTP"
   timeout_sec = "30"
@@ -104,3 +103,4 @@ resource "google_compute_backend_service" "dev-neg-be-svc" {
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
 }*/
+

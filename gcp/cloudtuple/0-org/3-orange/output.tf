@@ -12,3 +12,8 @@ output "orange_project_id" {
 output "orange_project_number" {
   value = "${google_project.orange_project.number}"
 }
+
+# service account email
+output "vm_orange_project_service_account_email" {
+  value = "${google_service_account.vm_orange_project.email}"
+}

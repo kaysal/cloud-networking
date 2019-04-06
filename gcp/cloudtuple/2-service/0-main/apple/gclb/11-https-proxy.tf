@@ -1,6 +1,6 @@
 # https proxy frontend
 resource "google_compute_target_https_proxy" "https_proxy" {
-  name    = "${var.name}https-proxy"
+  name    = "${var.main}https-proxy"
   url_map = "${google_compute_url_map.url_map.self_link}"
 
   ssl_certificates = [
@@ -13,7 +13,7 @@ resource "google_compute_target_https_proxy" "https_proxy" {
 
 # ssl policy
 resource "google_compute_ssl_policy" "ssl_policy_modern" {
-  name            = "${var.name}ssl-policy-modern"
+  name            = "${var.main}ssl-policy-modern"
   profile         = "MODERN"
   min_tls_version = "TLS_1_2"
 }

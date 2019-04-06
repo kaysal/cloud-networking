@@ -3,8 +3,7 @@ resource "random_id" "suffix" {
 }
 
 module "elk_stack" {
-  #source              = "github.com/kaysal/cloud-networking/modules/gcp/elk"
-  source                   = "../../../../../modules/gcp/elk"
+  source = "github.com/kaysal/modules.git//gcp/elk"
   project                  = "${data.terraform_remote_state.host.host_project_id}"
   network_project          = "${data.terraform_remote_state.host.host_project_id}"
   name                     = "elk-stack"
@@ -19,7 +18,7 @@ module "elk_stack" {
   google_pubsub_topic      = "logstash-input-dev"
   vpc_flow_log_sink_name   = "vpc-flows-${random_id.suffix.hex}"
   vpc_flow_log_destination = "pubsub.googleapis.com/projects/${data.terraform_remote_state.host.host_project_id}/topics/${module.elk_stack.pubsub_topic}"
-  vpc_flow_log_filter = "resource.type=\"gce_subnetwork\" logName=\"projects/${data.terraform_remote_state.host.host_project_id}/logs/compute.googleapis.com%2Fvpc_flows\""
+  vpc_flow_log_filter      = "resource.type=\"gce_subnetwork\" logName=\"projects/${data.terraform_remote_state.host.host_project_id}/logs/compute.googleapis.com%2Fvpc_flows\""
 }
 
 resource "google_dns_record_set" "elk_public" {

@@ -1,6 +1,7 @@
 # host network
 #--------------------------------------
 resource "google_compute_network" "vpc" {
+  provider                = "google-beta"
   name                    = "${var.main}vpc"
   auto_create_subnetworks = "false"
   routing_mode            = "GLOBAL"

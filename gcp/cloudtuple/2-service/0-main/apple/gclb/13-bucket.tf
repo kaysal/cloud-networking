@@ -21,7 +21,6 @@ resource "google_storage_bucket_iam_binding" "service_accounts_access_to_apple_b
 
   members = [
     "serviceAccount:${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}",
-    "serviceAccount:${data.terraform_remote_state.apple.tf_apple_service_project_service_account_email}",
   ]
 }
 

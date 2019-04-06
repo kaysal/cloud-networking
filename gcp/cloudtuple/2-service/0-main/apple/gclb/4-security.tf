@@ -4,7 +4,7 @@
 # default allow 0.0.0.0/0 and deny 9.9.9.0/24
 #-----------------------------------
 resource "google_compute_security_policy" "prod_app_policy" {
-  name = "${var.name}prod-app-policy"
+  name = "${var.main}prod-app-policy"
 
   rule {
     action   = "deny(403)"
@@ -40,7 +40,7 @@ resource "google_compute_security_policy" "prod_app_policy" {
 # default deny 0.0.0.0/0 and allow on-prem ip only
 #-----------------------------------
 resource "google_compute_security_policy" "dev_app_policy" {
-  name = "${var.name}dev-app-policy"
+  name = "${var.main}dev-app-policy"
 
   rule {
     action   = "allow"

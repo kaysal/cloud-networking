@@ -1,8 +1,8 @@
 # Instance template
 resource "google_compute_instance_template" "blue_template_eu_w1" {
-  name         = "${var.name}blue-template-eu-w1"
+  name         = "${var.main}blue-template-eu-w1"
   region       = "europe-west1"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   tags         = ["gce", "gce-mig-gclb", "nat-europe-west1"]
 
   disk {
@@ -34,9 +34,9 @@ resource "google_compute_instance_template" "blue_template_eu_w1" {
 }
 
 resource "google_compute_instance_template" "blue_template_eu_w2" {
-  name         = "${var.name}blue-template-eu-w2"
+  name         = "${var.main}blue-template-eu-w2"
   region       = "europe-west2"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   tags         = ["gce", "gce-mig-gclb", "nat-europe-west2"]
 
   disk {
@@ -68,9 +68,9 @@ resource "google_compute_instance_template" "blue_template_eu_w2" {
 }
 
 resource "google_compute_instance_template" "green_template_eu_w1" {
-  name         = "${var.name}green-template-eu-w1"
+  name         = "${var.main}green-template-eu-w1"
   region       = "europe-west1"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   tags         = ["gce", "gce-mig-gclb", "nat-europe-west1"]
 
   disk {
@@ -102,9 +102,9 @@ resource "google_compute_instance_template" "green_template_eu_w1" {
 }
 
 resource "google_compute_instance_template" "green_template_eu_w2" {
-  name         = "${var.name}green-template-eu-w2"
+  name         = "${var.main}green-template-eu-w2"
   region       = "europe-west2"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   tags         = ["gce", "gce-mig-gclb", "nat-europe-west2"]
 
   disk {
@@ -136,9 +136,9 @@ resource "google_compute_instance_template" "green_template_eu_w2" {
 }
 
 resource "google_compute_instance_template" "dev_template_eu_w3" {
-  name         = "${var.name}dev-template-eu-w3"
+  name         = "${var.main}dev-template-eu-w3"
   region       = "europe-west3"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   tags         = ["gce", "gce-mig-gclb", "nat-europe-west3"]
 
   disk {

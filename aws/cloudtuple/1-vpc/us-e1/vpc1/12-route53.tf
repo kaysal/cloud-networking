@@ -9,7 +9,7 @@ resource "aws_route53_zone" "cloudtuples_private" {
   }
 }
 
-# zone for restrcited.googleapis.com
+# restrcited.googleapis.com
 resource "aws_route53_zone" "googleapis" {
   name    = "googleapis.com"
   comment = "googleapis us-east1 vpc1"
@@ -17,6 +17,28 @@ resource "aws_route53_zone" "googleapis" {
   vpc {
     vpc_id = "${aws_vpc.vpc1.id}"
   }
+}
+
+resource "aws_route53_record" "googleapis" {
+  zone_id = "${aws_route53_zone.googleapis.zone_id}"
+  name    = "*.googleapis.com"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["restricted.googleapis.com"]
+}
+
+resource "aws_route53_record" "restricted_googleapis" {
+  zone_id = "${aws_route53_zone.googleapis.zone_id}"
+  name    = "restricted.googleapis.com"
+  type    = "A"
+  ttl     = "300"
+
+  records = [
+    "199.36.153.7",
+    "199.36.153.6",
+    "199.36.153.4",
+    "199.36.153.5",
+  ]
 }
 
 # Route53 Endpoints
@@ -57,4 +79,50 @@ resource "aws_route53_resolver_endpoint" "outbound_endpoint" {
   tags {
     Environment = "Prod"
   }
+}
+
+# west1.cloudtuples rule
+resource "aws_route53_resolver_rule" "eu_west1_cloudtuples_fwd" {
+  domain_name          = "west1.cloudtuples.com"
+  name                 = "west1-cloudtuples"
+  rule_type            = "FORWARD"
+  resolver_endpoint_id = "${aws_route53_resolver_endpoint.outbound_endpoint.id}"
+
+  target_ip {
+    ip = "172.16.10.100"
+  }
+
+  tags {
+    Environment = "Prod"
+  }
+}
+
+resource "aws_route53_resolver_rule_association" "eu_west1_cloudtuples_fwd" {
+  resolver_rule_id = "${aws_route53_resolver_rule.eu_west1_cloudtuples_fwd.id}"
+  vpc_id           = "${aws_vpc.vpc1.id}"
+}
+
+# apple.cloudtuple rule
+resource "aws_route53_resolver_rule" "gcp_apple_cloudtuple" {
+  domain_name          = "apple.cloudtuple.com"
+  name                 = "gcp-apple-cloudtuple"
+  rule_type            = "FORWARD"
+  resolver_endpoint_id = "${aws_route53_resolver_endpoint.outbound_endpoint.id}"
+
+  target_ip {
+    ip = "10.250.10.2"
+  }
+
+  target_ip {
+    ip = "10.150.10.2"
+  }
+
+  tags {
+    Environment = "Prod"
+  }
+}
+
+resource "aws_route53_resolver_rule_association" "gcp_cloudtuple" {
+  resolver_rule_id = "${aws_route53_resolver_rule.gcp_apple_cloudtuple.id}"
+  vpc_id           = "${aws_vpc.vpc1.id}"
 }

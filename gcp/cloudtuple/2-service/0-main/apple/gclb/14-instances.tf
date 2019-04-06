@@ -1,49 +1,58 @@
 # Bastion host
 #============================
-resource "google_compute_instance" "bastion_eu_w1" {
-  name                      = "${var.name}bastion-eu-w1"
-  machine_type              = "g1-small"
-  zone                      = "europe-west1-b"
-  tags                      = ["gce", "bastion"]
-  allow_stopping_for_update = true
-
-  boot_disk {
-    initialize_params {
-      image = "projects/debian-cloud/global/images/family/debian-9"
-    }
-  }
-
-  network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
-    network_ip = "10.100.10.55"
-
-    access_config {
-      // ephemeral nat ip
-    }
-  }
-
-  metadata {
-    ssh-keys = "user:${file("${var.public_key_path}")}"
-  }
-
-  metadata_startup_script = "${file("scripts/script.sh")}"
-
-  service_account {
-    scopes = ["cloud-platform"]
-    email = "${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}"
-  }
+locals {
+  project               = "${data.terraform_remote_state.apple.apple_service_project_id}"
+  network_project       = "${data.terraform_remote_state.host.host_project_id}"
+  network               = "${data.google_compute_network.vpc.self_link}"
+  subnetwork            = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
+  service_account_email = "${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}"
+  zone                  = "europe-west1-b"
 }
 
-output "bastion_eu_w1" {
-  value = "${google_compute_instance.bastion_eu_w1.network_interface.0.access_config.0.nat_ip}"
+module "bastion" {
+  source          = "/home/salawu/tf_modules/gcp/bastion"
+  #source = "github.com/kaysal/modules.git//gcp/bastion"
+  name                  = "${var.main}bastion"
+  hostname              = "bastion.host.cloudtuple.com"
+  project               = "${local.project}"
+  network_project       = "${local.network_project}"
+  network               = "${local.network}"
+  subnetwork            = "${local.subnetwork}"
+  zone                  = "${local.zone}"
+  service_account_email = "${local.service_account_email}"
+
+  #machine_type             = "f1-micro"
+  #list_of_tags             = ["bastion", "gce"]
+  #image                    = "debian-cloud/debian-9"
+  #disk_type                = "pd-standard"
+  #disk_size                = "10"
 }
 
+resource "google_dns_record_set" "bastion_public" {
+  project      = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  name         = "bastion.gclb.apple.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
+  type         = "A"
+  ttl          = 300
+  rrdatas      = ["${module.bastion.bastion_nat_ip}"]
+}
+
+resource "google_dns_record_set" "bastion_private" {
+  project      = "${data.terraform_remote_state.host.host_project_id}"
+  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  name         = "bastion.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
+  type         = "A"
+  ttl          = 300
+  rrdatas      = ["${module.bastion.bastion_private_ip}"]
+}
+
+/*
 # NEG endpoint VM
 #============================
 # vm neg 1
 #--------------------
 resource "google_compute_instance" "neg_eu_w3_vm1" {
-  name                      = "${var.name}neg-eu-w3-vm1"
+  name                      = "${var.main}neg-eu-w3-vm1"
   machine_type              = "g1-small"
   zone                      = "europe-west3-a"
   tags                      = ["gce", "gce-mig-gclb"]
@@ -81,7 +90,7 @@ resource "google_compute_instance" "neg_eu_w3_vm1" {
 # vm neg2
 #--------------------
 resource "google_compute_instance" "neg_eu_w3_vm2" {
-  name                      = "${var.name}neg-eu-w3-vm2"
+  name                      = "${var.main}neg-eu-w3-vm2"
   machine_type              = "g1-small"
   zone                      = "europe-west3-a"
   tags                      = ["gce", "gce-mig-gclb"]
@@ -119,7 +128,7 @@ resource "google_compute_instance" "neg_eu_w3_vm2" {
 # vm neg3
 #--------------------
 resource "google_compute_instance" "neg_eu_w3_vm3" {
-  name                      = "${var.name}neg-eu-w3-vm3"
+  name                      = "${var.main}neg-eu-w3-vm3"
   machine_type              = "g1-small"
   zone                      = "europe-west3-b"
   tags                      = ["gce", "gce-mig-gclb"]
@@ -156,7 +165,7 @@ resource "google_compute_instance" "neg_eu_w3_vm3" {
 # sandbox instance
 #--------------------
 resource "google_compute_instance" "sandbox_us_e1_vm" {
-  name                      = "${var.name}sandbox-us-e1-vm"
+  name                      = "${var.main}sandbox-us-e1-vm"
   machine_type              = "g1-small"
   zone                      = "us-east1-c"
   tags                      = ["gce", "nat-us-east1"]
@@ -181,3 +190,4 @@ resource "google_compute_instance" "sandbox_us_e1_vm" {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
+*/

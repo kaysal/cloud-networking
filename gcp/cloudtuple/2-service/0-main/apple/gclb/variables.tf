@@ -1,10 +1,6 @@
-variable "name" {
+variable "main" {
   description = "prefix to be appended to some resources"
   default     = "gclb-"
-}
-
-variable "credentials_file_path" {
-  description = "Path to the JSON file used to describe your account credentials"
 }
 
 variable "public_key_path" {
@@ -48,7 +44,10 @@ variable "crt_path_dev_v6" {
   description = "Path to dev (ipv6) certificate"
 }
 
+/*
 variable "path" {
   description = "The self link for backend services"
   default     = "https://www.googleapis.com/compute/v1/projects/apple-service-project-b5/global/backendServices"
 }
+*/
+

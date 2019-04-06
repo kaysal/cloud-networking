@@ -1,6 +1,6 @@
 # url map
 resource "google_compute_url_map" "url_map" {
-  name            = "${var.name}url-map"
+  name            = "${var.main}url-map"
   default_service = "${google_compute_backend_service.prod_be_svc.self_link}"
 
   host_rule {
@@ -40,6 +40,7 @@ resource "google_compute_url_map" "url_map" {
     name            = "devpath"
     default_service = "${google_compute_backend_service.dev-be-svc.self_link}"
 
+    /*
     path_rule {
       paths   = ["/app1", "/app1/*"]
       service = "${var.path}/gclb-dev-neg-app1-be-svc"
@@ -48,6 +49,6 @@ resource "google_compute_url_map" "url_map" {
     path_rule {
       paths   = ["/app2", "/app2/*"]
       service = "${var.path}/gclb-dev-neg-app2-be-svc"
-    }
+    }*/
   }
 }

@@ -1,6 +1,6 @@
 # http health checks
 resource "google_compute_health_check" "http_hc" {
-  name = "${var.name}http-hc"
+  name = "${var.main}http-hc"
 
   http_health_check {
     port = "80"

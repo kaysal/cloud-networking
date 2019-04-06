@@ -12,3 +12,8 @@ output "mango_project_id" {
 output "mango_project_number" {
   value = "${google_project.mango_project.number}"
 }
+
+# service account email
+output "vm_mango_project_service_account_email" {
+  value = "${google_service_account.vm_mango_project.email}"
+}

@@ -12,6 +12,8 @@ data "aws_ami" "ami" {
     name = "owner-alias"
     values = ["amazon",]
   }
+
+  owners = ["amazon"]
 }
 
 data "aws_ami" "ami_2" {
@@ -26,6 +28,8 @@ data "aws_ami" "ami_2" {
    name   = "name"
    values = ["amzn2-ami-hvm*"]
  }
+
+ owners = ["amazon"]
 }
 
 data "aws_ami" "ubuntu" {

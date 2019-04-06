@@ -139,3 +139,16 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
     }
   }
 }
+
+/*
+# DNS Policy
+resource "google_dns_policy" "allow_inbound" {
+  provider                  = "google-beta"
+  name                      = "allow-inbound"
+  enable_inbound_forwarding = true
+
+  networks {
+    network_url = "${google_compute_network.vpc.self_link}"
+  }
+}*/
+

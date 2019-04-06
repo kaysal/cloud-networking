@@ -320,7 +320,7 @@ resource "google_compute_firewall" "aws_gce" {
     "172.18.0.0/16",
   ]
 
-  target_tags = ["gce"]
+  target_tags = ["gce", "bastion"]
 }
 
 # AWS to GKE

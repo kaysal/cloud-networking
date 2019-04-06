@@ -21,11 +21,21 @@ resource "aws_security_group_rule" "bastion_ssh_ingress" {
   security_group_id = "${aws_security_group.bastion_pub_sg.id}"
 }
 
-resource "aws_security_group_rule" "bastion_tcp_dns_ingress" {
+resource "aws_security_group_rule" "bastion_icmp_ingress" {
   type              = "ingress"
-  from_port         = 53
-  to_port           = 53
-  protocol          = "tcp"
+  from_port         = 8
+  to_port           = 0
+  protocol          = "icmp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+  security_group_id = "${aws_security_group.bastion_pub_sg.id}"
+}
+
+resource "aws_security_group_rule" "bastion_traceroute_ingress" {
+  type              = "ingress"
+  from_port         = 33434
+  to_port           = 33534
+  protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
   security_group_id = "${aws_security_group.bastion_pub_sg.id}"

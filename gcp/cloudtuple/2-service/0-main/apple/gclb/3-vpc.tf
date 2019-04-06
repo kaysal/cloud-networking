@@ -1,12 +1,12 @@
 # gclb global static ip address
 #--------------------------------------
 resource "google_compute_global_address" "ipv4" {
-  name        = "${var.name}ipv4"
+  name        = "${var.main}ipv4"
   description = "static ipv4 address for gclb frontend"
 }
 
 resource "google_compute_global_address" "ipv6" {
-  name        = "${var.name}ipv6"
+  name        = "${var.main}ipv6"
   description = "static ipv6 address for gclb frontend"
   ip_version  = "IPV6"
 }
@@ -44,3 +44,4 @@ output "cidr_blocks_ipv4" {
 output "cidr_blocks_ipv6" {
   value = "${data.google_netblock_ip_ranges.netblock.cidr_blocks_ipv6}"
 }*/
+

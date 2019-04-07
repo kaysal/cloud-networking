@@ -14,6 +14,7 @@ resource "google_compute_forwarding_rule" "fr_orange_80" {
   ip_address            = "10.0.1.80"
   ip_protocol           = "TCP"
   ports                 = [80]
+  service_label         = "orange80"
 }
 
 resource "google_compute_forwarding_rule" "fr_orange_8080" {
@@ -26,4 +27,5 @@ resource "google_compute_forwarding_rule" "fr_orange_8080" {
   ip_address            = "10.0.1.88"
   ip_protocol           = "TCP"
   ports                 = [8080]
+  service_label         = "orange8080"
 }

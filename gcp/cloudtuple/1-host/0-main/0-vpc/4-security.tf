@@ -193,7 +193,7 @@ resource "google_compute_firewall" "onprem_bastion" {
   }
 
   source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
-  target_tags   = ["bastion"]
+  target_tags   = ["bastion", "gce", "gke"]
 }
 
 resource "google_compute_firewall" "onprem_elk" {

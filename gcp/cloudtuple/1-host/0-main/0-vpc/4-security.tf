@@ -267,10 +267,11 @@ resource "google_compute_firewall" "bastion_vpc" {
 }
 
 # gke to gce
+# ===========================
 resource "google_compute_firewall" "gke_gce" {
   provider       = "google-beta"
   name           = "${var.main}gke-gce"
-  description    = "allow connections from gce to gke"
+  description    = "allow connections from gke to gce"
   network        = "${google_compute_network.vpc.self_link}"
   enable_logging = true
 

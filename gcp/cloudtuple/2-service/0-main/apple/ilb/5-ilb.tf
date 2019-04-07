@@ -13,6 +13,7 @@ resource "google_compute_region_backend_service" "prod_ilb" {
 
 # internal forwarding rules
 resource "google_compute_forwarding_rule" "prod_ilb_fwd_rule" {
+  provider = "google-beta"
   name                  = "${var.main}fwd-rule-v4"
   region                = "europe-west1"
   load_balancing_scheme = "INTERNAL"
@@ -21,7 +22,7 @@ resource "google_compute_forwarding_rule" "prod_ilb_fwd_rule" {
   ip_address            = "10.100.10.99"
   ip_protocol           = "TCP"
   ports                 = ["80"]
-  # all ports
+  service_label         = "appleilb"
 }
 
 resource "google_dns_record_set" "ilb" {

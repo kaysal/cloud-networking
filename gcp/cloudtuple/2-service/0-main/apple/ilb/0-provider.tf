@@ -3,6 +3,12 @@ provider "google" {
   region      = "europe-west1"
 }
 
+provider "google-beta" {
+  project     = "${data.terraform_remote_state.apple.apple_service_project_id}"
+  region      = "europe-west1"
+}
+
+
 provider "random" {}
 
 terraform {

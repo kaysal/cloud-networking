@@ -7,7 +7,7 @@ resource "google_container_node_pool" "node_pool_w1" {
 
   node_config {
     machine_type    = "n1-standard-2"
-    service_account = "${data.terraform_remote_state.gke.node_gke_service_project_service_account_email}"
+    service_account = "${data.terraform_remote_state.gke.vm_gke_service_project_service_account_email}"
     tags            = ["nat-europe-west1", "gke"]
 
     labels {

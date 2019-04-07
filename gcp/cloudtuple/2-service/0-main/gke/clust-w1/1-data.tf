@@ -54,6 +54,11 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+data "google_compute_network" "vpc" {
+  project = "${data.terraform_remote_state.host.host_project_id}"
+  name    = "${data.terraform_remote_state.vpc.vpc_name}"
+}
+
 # capture local machine ipv4 to use in security configuration
 data "external" "onprem_ip" {
   program = ["sh", "scripts/onprem-ip.sh"]

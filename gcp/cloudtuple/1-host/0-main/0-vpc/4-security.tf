@@ -287,6 +287,27 @@ resource "google_compute_firewall" "gke_gce" {
   target_tags = ["gce"]
 }
 
+# rule for pod IP range necessary since 
+# node tags only affect node IP range
+resource "google_compute_firewall" "gke_pod_gce" {
+  provider       = "google-beta"
+  name           = "${var.main}gke-pod-gce"
+  description    = "allow connections from gke pod to gce"
+  network        = "${google_compute_network.vpc.self_link}"
+  enable_logging = true
+
+  allow {
+    protocol = "tcp"
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+
+  source_ranges = ["10.4.0.0/14", "10.8.0.0/14"]
+  target_tags = ["gce"]
+}
+
 # AWS to GCE
 # ===========================
 resource "google_compute_firewall" "aws_gce" {

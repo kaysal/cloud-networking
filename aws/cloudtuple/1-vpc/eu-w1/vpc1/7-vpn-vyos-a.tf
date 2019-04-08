@@ -46,8 +46,20 @@ resource "aws_route" "private_gcp_vpn_route1_a" {
   instance_id            = "${aws_instance.vyos_a.id}"
 }
 
+resource "aws_route" "public_gcp_vpn_route1_a" {
+  route_table_id         = "${aws_route_table.public_rtb_a.id}"
+  destination_cidr_block = "10.0.0.0/8"
+  instance_id            = "${aws_instance.vyos_a.id}"
+}
+
 resource "aws_route" "private_gcp_vpn_route2_a" {
   route_table_id         = "${aws_route_table.private_rtb_a.id}"
+  destination_cidr_block = "35.199.192.0/19"
+  instance_id            = "${aws_instance.vyos_a.id}"
+}
+
+resource "aws_route" "public_gcp_vpn_route2_a" {
+  route_table_id         = "${aws_route_table.public_rtb_a.id}"
   destination_cidr_block = "35.199.192.0/19"
   instance_id            = "${aws_instance.vyos_a.id}"
 }

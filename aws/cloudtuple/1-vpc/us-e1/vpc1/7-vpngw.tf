@@ -20,3 +20,13 @@ resource "aws_vpn_gateway_route_propagation" "private_rtb_b" {
   vpn_gateway_id = "${aws_vpn_gateway.vpc1_vpgw.id}"
   route_table_id = "${aws_route_table.private_rtb_b.id}"
 }
+
+resource "aws_vpn_gateway_route_propagation" "public_rtb_a" {
+  vpn_gateway_id = "${aws_vpn_gateway.vpc1_vpgw.id}"
+  route_table_id = "${aws_route_table.public_rtb_a.id}"
+}
+
+resource "aws_vpn_gateway_route_propagation" "public_rtb_b" {
+  vpn_gateway_id = "${aws_vpn_gateway.vpc1_vpgw.id}"
+  route_table_id = "${aws_route_table.public_rtb_b.id}"
+}

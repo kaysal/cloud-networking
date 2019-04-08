@@ -16,8 +16,7 @@ export LOCAL_VTI_IP2=169.254.100.9/30
 export PEER_VTI_IP2=169.254.100.10
 
 #! Local AWS Subnets and parameters
-export LOCAL_NETWORK1=172.16.10.0/24
-export LOCAL_NETWORK2=172.16.11.0/24
+export LOCAL_NETWORK=172.16.0.0/16
 export LOCAL_DEFAULT_ROUTER=172.16.0.1
 export LOCAL_ASN=65010
 export REMOTE_ASN=65000
@@ -121,16 +120,13 @@ set protocols bgp $LOCAL_ASN neighbor $PEER_VTI_IP2 timers keepalive '10'
 #! ---------------------------------------------------
 #! Add local static routes
 #! ---------------------------------------------------
-set protocols static route $LOCAL_NETWORK1 next-hop $LOCAL_DEFAULT_ROUTER
-set protocols static route $LOCAL_NETWORK2 next-hop $LOCAL_DEFAULT_ROUTER
+set protocols static route $LOCAL_NETWORK next-hop $LOCAL_DEFAULT_ROUTER
 #! ---------------------------------------------------
 #! Add local static routes
 #! ---------------------------------------------------
 #! gcp 'vpc' vpc
 set policy prefix-list GCP rule 10 action 'permit'
-set policy prefix-list GCP rule 10 prefix $LOCAL_NETWORK1
-set policy prefix-list GCP rule 20 action 'permit'
-set policy prefix-list GCP rule 20 prefix $LOCAL_NETWORK2
+set policy prefix-list GCP rule 10 prefix $LOCAL_NETWORK
 set policy route-map GCP rule 10 action 'permit'
 set policy route-map GCP rule 10 match ip address prefix-list 'GCP'
 set policy route-map GCP rule 10 set metric 100
@@ -139,9 +135,7 @@ set protocols bgp 65010 neighbor $PEER_VTI_IP route-map export 'GCP'
 #!
 #! gcp 'untrust' vpc
 set policy prefix-list UNTRUST rule 10 action 'permit'
-set policy prefix-list UNTRUST rule 10 prefix $LOCAL_NETWORK1
-set policy prefix-list UNTRUST rule 20 action 'permit'
-set policy prefix-list UNTRUST rule 20 prefix $LOCAL_NETWORK2
+set policy prefix-list UNTRUST rule 10 prefix $LOCAL_NETWORK
 set policy route-map UNTRUST rule 10 action 'permit'
 set policy route-map UNTRUST rule 10 match ip address prefix-list 'UNTRUST'
 set policy route-map UNTRUST rule 10 set metric 100

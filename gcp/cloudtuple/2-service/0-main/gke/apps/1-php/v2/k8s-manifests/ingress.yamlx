@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: phpingress
+  labels:
+    app: phpapp
+spec:
+  backend:
+    serviceName: phpnodeport
+    servicePort: 80
+---

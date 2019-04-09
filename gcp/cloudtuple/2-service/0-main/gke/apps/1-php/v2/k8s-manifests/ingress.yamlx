@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: phpingress
   labels:
-    app: phpapp
+    app: phpapp2
 spec:
   backend:
     serviceName: phpnodeport

@@ -20,8 +20,8 @@ build:
   # must provide a "default repo" using one of the methods described
   # here:
   # https://skaffold.dev/docs/concepts/#image-repository-handling
-  - image: phpapp
-    context: src/phpapp
+  - image: phpapp2
+    context: src/phpapp2
   tagPolicy:
     gitCommit: {}
 deploy:

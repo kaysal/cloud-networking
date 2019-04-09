@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: phplb
   labels:
-    app: phpapp
+    app: phpapp2
 spec:
   ports:
   - nodePort:
@@ -11,6 +11,6 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: phpapp
+    app: phpapp2
   sessionAffinity: None
   type: LoadBalancer

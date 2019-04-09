@@ -5,7 +5,7 @@ metadata:
   annotations:
     cloud.google.com/load-balancer-type: "Internal"
   labels:
-    app: phpapp
+    app: phpapp2
 spec:
   type: LoadBalancer
   loadBalancerIP: 10.0.4.99
@@ -15,4 +15,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: phpapp
+    app: phpapp2

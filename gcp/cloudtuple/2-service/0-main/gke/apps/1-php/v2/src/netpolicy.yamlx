@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: phpapp
+      app: phpapp2
   policyTypes:
   - Ingress
   - Egress

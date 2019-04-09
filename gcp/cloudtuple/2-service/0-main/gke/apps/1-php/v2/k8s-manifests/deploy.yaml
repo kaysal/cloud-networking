@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: phpdeploy
   labels:
-    app: phpapp
+    app: phpapp2
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: phpapp
+      app: phpapp2
   template:
     metadata:
       labels:
-        app: phpapp
+        app: phpapp2
     spec:
       volumes:
       - name: google-cloud-key

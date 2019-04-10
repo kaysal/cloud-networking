@@ -9,7 +9,7 @@ resource "google_compute_url_map" "url_map" {
   }
 
   host_rule {
-    hosts = ["pan.cloudtuple.com"]
+    hosts        = ["pan.cloudtuple.com"]
     path_matcher = "pan"
   }
 

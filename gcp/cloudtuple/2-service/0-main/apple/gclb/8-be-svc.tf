@@ -75,6 +75,7 @@ resource "google_compute_backend_service" "dev-be-svc" {
     "X-TLS-Version:{tls_version}",
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
+  
   backend {
     group           = "${google_compute_region_instance_group_manager.dev_eu_w3.instance_group}"
     balancing_mode  = "UTILIZATION"
@@ -103,4 +104,3 @@ resource "google_compute_backend_service" "dev-neg-be-svc" {
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
 }*/
-

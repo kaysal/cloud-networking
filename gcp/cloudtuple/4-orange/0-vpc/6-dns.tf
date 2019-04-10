@@ -7,6 +7,10 @@ resource "google_dns_managed_zone" "private_googleapis" {
   description = "private zone for googleapis"
   visibility  = "private"
 
+  labels = {
+    foo = "bar"
+  }
+
   private_visibility_config {
     networks {
       network_url = "${google_compute_network.vpc.self_link}"
@@ -47,6 +51,10 @@ resource "google_dns_managed_zone" "private_orange_cloudtuple" {
   description = "private zone for orange project"
   visibility  = "private"
 
+  labels = {
+    foo = "bar"
+  }
+
   private_visibility_config {
     networks {
       network_url = "${google_compute_network.vpc.self_link}"
@@ -67,6 +75,10 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   description = "zone queries to aws west1 region"
   visibility  = "private"
 
+  labels = {
+    foo = "bar"
+  }
+
   private_visibility_config {
     networks {
       network_url = "${google_compute_network.vpc.self_link}"
@@ -86,6 +98,10 @@ resource "google_dns_managed_zone" "private_aws_east1_cloudtuples" {
   dns_name    = "east1.cloudtuples.com."
   description = "zone queries to aws east1 region inbound endpoint"
   visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
 
   private_visibility_config {
     networks {

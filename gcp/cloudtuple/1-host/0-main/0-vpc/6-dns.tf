@@ -12,6 +12,10 @@ resource "google_dns_managed_zone" "public_host_cloudtuple" {
   name        = "public-host-cloudtuple"
   dns_name    = "cloudtuple.com."
   description = "Cloudtuple Public Second Level Domain"
+
+  labels = {
+    foo = "bar"
+  }
 }
 
 # Private DNS
@@ -22,6 +26,10 @@ resource "google_dns_managed_zone" "private_googleapis" {
   dns_name    = "googleapis.com."
   description = "private zone for googleapis"
   visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
 
   private_visibility_config {
     networks {
@@ -61,6 +69,10 @@ resource "google_dns_managed_zone" "private_host_cloudtuple" {
   description = "private zone for host project"
   visibility  = "private"
 
+  labels = {
+    foo = "bar"
+  }
+
   private_visibility_config {
     networks {
       network_url = "${google_compute_network.vpc.self_link}"
@@ -74,6 +86,10 @@ resource "google_dns_managed_zone" "private_apple_cloudtuple" {
   dns_name    = "apple.cloudtuple.com."
   description = "private zone for apple project"
   visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
 
   private_visibility_config {
     networks {
@@ -89,6 +105,10 @@ resource "google_dns_managed_zone" "private_gke_cloudtuple" {
   description = "private zone for gke project"
   visibility  = "private"
 
+  labels = {
+    foo = "bar"
+  }
+
   private_visibility_config {
     networks {
       network_url = "${google_compute_network.vpc.self_link}"
@@ -102,6 +122,10 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   dns_name    = "west1.cloudtuples.com."
   description = "zone queries to aws west1 region"
   visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
 
   private_visibility_config {
     networks {
@@ -122,6 +146,10 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
   dns_name    = "east1.cloudtuples.com."
   description = "zone queries to aws east1 region inbound endpoint"
   visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
 
   private_visibility_config {
     networks {
@@ -151,4 +179,3 @@ resource "google_dns_policy" "allow_inbound" {
     network_url = "${google_compute_network.vpc.self_link}"
   }
 }*/
-

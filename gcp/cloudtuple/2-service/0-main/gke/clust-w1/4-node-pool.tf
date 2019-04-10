@@ -2,8 +2,8 @@ resource "google_container_node_pool" "node_pool_w1" {
   provider   = "google-beta"
   name       = "${var.name}node-pool-w1"
   cluster    = "${google_container_cluster.clust_w1.name}"
-  region     = "europe-west1"
-  node_count = 2
+  location   = "europe-west1"
+  node_count = 1
 
   node_config {
     machine_type    = "n1-standard-2"

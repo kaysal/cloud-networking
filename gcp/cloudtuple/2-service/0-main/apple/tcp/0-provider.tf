@@ -1,6 +1,9 @@
 provider "google" {
   project    = "${data.terraform_remote_state.apple.apple_service_project_id}"
-  credentials = "${var.credentials_file_path}"
+}
+
+provider "google-beta" {
+  project    = "${data.terraform_remote_state.apple.apple_service_project_id}"
 }
 
 provider "random" {}

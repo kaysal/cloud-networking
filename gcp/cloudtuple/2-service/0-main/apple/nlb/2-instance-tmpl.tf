@@ -3,7 +3,7 @@
 resource "google_compute_instance_template" "prod_template_eu_w1" {
   name         = "${var.name}prod-template-eu-w1"
   region       = "europe-west1"
-  machine_type = "g1-small"
+  machine_type = "f1-micro"
   tags         = ["gce","gce-mig-nlb","nat-europe-west1"]
 
   disk {

@@ -36,7 +36,7 @@ resource "google_compute_firewall" "vpc_demo_allow_http_ssh_icmp" {
   }
 }
 
-# Create vpc-demo Cloud Routers
+# Create vpc-demo Cloud Router
 resource "google_compute_router" "vpc_demo_router" {
   name    = "vpc-demo-router"
   network = "${google_compute_network.vpc_demo.name}"

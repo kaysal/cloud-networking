@@ -45,6 +45,23 @@ output "vpn_gw2_ip_us_e1_addr" {
   value = "${google_compute_address.vpn_gw2_ip_us_e1.address}"
 }
 
+# vpn gw external ip address names
+output "vpn_gw_ip_eu_w1_name" {
+  value = "${google_compute_address.vpn_gw_ip_eu_w1.name}"
+}
+
+output "vpn_gw_ip_eu_w2_name" {
+  value = "${google_compute_address.vpn_gw_ip_eu_w2.name}"
+}
+
+output "vpn_gw1_ip_us_e1_name" {
+  value = "${google_compute_address.vpn_gw1_ip_us_e1.name}"
+}
+
+output "vpn_gw2_ip_us_e1_name" {
+  value = "${google_compute_address.vpn_gw2_ip_us_e1.name}"
+}
+
 /*
 output "gcp_eu_w3_vpn_gw1_ip" {
   value = "${google_compute_address.gcp_eu_w3_vpn_gw1_ip.address}"

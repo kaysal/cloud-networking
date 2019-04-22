@@ -46,17 +46,7 @@ data "terraform_remote_state" "untrust" {
 
   config {
     bucket = "tf-shk"
-    prefix = "states/gcp/cloudtuple/1-host/1-pan/0-vpc"
-  }
-}
-
-# gcp vpcuser16 remote state files
-data "terraform_remote_state" "vpcuser16" {
-  backend = "gcs"
-
-  config {
-    bucket = "tf-shk"
-    prefix = "states/gcp/vpcuser16/private-dns/0-vpc"
+    prefix = "states/gcp/cloudtuple/1-host/1-nva/0-vpc"
   }
 }
 

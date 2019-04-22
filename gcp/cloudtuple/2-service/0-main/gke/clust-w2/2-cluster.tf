@@ -1,13 +1,13 @@
 resource "google_container_cluster" "clust_w2" {
-  provider   = "google-beta"
-  name       = "${var.name}clust-w2"
-  region     = "europe-west2"
-  network    = "${data.google_compute_network.vpc.self_link}"
-  subnetwork = "${data.terraform_remote_state.vpc.gke_eu_w2_10_0_8}"
-  enable_binary_authorization  = true
-  logging_service = "logging.googleapis.com"
-  initial_node_count = 1
-  remove_default_node_pool  = true
+  provider                    = "google-beta"
+  name                        = "${var.name}clust-w2"
+  location                    = "europe-west2"
+  network                     = "${data.google_compute_network.vpc.self_link}"
+  subnetwork                  = "${data.terraform_remote_state.vpc.gke_eu_w2_10_0_8}"
+  enable_binary_authorization = true
+  logging_service             = "logging.googleapis.com"
+  initial_node_count          = 1
+  remove_default_node_pool    = true
 
   private_cluster_config {
     enable_private_endpoint = false
@@ -17,8 +17,16 @@ resource "google_container_cluster" "clust_w2" {
 
   master_authorized_networks_config {
     cidr_blocks = [
-      {cidr_block = "0.0.0.0/0", display_name = "all-external"},
-      {cidr_block = "${data.external.onprem_ip.result.ip}/32", display_name = "on-prem"},
+      {
+        cidr_block = "0.0.0.0/0"
+
+        display_name = "all-external"
+      },
+      {
+        cidr_block = "${data.external.onprem_ip.result.ip}/32"
+
+        display_name = "on-prem"
+      },
     ]
   }
 
@@ -38,6 +46,7 @@ resource "google_container_cluster" "clust_w2" {
 
     istio_config {
       disabled = false
+
       #auth = "AUTH_MUTUAL_TLS"
     }
   }

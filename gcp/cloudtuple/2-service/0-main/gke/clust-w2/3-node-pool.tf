@@ -2,7 +2,7 @@ resource "google_container_node_pool" "node_pool_w2" {
   provider   = "google-beta"
   name       = "${var.name}node-pool-w2"
   cluster    = "${google_container_cluster.clust_w2.name}"
-  location     = "europe-west2"
+  location   = "europe-west2"
   node_count = 1
 
   node_config {

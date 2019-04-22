@@ -27,7 +27,7 @@ build:
 deploy:
   kubectl:
     manifests:
-    - ./k8s-manifests/**.yaml
+    - ./manifests/**.yaml
 profiles:
 # "travis-ci" profile is used to build the images without
 # pushing them.

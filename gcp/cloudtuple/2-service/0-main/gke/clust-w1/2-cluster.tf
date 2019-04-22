@@ -1,7 +1,7 @@
 resource "google_container_cluster" "clust_w1" {
   provider                    = "google-beta"
   name                        = "${var.name}clust-w1"
-  region                      = "europe-west1"
+  location                    = "europe-west1"
   network                     = "${data.google_compute_network.vpc.self_link}"
   subnetwork                  = "${data.terraform_remote_state.vpc.gke_eu_w1_10_0_4}"
   enable_binary_authorization = true

@@ -1,4 +1,4 @@
-#!/bin/vbash
+#!/bin/bash
 #source /opt/vyatta/etc/functions/script-template
 
 #! Router IP Addresses

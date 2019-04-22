@@ -9,7 +9,7 @@ resource "aws_instance" "vyos_b" {
   instance_type          = "t2.micro"
   availability_zone      = "eu-west-1b"
   ami                    = "ami-99a70de0"
-  key_name               = "${var.key_name_eu_west1}"
+  key_name               = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids = ["${aws_security_group.vyos_pub_sg.id}"]
   subnet_id              = "${aws_subnet.public_172_16_1.id}"
   private_ip             = "172.16.1.100"

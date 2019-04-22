@@ -1,5 +1,15 @@
 # REMOTE STATES
 #==============================
+# eu-west1 Regional shared stuff
+data "terraform_remote_state" "w1_shared" {
+  backend = "gcs"
+
+  config {
+    bucket = "tf-shk"
+    prefix = "states/aws/cloudtuple/1-vpc/eu-w1/shared"
+  }
+}
+
 # eu-west1 vpc2 remote state files
 data "terraform_remote_state" "w1_vpc2" {
   backend = "gcs"

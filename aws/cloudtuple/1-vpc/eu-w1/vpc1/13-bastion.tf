@@ -4,7 +4,7 @@ resource "aws_instance" "bastion" {
   instance_type               = "t2.micro"
   availability_zone           = "eu-west-1a"
   ami                         = "${data.aws_ami.ubuntu.id}"
-  key_name                    = "${var.key_name_eu_west1}"
+  key_name                    = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids      = ["${aws_security_group.bastion_pub_sg.id}"]
   subnet_id                   = "${aws_subnet.public_172_16_0.id}"
   private_ip                  = "172.16.0.10"

@@ -4,7 +4,7 @@ resource "aws_instance" "web" {
   instance_type               = "t2.micro"
   availability_zone           = "us-east-1a"
   ami                         = "${data.aws_ami.ubuntu.id}"
-  key_name                    = "${var.key_name}"
+  key_name                    = "${data.terraform_remote_state.e1_shared.kp}"
   subnet_id                   = "${data.terraform_remote_state.e1_vpc1.private_172_18_10}"
   private_ip                  = "172.18.10.10"
   associate_public_ip_address = false
@@ -42,7 +42,7 @@ resource "aws_instance" "server" {
   instance_type               = "t2.micro"
   availability_zone           = "us-east-1b"
   ami                         = "${data.aws_ami.ubuntu.id}"
-  key_name                    = "${var.key_name}"
+  key_name                    = "${data.terraform_remote_state.e1_shared.kp}"
   subnet_id                   = "${data.terraform_remote_state.e1_vpc1.private_172_18_11}"
   private_ip                  = "172.18.11.10"
   associate_public_ip_address = false
@@ -80,7 +80,7 @@ resource "aws_instance" "sandbox" {
   instance_type               = "t2.micro"
   availability_zone           = "us-east-1c"
   ami                         = "${data.aws_ami.ami.id}"
-  key_name                    = "${var.key_name}"
+  key_name                    = "${data.terraform_remote_state.e1_shared.kp}"
   subnet_id                   = "${data.terraform_remote_state.e1_vpc1.private_172_18_12}"
   private_ip                  = "172.18.12.10"
   associate_public_ip_address = false

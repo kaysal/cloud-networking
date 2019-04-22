@@ -4,7 +4,7 @@ resource "aws_instance" "appliance" {
   instance_type          = "t2.medium"
   availability_zone      = "eu-west-1a"
   ami                    = "ami-0ea87e2bfa81ca08a"
-  key_name               = "${var.key_name_eu_west1}"
+  key_name               = "${data.terraform_remote_state.w1_shared.kp}"
   subnet_id = "${data.terraform_remote_state.w1_vpc2.public_172_17_0}"
   private_ip             = "172.17.0.100"
   ipv6_address_count = 1
@@ -66,7 +66,7 @@ resource "aws_instance" "web" {
   instance_type               = "t2.micro"
   availability_zone           = "eu-west-1a"
   ami                         = "${data.aws_ami.ubuntu.id}"
-  key_name                    = "${var.key_name_eu_west1}"
+  key_name                    = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids      = ["${data.terraform_remote_state.w1_vpc2.ec2_prv_sg}"]
   subnet_id                   = "${data.terraform_remote_state.w1_vpc2.private_172_17_10}"
   private_ip                  = "172.17.10.10"

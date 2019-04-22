@@ -12,8 +12,7 @@ provider "random" {}
 #==============================
 terraform {
   backend "gcs" {
-    bucket      = "tf-shk"
-    prefix      = "states/aws/cloudtuple/2-svc/eu-w1/vpc2/1-demo"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
+    bucket = "tf-shk"
+    prefix = "states/aws/cloudtuple/1-vpc/eu-w1/shared"
   }
 }

@@ -6,21 +6,17 @@ variable "secret_key" {
   description = "account secret key"
 }
 
-variable "peer_access_key" {
-  description = "account access key"
+variable "public_key_path" {
+  description = "path to public key for ec2 SSH"
 }
 
-variable "peer_secret_key" {
-  description = "account secret key"
+variable "private_key_path" {
+  description = "path to private key for ec2 SSH"
 }
 
 variable "name" {
   description = "general resource prefix"
   default     = "ks-w1.2-"
-}
-
-variable "key_name_eu_west1" {
-  description = "Name of the SSH keypair to use in aws us-east1"
 }
 
 variable "domain_name" {

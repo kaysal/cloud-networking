@@ -69,6 +69,13 @@ resource "aws_subnet" "private_172_17_12" {
   }
 }
 
+# Key Pair
+resource "aws_key_pair" "ks_ec2" {
+  key_name   = "ks-ec2"
+  public_key = "${file(var.public_key_path)}"
+}
+
+
 # OUTPUTS
 #==============================
 output "vpc2" {

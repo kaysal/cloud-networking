@@ -33,7 +33,7 @@ resource "aws_instance" "ns01" {
   instance_type               = "t2.micro"
   availability_zone           = "eu-west-1a"
   ami                         = "${data.aws_ami.ubuntu.id}"
-  key_name                    = "${var.key_name_eu_west1}"
+  key_name                    = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids      = ["${aws_security_group.ec2_prv_sg.id}"]
   subnet_id                   = "${aws_subnet.private_172_16_10.id}"
   private_ip                  = "172.16.10.100"

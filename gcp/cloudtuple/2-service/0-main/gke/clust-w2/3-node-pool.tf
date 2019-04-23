@@ -8,7 +8,7 @@ resource "google_container_node_pool" "node_pool_w2" {
   node_config {
     machine_type    = "n1-standard-1"
     service_account = "${data.terraform_remote_state.gke.vm_gke_service_project_service_account_email}"
-    tags            = ["nat-europe-west1", "gke"]
+    tags            = ["gke", "mig", "mig-nlb", "nat-europe-west2"]
 
     labels {
       engine = "gke"
@@ -16,10 +16,6 @@ resource "google_container_node_pool" "node_pool_w2" {
 
     workload_metadata_config {
       node_metadata = "SECURE"
-    }
-
-    metadata {
-      ssh-keys = "user:${file("${var.public_key_path}")}"
     }
 
     oauth_scopes = [

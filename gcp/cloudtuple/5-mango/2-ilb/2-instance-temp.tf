@@ -4,7 +4,7 @@ resource "google_compute_instance_template" "prod_template" {
   machine_type   = "f1-micro"
   tags           = ["mig", "nat-europe-west2"]
   can_ip_forward = true
-  tags           = ["mig"]
+  tags           = ["mig","gce"]
 
   disk {
     source_image = "debian-cloud/debian-9"

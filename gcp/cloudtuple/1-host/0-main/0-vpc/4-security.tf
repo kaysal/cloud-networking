@@ -1,415 +1,234 @@
-# GFE to GCE
-# ======================
-# allow gfe to LBs - gclb
-resource "google_compute_firewall" "gfe_gce_gclb" {
-  provider       = "google-beta"
-  name           = "${var.main}gfe-gce-gclb"
-  description    = "allow gfe to gclb MIG"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
+# gfe proxy
+#----------------------
+# gce: tcp_proxy = tcp/(allowed ports)
+# gce: http_proxy = tcp/80;8080
+# gce: ilb = tcp, udp
+# gke: ilb = tcp/10256
+# gke: ingress = tcp/30000-32767
 
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080"]
-  }
-
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
-  target_tags   = ["gce-mig-gclb"]
-}
-
-# allow gfe to gce tcp proxy LB on port 110
-resource "google_compute_firewall" "gfe_gce_tcp" {
-  name        = "${var.main}gfe-gce-tcp"
-  description = "allow gfe to gce tcp proxy lb"
+resource "google_compute_firewall" "gfe_http_ssl_tcp_internal" {
+  provider    = "google-beta"
+  name        = "${var.env}gfe-http-ssl-tcp-internal"
+  description = "gfe http ssl tcp internal"
   network     = "${google_compute_network.vpc.self_link}"
 
   #enable_logging = true
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "110"]
+    ports    = [80, 8080, 110, 10256, "30000-32767"]
   }
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
-  target_tags   = ["gce-mig-tcp"]
-}
-
-# allow traffic to gce external ilb instances
-resource "google_compute_firewall" "gfe_gce_ilb" {
-  name        = "${var.main}gfe-gce-ilb"
-  description = "allow gfe to ilb"
-  network     = "${google_compute_network.vpc.self_link}"
-
-  #enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080"]
-  }
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
-  target_tags   = ["gce-mig-ilb"]
-}
-
-# Web to GCE NLB (including GFE to GCE NLB)
-# ======================
-# allow traffic to gce external nlb instances
-resource "google_compute_firewall" "web_gce_nlb" {
-  name        = "${var.main}web-gce-nlb"
-  description = "allow all traffic to nlb"
-  network     = "${google_compute_network.vpc.self_link}"
-
-  #enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080"]
-  }
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["gce-mig-nlb"]
-}
-
-# GFE to GKE
-# ======================
-# allow gfe to gke ilb on tcp:10256
-resource "google_compute_firewall" "gfe_gke_ilb" {
-  name        = "${var.main}gfe-gke-ilb"
-  description = "allow gfe to GKE ILB nodes on tcp 10256"
-  network     = "${google_compute_network.vpc.self_link}"
-
-  #enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["10256"]
-  }
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
-  target_tags   = ["gke"]
-}
-
-# allow gfe to gke nlb on tcp:10256
-resource "google_compute_firewall" "gfe_gke_nlb" {
-  name        = "${var.main}gfe-gke-nlb"
-  description = "allow gfe to GKE NLB nodes on tcp 10256"
-  network     = "${google_compute_network.vpc.self_link}"
-
-  #enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["10256"]
-  }
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.network}"]
-  target_tags   = ["gke"]
-}
-
-# allow gfe to gke ingress on NodePort range
-resource "google_compute_firewall" "gfe_gke_ing" {
-  provider       = "google-beta"
-  name           = "${var.main}gfe-gke-ing"
-  description    = "allow gfe to GKE ingress nodes on NodePort range"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["30000-32767"]
-  }
-
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
-  target_tags   = ["gke"]
-}
-
-# Web to GKE NLB
-# ===============================
-resource "google_compute_firewall" "web_gke_nlb" {
-  provider       = "google-beta"
-  name           = "${var.main}web-gke-nlb"
-  description    = "allow external web to GKE nodes using NLB"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["gke"]
-}
-
-# GKE to GKE
-# ===============================
-resource "google_compute_firewall" "gke_gke" {
-  provider       = "google-beta"
-  name           = "${var.main}gke-gke"
-  description    = "allow all traffic between GKE clusters"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-  }
-
   allow {
     protocol = "udp"
   }
+  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
+  target_tags   = ["mig"]
+}
+
+# gfe nlb
+#----------------------
+# gce: nlb = tcp
+# gke: nlb = tcp/10256
+
+resource "google_compute_firewall" "gfe_nlb" {
+  provider    = "google-beta"
+  name        = "${var.env}gfe-nlb"
+  description = "gfe nlb"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
-    protocol = "icmp"
+    protocol = "tcp"
   }
+  allow {
+    protocol = "udp"
+  }
+  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.network}"]
+  target_tags   = ["mig-nlb"]
+}
+
+# web nlb
+#----------------------
+resource "google_compute_firewall" "web_nlb" {
+  provider    = "google-beta"
+  name        = "${var.env}web-nlb"
+  description = "web to nlb mig"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
-    protocol = "esp"
+    protocol = "tcp"
   }
+  allow {
+    protocol = "udp"
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["mig-nlb"]
+}
+
+# gce to gce
+#----------------------
+resource "google_compute_firewall" "gce_gce" {
+  provider    = "google-beta"
+  name        = "${var.env}gce-gce"
+  description = "allow all gce to gce"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
-    protocol = "ah"
+    protocol = "all"
   }
+  source_tags = ["gce"]
+  target_tags = ["gce"]
+}
+
+# gke to gke
+#----------------------
+# ports = tcp, udp, icmp, ah, sctp
+
+resource "google_compute_firewall" "gke_gke" {
+  provider    = "google-beta"
+  name        = "${var.env}gke-gke"
+  description = "allow all gke to gke"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
-    protocol = "sctp"
+    protocol = "all"
   }
-
   source_tags = ["gke"]
   target_tags = ["gke"]
 }
 
-# Onprem access
-# ======================
-resource "google_compute_firewall" "onprem_bastion" {
-  provider       = "google-beta"
-  name           = "${var.main}onprem-bastion"
-  description    = "access to bastion"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
+# gce to gke
+#----------------------
+resource "google_compute_firewall" "gce_gke" {
+  provider    = "google-beta"
+  name        = "${var.env}gce-gke"
+  description = "allow gce to gke"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
+
+  allow {
+    protocol = "all"
+  }
+  source_tags = ["gce"]
+  target_tags = ["gke"]
+}
+
+# gke to gce
+#----------------------
+resource "google_compute_firewall" "gke_gce" {
+  provider    = "google-beta"
+  name        = "${var.env}gke-gce"
+  description = "allow gke to gce"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
+
+  allow {
+    protocol = "all"
+  }
+  source_tags = ["gke"]
+  target_tags = ["gce"]
+}
+
+# external ssh and rdp
+#----------------------
+resource "google_compute_firewall" "external_ssh_rdp" {
+  provider    = "google-beta"
+  name        = "${var.env}external-ssh-rdp"
+  description = "external ssh rdp"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
     protocol = "tcp"
     ports    = ["22"]
   }
-
   allow {
     protocol = "tcp"
     ports    = ["3389"]
   }
-
   source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
-  target_tags   = ["bastion", "gce", "gke"]
+  target_tags   = ["gce", "gke"]
 }
 
-resource "google_compute_firewall" "onprem_elk" {
-  provider       = "google-beta"
-  name           = "${var.main}onprem-elk"
-  description    = "access to elk"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
+# external to gce elk
+#----------------------
+# gce: elk port = tcp/5601
+resource "google_compute_firewall" "external_elk" {
+  provider    = "google-beta"
+  name        = "${var.env}external-elk"
+  description = "external to elk"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "5601"]
+    ports    = ["5601"]
   }
-
-  source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
+  source_ranges = ["0.0.0.0/0"]
   target_tags   = ["elk"]
 }
 
-# VPC access
-# ===========================
-# vm to vpc access
-resource "google_compute_firewall" "gce_vpc" {
-  provider       = "google-beta"
-  name           = "${var.main}gce-vpc"
-  description    = "allowed connections from vm to vpc"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
+# bastion
+#----------------------
+resource "google_compute_firewall" "bastion" {
+  provider    = "google-beta"
+  name        = "${var.env}bastion"
+  description = "allow connections from bastion"
+  network     = "${google_compute_network.vpc.self_link}"
+
+  #enable_logging = true
 
   allow {
     protocol = "all"
   }
-
-  source_tags = ["gce"]
-  target_tags = ["gce"]
-}
-
-# gce to gke
-resource "google_compute_firewall" "gce_gke" {
-  provider       = "google-beta"
-  name           = "${var.main}gce-gke"
-  description    = "allow connections from gce to gke"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080", "30000-32767"]
-  }
-
-  allow {
-    protocol = "icmp"
-  }
-
-  source_tags = ["gce"]
-  target_tags = ["gke"]
-}
-
-# bastion to vpc
-resource "google_compute_firewall" "bastion_vpc" {
-  provider       = "google-beta"
-  name           = "${var.main}bastion-vpc"
-  description    = "allow connections from gce to gke"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "all"
-  }
-
   source_tags = ["bastion"]
 }
 
-# gke to gce
-# ===========================
-resource "google_compute_firewall" "gke_gce" {
+# rfc1918 to gce
+#----------------------
+# gke pod ip range to gce (node tags only affects gke node ip range)
+# all other external private ip sources
+resource "google_compute_firewall" "rfc1918_gce" {
   provider       = "google-beta"
-  name           = "${var.main}gke-gce"
-  description    = "allow connections from gke to gce"
+  name           = "${var.env}pod-gce"
+  description    = "rfc1918 to gce"
   network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-  }
-
-  allow {
-    protocol = "icmp"
-  }
-
-  source_tags = ["gke"]
-  target_tags = ["gce"]
-}
-
-# rule for pod IP range necessary since 
-# node tags only affect node IP range
-resource "google_compute_firewall" "gke_pod_gce" {
-  provider       = "google-beta"
-  name           = "${var.main}gke-pod-gce"
-  description    = "allow connections from gke pod to gce"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-  }
-
-  allow {
-    protocol = "icmp"
-  }
-
-  source_ranges = ["10.4.0.0/14", "10.8.0.0/14"]
-  target_tags = ["gce"]
-}
-
-# AWS to GCE
-# ===========================
-resource "google_compute_firewall" "aws_gce" {
-  provider       = "google-beta"
-  name           = "${var.main}aws-gce"
-  description    = "allowed connections from aws to gce"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080", "443", "53", "110"]
-  }
-
-  allow {
-    protocol = "udp"
-    ports    = ["33434-33534", "53"]
-  }
-
-  allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["3389"]
-  }
-
-  source_ranges = [
-    "172.16.0.0/16",
-    "172.17.0.0/16",
-    "172.18.0.0/16",
-  ]
-
-  target_tags = ["gce", "bastion"]
-}
-
-# AWS to GKE
-# ===========================
-resource "google_compute_firewall" "aws_gke" {
-  provider       = "google-beta"
-  name           = "${var.main}aws-gke"
-  description    = "allowed connections from aws to gce"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "8080", "53", "30000-32767"]
-  }
-
-  allow {
-    protocol = "udp"
-    ports    = ["33434-33534", "53"]
-  }
-
-  allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["3389"]
-  }
-
-  source_ranges = [
-    "172.16.0.0/16",
-    "172.17.0.0/16",
-    "172.18.0.0/16",
-  ]
-
-  target_tags = ["gke"]
-}
-
-# Mango Project to gce
-# ===========================
-resource "google_compute_firewall" "mango_to_gce" {
-  provider       = "google-beta"
-  name           = "${var.main}mango-to-gce"
-  network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
+  #enable_logging = true
 
   allow {
     protocol = "all"
   }
 
-  source_ranges = ["10.200.30.0/24"]
+  source_ranges = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
   target_tags   = ["gce"]
 }
 
-# Mango Project to gke
-# ===========================
-resource "google_compute_firewall" "mango_to_gke" {
+# rfc1918 to gke
+#----------------------
+# gke pod ip range to gke (node tags only affects gke node ip range)
+# all other external private ip sources
+resource "google_compute_firewall" "rfc1918_gke" {
   provider       = "google-beta"
-  name           = "${var.main}mango-to-gke"
+  name           = "${var.env}pod-gke"
+  description    = "rfc1918 to gke"
   network        = "${google_compute_network.vpc.self_link}"
-  enable_logging = true
+  #enable_logging = true
 
   allow {
     protocol = "all"
   }
 
-  source_ranges = ["10.200.30.0/24"]
+  source_ranges = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
   target_tags   = ["gke"]
 }

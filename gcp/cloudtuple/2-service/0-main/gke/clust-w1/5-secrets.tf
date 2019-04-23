@@ -17,7 +17,7 @@ resource "google_project_iam_binding" "php_app_owner_role" {
     "serviceAccount:${google_service_account.php_app.email}",
   ]
 }
-
+/*
 # Kubernetes secret
 #----------------------------------
 resource "kubernetes_secret" "phpkey" {
@@ -27,4 +27,4 @@ resource "kubernetes_secret" "phpkey" {
   data {
     key.json = "${base64decode(google_service_account_key.php_key.private_key)}"
   }
-}
+}*/

@@ -22,8 +22,8 @@ data "template_file" "bind_init" {
     REMOTE_ZONE_GCP_ORANGE_PROJECT = "orange.cloudtuple.com"
     REMOTE_ZONE_GCP_MANGO_PROJECT  = "mango.cloudtuple.com"
     REMOTE_NS_GCP_HOST_PROJECT     = "10.100.10.40;10.150.10.2;10.200.10.2;10.250.10.2"
-    REMOTE_NS_GCP_ORANGE_PROJECT   = "10.200.20.2"
-    REMOTE_NS_GCP_MANGO_PROJECT    = "10.200.30.2"
+    REMOTE_NS_GCP_ORANGE_PROJECT   = "10.200.20.23"
+    REMOTE_NS_GCP_MANGO_PROJECT    = "10.200.30.32"
     REMOTE_ZONE_AWS_EAST1          = "east1.cloudtuples.com"
     REMOTE_NS_AWS_EAST1            = "172.18.11.100;172.18.10.100"
   }

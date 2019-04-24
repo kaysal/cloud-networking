@@ -6,7 +6,7 @@ resource "aws_eip_association" "vyos_a" {
 }
 
 data "template_file" "vyos_a" {
-  template = "${file("scripts/vyos-a.sh.tpl")}"
+  template = "${file("scripts/vyos.sh.tpl")}"
 
   vars {
     LOCAL_IP = "$(curl 169.254.169.254/latest/meta-data/local-ipv4)"
@@ -14,8 +14,8 @@ data "template_file" "vyos_a" {
     PEER_IP  = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
     PEER_IP2 = "${data.terraform_remote_state.untrust.vpn_gw_ip_eu_w1_addr}"
     LOCAL_VTI_IP = "169.254.100.1/30"
-    LOCAL_VTI_IP2 = "169.254.100.9/30"
     PEER_VTI_IP = "169.254.100.2"
+    LOCAL_VTI_IP2 = "169.254.100.9/30"
     PEER_VTI_IP2 = "169.254.100.10"
     LOCAL_NETWORK="172.16.0.0/16"
     LOCAL_DEFAULT_ROUTER="172.16.0.1"
@@ -26,15 +26,14 @@ data "template_file" "vyos_a" {
 }
 
 resource "aws_instance" "vyos_a" {
-  instance_type          = "t2.micro"
-  availability_zone      = "eu-west-1a"
+  instance_type     = "t2.micro"
+  availability_zone = "eu-west-1a"
   ami                    = "ami-99a70de0"
   key_name               = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids = ["${aws_security_group.vyos_pub_sg.id}"]
   subnet_id              = "${aws_subnet.public_172_16_0.id}"
   private_ip             = "172.16.0.100"
   source_dest_check      = false
-  #user_data              = "${data.template_file.vyos_a.rendered}"
 
   tags {
     Name = "${var.name}vyos-a"
@@ -82,20 +81,8 @@ resource "aws_route" "private_gcp_vpn_route1_a" {
   instance_id            = "${aws_instance.vyos_a.id}"
 }
 
-resource "aws_route" "public_gcp_vpn_route1_a" {
-  route_table_id         = "${aws_route_table.public_rtb_a.id}"
-  destination_cidr_block = "10.0.0.0/8"
-  instance_id            = "${aws_instance.vyos_a.id}"
-}
-
 resource "aws_route" "private_gcp_vpn_route2_a" {
   route_table_id         = "${aws_route_table.private_rtb_a.id}"
-  destination_cidr_block = "35.199.192.0/19"
-  instance_id            = "${aws_instance.vyos_a.id}"
-}
-
-resource "aws_route" "public_gcp_vpn_route2_a" {
-  route_table_id         = "${aws_route_table.public_rtb_a.id}"
   destination_cidr_block = "35.199.192.0/19"
   instance_id            = "${aws_instance.vyos_a.id}"
 }

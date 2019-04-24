@@ -6,7 +6,7 @@ resource "aws_eip_association" "vyos_b" {
 }
 
 data "template_file" "vyos_b" {
-  template = "${file("scripts/vyos-b.sh.tpl")}"
+  template = "${file("scripts/vyos.sh.tpl")}"
 
   vars {
     LOCAL_IP = "$(curl 169.254.169.254/latest/meta-data/local-ipv4)"
@@ -14,8 +14,8 @@ data "template_file" "vyos_b" {
     PEER_IP  = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
     PEER_IP2 = "${data.terraform_remote_state.untrust.vpn_gw_ip_eu_w1_addr}"
     LOCAL_VTI_IP = "169.254.100.5/30"
-    LOCAL_VTI_IP2 = "169.254.100.13/30"
     PEER_VTI_IP = "169.254.100.6"
+    LOCAL_VTI_IP2 = "169.254.100.13/30"
     PEER_VTI_IP2 = "169.254.100.14"
     LOCAL_NETWORK="172.16.0.0/16"
     LOCAL_DEFAULT_ROUTER="172.16.0.1"
@@ -34,7 +34,6 @@ resource "aws_instance" "vyos_b" {
   subnet_id              = "${aws_subnet.public_172_16_1.id}"
   private_ip             = "172.16.1.100"
   source_dest_check      = false
-  #user_data              = "${file("./scripts/vyos-b.sh")}"
 
   tags {
     Name = "${var.name}vyos-b"
@@ -42,7 +41,7 @@ resource "aws_instance" "vyos_b" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo '${data.template_file.vyos_a.rendered}' > vyos.sh",
+      "echo '${data.template_file.vyos_b.rendered}' > vyos.sh",
       "chmod +x vyos.sh",
       "# configure",
       "# . vyos.sh",

@@ -2,25 +2,25 @@
 #source /opt/vyatta/etc/functions/script-template
 
 #! Router IP Addresses
-export LOCAL_IP=$(curl 169.254.169.254/latest/meta-data/local-ipv4)
-export NAT_IP=$(curl 169.254.169.254/latest/meta-data/public-ipv4)
+export LOCAL_IP=${LOCAL_IP}
+export NAT_IP=${NAT_IP}
 
 #! gcp 'vpc' vpc
-export PEER_IP=34.76.208.118
-export LOCAL_VTI_IP=169.254.100.5/30
-export PEER_VTI_IP=169.254.100.6
+export PEER_IP=${PEER_IP}
+export LOCAL_VTI_IP=${LOCAL_VTI_IP}
+export PEER_VTI_IP=${PEER_VTI_IP}
 
 #gcp 'untrust' vpc
-export PEER_IP2=34.76.52.80
-export LOCAL_VTI_IP2=169.254.100.13/30
-export PEER_VTI_IP2=169.254.100.14
+export PEER_IP2=${PEER_IP2}
+export LOCAL_VTI_IP2=${LOCAL_VTI_IP2}
+export PEER_VTI_IP2=${PEER_VTI_IP2}
 
 #! Local AWS Subnets and parameters
-export LOCAL_NETWORK=172.16.0.0/16
-export LOCAL_DEFAULT_ROUTER=172.16.0.1
-export LOCAL_ASN=65010
-export REMOTE_ASN=65000
-export PSK=password123
+export LOCAL_NETWORK=${LOCAL_NETWORK}
+export LOCAL_DEFAULT_ROUTER=${LOCAL_DEFAULT_ROUTER}
+export LOCAL_ASN=${LOCAL_ASN}
+export REMOTE_ASN=${REMOTE_ASN}
+export PSK=${PSK}
 
 configure
 
@@ -70,7 +70,7 @@ set vpn ipsec ike-group UNTRUST dead-peer-detection timeout '30'
 set vpn ipsec site-to-site peer $PEER_IP authentication id $NAT_IP
 set vpn ipsec site-to-site peer $PEER_IP authentication mode 'pre-shared-secret'
 set vpn ipsec site-to-site peer $PEER_IP authentication pre-shared-secret $PSK
-set vpn ipsec site-to-site peer $PEER_IP description 'VPC tunnel 1'
+set vpn ipsec site-to-site peer $PEER_IP description 'vpc-tunnel-1'
 set vpn ipsec site-to-site peer $PEER_IP ike-group 'GCP'
 set vpn ipsec site-to-site peer $PEER_IP local-address $LOCAL_IP
 set vpn ipsec site-to-site peer $PEER_IP vti bind 'vti0'
@@ -80,7 +80,7 @@ set vpn ipsec site-to-site peer $PEER_IP vti esp-group 'GCP'
 set vpn ipsec site-to-site peer $PEER_IP2 authentication id $NAT_IP
 set vpn ipsec site-to-site peer $PEER_IP2 authentication mode 'pre-shared-secret'
 set vpn ipsec site-to-site peer $PEER_IP2 authentication pre-shared-secret $PSK
-set vpn ipsec site-to-site peer $PEER_IP2 description 'VPC tunnel 2'
+set vpn ipsec site-to-site peer $PEER_IP2 description 'vpc-tunnel-2'
 set vpn ipsec site-to-site peer $PEER_IP2 ike-group 'UNTRUST'
 set vpn ipsec site-to-site peer $PEER_IP2 local-address $LOCAL_IP
 set vpn ipsec site-to-site peer $PEER_IP2 vti bind 'vti1'
@@ -92,13 +92,13 @@ set vpn ipsec site-to-site peer $PEER_IP2 vti esp-group 'UNTRUST'
 #! gcp 'vpc' vpc
 set vpn ipsec ipsec-interfaces interface 'eth0'
 set interfaces vti vti0 address $LOCAL_VTI_IP
-set interfaces vti vti0 description 'VPC tunnel 1'
+set interfaces vti vti0 description 'vpc-tunnel-1'
 set interfaces vti vti0 mtu '1436'
 #!
 #! gcp 'untrust' vpc
 set vpn ipsec ipsec-interfaces interface 'eth0'
 set interfaces vti vti1 address $LOCAL_VTI_IP2
-set interfaces vti vti1 description 'VPC tunnel 2'
+set interfaces vti vti1 description 'vpc-tunnel-2'
 set interfaces vti vti1 mtu '1436'
 #!
 #! ---------------------------------------------------

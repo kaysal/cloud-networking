@@ -15,9 +15,9 @@ spec:
         app: phpapp2
     spec:
       volumes:
-      - name: google-cloud-key
-        secret:
-          secretName: phpkey
+      #- name: google-cloud-key
+      #  secret:
+      #    secretName: phpkey
       - name: pod-info
         downwardAPI:
           items:
@@ -37,20 +37,20 @@ spec:
               fieldRef:
                 fieldPath: metadata.annotations
       containers:
-      - image: phpapp
+      - image: phpapp2
         name: phpcontainer
         ports:
         - containerPort: 8080
           protocol: TCP
         volumeMounts:
-        - name: google-cloud-key
-          mountPath: /var/secrets/google
+        #- name: google-cloud-key
+        #  mountPath: /var/secrets/google
         - name: pod-info
           mountPath: /etc/podinfo
           readOnly: false
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /var/secrets/google/key.json
+        #- name: GOOGLE_APPLICATION_CREDENTIALS
+        #  value: /var/secrets/google/key.json
         - name: NODE_NAME
           valueFrom:
             fieldRef:

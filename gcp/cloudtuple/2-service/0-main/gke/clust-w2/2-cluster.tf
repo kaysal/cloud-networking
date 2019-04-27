@@ -45,7 +45,7 @@ resource "google_container_cluster" "clust_w2" {
     }
 
     istio_config {
-      disabled = false
+      disabled = true
 
       #auth = "AUTH_MUTUAL_TLS"
     }

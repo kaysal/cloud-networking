@@ -1,6 +1,6 @@
 # orange
 #--------------------------
-# org data for orange project
+# org data
 data "terraform_remote_state" "orange" {
   backend = "gcs"
 
@@ -77,7 +77,7 @@ data "external" "onprem_ip" {
   program = ["sh", "scripts/onprem-ip.sh"]
 }
 
-# GFE LB IP ranges
+#  gfe ip ranges
 data "google_compute_lb_ip_ranges" "ranges" {}
 
 output "nlb" {

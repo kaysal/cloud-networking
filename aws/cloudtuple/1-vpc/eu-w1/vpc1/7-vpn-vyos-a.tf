@@ -9,25 +9,25 @@ data "template_file" "vyos_a" {
   template = "${file("scripts/vyos.sh.tpl")}"
 
   vars {
-    LOCAL_IP = "$(curl 169.254.169.254/latest/meta-data/local-ipv4)"
-    NAT_IP = "$(curl 169.254.169.254/latest/meta-data/public-ipv4)"
-    PEER_IP  = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
-    PEER_IP2 = "${data.terraform_remote_state.untrust.vpn_gw_ip_eu_w1_addr}"
-    LOCAL_VTI_IP = "169.254.100.1/30"
-    PEER_VTI_IP = "169.254.100.2"
-    LOCAL_VTI_IP2 = "169.254.100.9/30"
-    PEER_VTI_IP2 = "169.254.100.10"
-    LOCAL_NETWORK="172.16.0.0/16"
-    LOCAL_DEFAULT_ROUTER="172.16.0.1"
-    LOCAL_ASN=65010
-    REMOTE_ASN=65000
-    PSK="password123"
+    LOCAL_IP             = "$(curl 169.254.169.254/latest/meta-data/local-ipv4)"
+    NAT_IP               = "$(curl 169.254.169.254/latest/meta-data/public-ipv4)"
+    PEER_IP              = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
+    PEER_IP2             = "${data.terraform_remote_state.untrust.vpn_gw_ip_eu_w1_addr}"
+    LOCAL_VTI_IP         = "169.254.100.1/30"
+    PEER_VTI_IP          = "169.254.100.2"
+    LOCAL_VTI_IP2        = "169.254.100.9/30"
+    PEER_VTI_IP2         = "169.254.100.10"
+    LOCAL_NETWORK        = "172.16.0.0/16"
+    LOCAL_DEFAULT_ROUTER = "172.16.0.1"
+    LOCAL_ASN            = 65010
+    REMOTE_ASN           = 65000
+    PSK                  = "password123"
   }
 }
 
 resource "aws_instance" "vyos_a" {
-  instance_type     = "t2.micro"
-  availability_zone = "eu-west-1a"
+  instance_type          = "t2.micro"
+  availability_zone      = "eu-west-1a"
   ami                    = "ami-99a70de0"
   key_name               = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids = ["${aws_security_group.vyos_pub_sg.id}"]

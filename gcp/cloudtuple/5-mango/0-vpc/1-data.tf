@@ -1,3 +1,5 @@
+# mango
+#--------------------------
 # org data for mango project
 data "terraform_remote_state" "mango" {
   backend = "gcs"
@@ -8,7 +10,9 @@ data "terraform_remote_state" "mango" {
   }
 }
 
-# host project data
+# host
+#--------------------------
+# host org
 data "terraform_remote_state" "host" {
   backend = "gcs"
 
@@ -18,12 +22,56 @@ data "terraform_remote_state" "host" {
   }
 }
 
+# host vpc
+data "terraform_remote_state" "host_vpc" {
+  backend = "gcs"
+
+  config {
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
+  }
+}
+
+data "google_compute_network" "host_vpc" {
+  project = "${data.terraform_remote_state.host.host_project_id}"
+  name    = "${data.terraform_remote_state.host_vpc.vpc_name}"
+}
+
 # dns data
 data "google_dns_managed_zone" "public_host_cloudtuple" {
   project = "${data.terraform_remote_state.host.host_project_id}"
   name    = "public-host-cloudtuple"
 }
 
+# orange
+#--------------------------
+# orange org
+data "terraform_remote_state" "orange" {
+  backend = "gcs"
+
+  config {
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/0-org/3-orange"
+  }
+}
+
+# orange vpc
+data "terraform_remote_state" "orange_vpc" {
+  backend = "gcs"
+
+  config {
+    bucket = "tf-shk"
+    prefix = "states/gcp/cloudtuple/4-orange/0-vpc"
+  }
+}
+
+data "google_compute_network" "orange_vpc" {
+  project = "${data.terraform_remote_state.orange.orange_project_id}"
+  name    = "${data.terraform_remote_state.orange_vpc.vpc_name}"
+}
+
+# other data
+#--------------------------
 # capture local machine ipv4
 data "external" "onprem_ip" {
   program = ["sh", "scripts/onprem-ip.sh"]

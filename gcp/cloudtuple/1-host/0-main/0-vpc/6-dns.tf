@@ -168,8 +168,59 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
   }
 }
 
+# Peering Zones
+#--------------------------------
+resource "google_dns_managed_zone" "private_mango_cloudtuple" {
+  provider    = "google-beta"
+  name        = "${var.env}private-mango-cloudtuple"
+  dns_name    = "mango.cloudtuple.com."
+  description = "zone queries to mango private zone"
+  visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
+
+  private_visibility_config {
+    networks {
+      network_url = "${google_compute_network.vpc.self_link}"
+    }
+  }
+
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.mango_vpc.self_link}"
+    }
+  }
+}
+
+resource "google_dns_managed_zone" "private_orange_cloudtuple" {
+  provider    = "google-beta"
+  name        = "${var.env}private-orange-cloudtuple"
+  dns_name    = "orange.cloudtuple.com."
+  description = "zone queries to orange private zone"
+  visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
+
+  private_visibility_config {
+    networks {
+      network_url = "${google_compute_network.vpc.self_link}"
+    }
+  }
+
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.orange_vpc.self_link}"
+    }
+  }
+}
+
 
 # DNS Policy
+#-------------------------
 resource "google_dns_policy" "allow_inbound" {
   provider                  = "google-beta"
   name                      = "inbound-policy"

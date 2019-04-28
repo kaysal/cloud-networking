@@ -9,19 +9,19 @@ data "template_file" "vyos_b" {
   template = "${file("scripts/vyos.sh.tpl")}"
 
   vars {
-    LOCAL_IP = "$(curl 169.254.169.254/latest/meta-data/local-ipv4)"
-    NAT_IP = "$(curl 169.254.169.254/latest/meta-data/public-ipv4)"
-    PEER_IP  = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
-    PEER_IP2 = "${data.terraform_remote_state.untrust.vpn_gw_ip_eu_w1_addr}"
-    LOCAL_VTI_IP = "169.254.100.5/30"
-    PEER_VTI_IP = "169.254.100.6"
-    LOCAL_VTI_IP2 = "169.254.100.13/30"
-    PEER_VTI_IP2 = "169.254.100.14"
-    LOCAL_NETWORK="172.16.0.0/16"
-    LOCAL_DEFAULT_ROUTER="172.16.0.1"
-    LOCAL_ASN=65010
-    REMOTE_ASN=65000
-    PSK="password123"
+    LOCAL_IP             = "$(curl 169.254.169.254/latest/meta-data/local-ipv4)"
+    NAT_IP               = "$(curl 169.254.169.254/latest/meta-data/public-ipv4)"
+    PEER_IP              = "${data.terraform_remote_state.vpc.vpn_gw_ip_eu_w1_addr}"
+    PEER_IP2             = "${data.terraform_remote_state.untrust.vpn_gw_ip_eu_w1_addr}"
+    LOCAL_VTI_IP         = "169.254.100.5/30"
+    PEER_VTI_IP          = "169.254.100.6"
+    LOCAL_VTI_IP2        = "169.254.100.13/30"
+    PEER_VTI_IP2         = "169.254.100.14"
+    LOCAL_NETWORK        = "172.16.0.0/16"
+    LOCAL_DEFAULT_ROUTER = "172.16.0.1"
+    LOCAL_ASN            = 65010
+    REMOTE_ASN           = 65000
+    PSK                  = "password123"
   }
 }
 

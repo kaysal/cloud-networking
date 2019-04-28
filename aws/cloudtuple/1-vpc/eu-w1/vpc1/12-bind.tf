@@ -1,5 +1,11 @@
 # BIND Name Server ns01
 #==============================
+
+locals {
+  name_server_ip = "172.16.10.100"
+  gcp_remote_ns  = "10.100.10.40;10.150.10.2;10.200.10.2;10.250.10.2"
+}
+
 data "template_file" "bind_init" {
   template = "${file("./scripts/bind.sh.tpl")}"
 
@@ -8,7 +14,7 @@ data "template_file" "bind_init" {
     DOMAIN_NAME                    = "cloudtuples.com"
     DOMAIN_NAME_SEARCH             = "west1.cloudtuples.com"
     LOCAL_FORWARDERS               = "172.16.0.2"
-    LOCAL_NAME_SERVER_IP           = "172.16.10.100"
+    LOCAL_NAME_SERVER_IP           = "${local.name_server_ip}"
     LOCAL_ZONE                     = "west1.cloudtuples.com"
     LOCAL_ZONE_FILE                = "/etc/bind/db.west1.cloudtuples.com"
     LOCAL_ZONE_INV                 = "10.16.172.in-addr.arpa"
@@ -21,9 +27,9 @@ data "template_file" "bind_init" {
     REMOTE_ZONE_GCP_GKE_PROJECT    = "gke.cloudtuple.com"
     REMOTE_ZONE_GCP_ORANGE_PROJECT = "orange.cloudtuple.com"
     REMOTE_ZONE_GCP_MANGO_PROJECT  = "mango.cloudtuple.com"
-    REMOTE_NS_GCP_HOST_PROJECT     = "10.100.10.40;10.150.10.2;10.200.10.2;10.250.10.2"
-    REMOTE_NS_GCP_ORANGE_PROJECT   = "10.200.20.6"
-    REMOTE_NS_GCP_MANGO_PROJECT    = "10.200.30.32"
+    REMOTE_NS_GCP_HOST_PROJECT     = "${local.gcp_remote_ns}"
+    REMOTE_NS_GCP_ORANGE_PROJECT   = "${local.gcp_remote_ns}"
+    REMOTE_NS_GCP_MANGO_PROJECT    = "${local.gcp_remote_ns}"
     REMOTE_ZONE_AWS_EAST1          = "east1.cloudtuples.com"
     REMOTE_NS_AWS_EAST1            = "172.18.11.100;172.18.10.100"
   }
@@ -36,7 +42,7 @@ resource "aws_instance" "ns01" {
   key_name                    = "${data.terraform_remote_state.w1_shared.kp}"
   vpc_security_group_ids      = ["${aws_security_group.ec2_prv_sg.id}"]
   subnet_id                   = "${aws_subnet.private_172_16_10.id}"
-  private_ip                  = "172.16.10.100"
+  private_ip                  = "${local.name_server_ip}"
   associate_public_ip_address = false
   user_data                   = "${data.template_file.bind_init.rendered}"
 

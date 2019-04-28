@@ -103,6 +103,36 @@ resource "aws_route53_resolver_rule_association" "eu_west1_cloudtuples_fwd" {
 }
 
 # apple.cloudtuple rule
+resource "aws_route53_resolver_rule" "gcp_host_cloudtuple" {
+  domain_name          = "host.cloudtuple.com"
+  name                 = "gcp-host-cloudtuple"
+  rule_type            = "FORWARD"
+  resolver_endpoint_id = "${aws_route53_resolver_endpoint.outbound_endpoint.id}"
+
+  target_ip {
+    ip = "10.250.10.2"
+  }
+
+  target_ip {
+    ip = "10.150.10.2"
+  }
+
+  target_ip {
+    ip = "10.100.10.40"
+  }
+
+
+  tags {
+    Environment = "Prod"
+  }
+}
+
+resource "aws_route53_resolver_rule_association" "gcp_host_cloudtuple" {
+  resolver_rule_id = "${aws_route53_resolver_rule.gcp_host_cloudtuple.id}"
+  vpc_id           = "${aws_vpc.vpc1.id}"
+}
+
+# apple.cloudtuple rule
 resource "aws_route53_resolver_rule" "gcp_apple_cloudtuple" {
   domain_name          = "apple.cloudtuple.com"
   name                 = "gcp-apple-cloudtuple"
@@ -117,6 +147,11 @@ resource "aws_route53_resolver_rule" "gcp_apple_cloudtuple" {
     ip = "10.150.10.2"
   }
 
+  target_ip {
+    ip = "10.100.10.40"
+  }
+
+
   tags {
     Environment = "Prod"
   }
@@ -124,5 +159,63 @@ resource "aws_route53_resolver_rule" "gcp_apple_cloudtuple" {
 
 resource "aws_route53_resolver_rule_association" "gcp_cloudtuple" {
   resolver_rule_id = "${aws_route53_resolver_rule.gcp_apple_cloudtuple.id}"
+  vpc_id           = "${aws_vpc.vpc1.id}"
+}
+
+# mango.cloudtuple rule
+resource "aws_route53_resolver_rule" "gcp_mango_cloudtuple" {
+  domain_name          = "mango.cloudtuple.com"
+  name                 = "gcp-mango-cloudtuple"
+  rule_type            = "FORWARD"
+  resolver_endpoint_id = "${aws_route53_resolver_endpoint.outbound_endpoint.id}"
+
+  target_ip {
+    ip = "10.250.10.2"
+  }
+
+  target_ip {
+    ip = "10.150.10.2"
+  }
+
+  target_ip {
+    ip = "10.100.10.40"
+  }
+
+  tags {
+    Environment = "Prod"
+  }
+}
+
+resource "aws_route53_resolver_rule_association" "gcp_mango_cloudtuple" {
+  resolver_rule_id = "${aws_route53_resolver_rule.gcp_mango_cloudtuple.id}"
+  vpc_id           = "${aws_vpc.vpc1.id}"
+}
+
+# orange.cloudtuple rule
+resource "aws_route53_resolver_rule" "gcp_orange_cloudtuple" {
+  domain_name          = "orange.cloudtuple.com"
+  name                 = "gcp-orange-cloudtuple"
+  rule_type            = "FORWARD"
+  resolver_endpoint_id = "${aws_route53_resolver_endpoint.outbound_endpoint.id}"
+
+  target_ip {
+    ip = "10.250.10.2"
+  }
+
+  target_ip {
+    ip = "10.150.10.2"
+  }
+
+  target_ip {
+    ip = "10.100.10.40"
+  }
+
+  tags {
+    Environment = "Prod"
+  }
+}
+
+resource "aws_route53_resolver_rule_association" "gcp_orange_cloudtuple" {
+  resolver_rule_id = "${aws_route53_resolver_rule.gcp_orange_cloudtuple.id}"
   vpc_id           = "${aws_vpc.vpc1.id}"
 }

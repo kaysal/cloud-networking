@@ -97,3 +97,15 @@ resource "google_compute_subnetwork_iam_binding" "gke_eu_w2_10_0_8" {
     "serviceAccount:service-${data.terraform_remote_state.gke.gke_service_project_number}@container-engine-robot.iam.gserviceaccount.com",
   ]
 }
+
+# DNS Peering
+#===================================
+resource "google_project_iam_binding" "dns_peer" {
+  provider   = "google-beta"
+  role       = "roles/dns.peer"
+
+  members = [
+    "serviceAccount:${data.terraform_remote_state.orange.vm_orange_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.mango.vm_mango_project_service_account_email}",
+  ]
+}

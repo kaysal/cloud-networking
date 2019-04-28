@@ -66,8 +66,92 @@ output "private_orange_cloudtuple_name" {
   value = "${google_dns_managed_zone.private_orange_cloudtuple.name}"
 }
 
-# AWS Zones
+# DNS Peering
+#===================================
+resource "google_project_iam_binding" "dns_peer" {
+  provider   = "google-beta"
+  role       = "roles/dns.peer"
+
+  members = [
+    "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
+  ]
+}
+
+# Peering Zones
 #--------------------------------
+resource "google_dns_managed_zone" "gcp_host_cloudtuple" {
+  provider    = "google-beta"
+  name        = "${var.main}gcp-host-cloudtuple"
+  dns_name    = "host.cloudtuple.com."
+  description = "queries to gcp host private zone"
+  visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
+
+  private_visibility_config {
+    networks {
+      network_url = "${google_compute_network.vpc.self_link}"
+    }
+  }
+
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.host_vpc.self_link}"
+    }
+  }
+}
+
+resource "google_dns_managed_zone" "gcp_apple_cloudtuple" {
+  provider    = "google-beta"
+  name        = "${var.main}gcp-apple-cloudtuple"
+  dns_name    = "apple.cloudtuple.com."
+  description = "queries to gcp apple private zone"
+  visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
+
+  private_visibility_config {
+    networks {
+      network_url = "${google_compute_network.vpc.self_link}"
+    }
+  }
+
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.host_vpc.self_link}"
+    }
+  }
+}
+
+resource "google_dns_managed_zone" "gcp_mango_cloudtuple" {
+  provider    = "google-beta"
+  name        = "${var.main}gcp-mango-cloudtuple"
+  dns_name    = "mango.cloudtuple.com."
+  description = "queries to gcp mango private zone"
+  visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
+
+  private_visibility_config {
+    networks {
+      network_url = "${google_compute_network.vpc.self_link}"
+    }
+  }
+
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.mango_vpc.self_link}"
+    }
+  }
+}
+
 resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   provider    = "google-beta"
   name        = "${var.main}private-aws-west1-cloudtuples"
@@ -85,9 +169,9 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
     }
   }
 
-  forwarding_config {
-    target_name_servers {
-      ipv4_address = "172.16.10.100"
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.host_vpc.self_link}"
     }
   }
 }
@@ -96,7 +180,7 @@ resource "google_dns_managed_zone" "private_aws_east1_cloudtuples" {
   provider    = "google-beta"
   name        = "${var.main}private-aws-east1-cloudtuples"
   dns_name    = "east1.cloudtuples.com."
-  description = "zone queries to aws east1 region inbound endpoint"
+  description = "zone queries to aws east1 region"
   visibility  = "private"
 
   labels = {
@@ -109,18 +193,15 @@ resource "google_dns_managed_zone" "private_aws_east1_cloudtuples" {
     }
   }
 
-  forwarding_config {
-    target_name_servers {
-      ipv4_address = "172.18.10.100"
-    }
-
-    target_name_servers {
-      ipv4_address = "172.18.11.100"
+  peering_config {
+    target_network {
+      network_url = "${data.google_compute_network.host_vpc.self_link}"
     }
   }
 }
-/*
+
 # DNS Policy
+#--------------------------------
 resource "google_dns_policy" "inbound_policy" {
   provider                  = "google-beta"
   name                      = "inbound-policy"
@@ -129,4 +210,4 @@ resource "google_dns_policy" "inbound_policy" {
   networks {
     network_url = "${google_compute_network.vpc.self_link}"
   }
-}*/
+}

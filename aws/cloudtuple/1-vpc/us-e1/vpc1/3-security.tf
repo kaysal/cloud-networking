@@ -17,7 +17,6 @@ resource "aws_security_group_rule" "bastion_ssh_ingress" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  cidr_blocks       = ["${data.external.onprem_ip.result.ip}/32"]
   security_group_id = "${aws_security_group.bastion_pub_sg.id}"
 }
 

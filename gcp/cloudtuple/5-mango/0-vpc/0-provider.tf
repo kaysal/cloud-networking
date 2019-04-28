@@ -4,6 +4,7 @@ provider "google" {
 
 provider "google-beta" {
   project = "${data.terraform_remote_state.mango.mango_project_id}"
+  version = "~> 2.2"
 }
 
 provider "random" {}

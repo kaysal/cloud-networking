@@ -1,6 +1,6 @@
 
-resource "google_compute_target_pool" "prod_target_pool" {
-  name = "${var.name}prod-target-pool"
+resource "google_compute_target_pool" "target_pool" {
+  name = "${var.name}target-pool"
   session_affinity = "NONE"
 
   health_checks = [

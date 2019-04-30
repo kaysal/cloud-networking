@@ -3,5 +3,5 @@ output "onprem_ip" {
 }
 
 output "load_balancer_ipv4" {
-  value = "${google_compute_forwarding_rule.prod_fwd_rule.ip_address}"
+  value = "${google_compute_forwarding_rule.fwd_rule.ip_address}"
 }

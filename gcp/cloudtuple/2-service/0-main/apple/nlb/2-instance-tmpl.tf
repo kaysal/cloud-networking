@@ -1,7 +1,7 @@
 
 # Instance template
-resource "google_compute_instance_template" "prod_template_eu_w1" {
-  name         = "${var.name}prod-template-eu-w1"
+resource "google_compute_instance_template" "template_eu_w1" {
+  name         = "${var.name}template-eu-w1"
   region       = "europe-west1"
   machine_type = "f1-micro"
   tags         = ["gce","mig-nlb","nat-europe-west1"]

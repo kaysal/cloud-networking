@@ -20,6 +20,9 @@ resource "google_dns_managed_zone" "public_host_cloudtuple" {
 
 # Private DNS
 #-------------------------
+
+# googleapis.com
+
 resource "google_dns_managed_zone" "private_googleapis" {
   provider    = "google-beta"
   name        = "${var.env}private-googleapis"
@@ -62,6 +65,37 @@ resource "google_dns_record_set" "restricted_googleapis" {
   ]
 }
 
+# gcr.io
+/*
+resource "google_dns_managed_zone" "private_gcr_io" {
+  provider    = "google-beta"
+  name        = "${var.env}private-gcr-io"
+  dns_name    = "gcr.io."
+  description = "private zone for gcr.io"
+  visibility  = "private"
+
+  labels = {
+    foo = "bar"
+  }
+
+  private_visibility_config {
+    networks {
+      network_url = "${google_compute_network.vpc.self_link}"
+    }
+  }
+}
+
+resource "google_dns_record_set" "gcr_io_cname" {
+  name = "*.${google_dns_managed_zone.private_gcr_io.dns_name}"
+  type = "CNAME"
+  ttl  = 300
+
+  managed_zone = "${google_dns_managed_zone.private_gcr_io.name}"
+  rrdatas      = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
+}*/
+
+# host
+
 resource "google_dns_managed_zone" "private_host_cloudtuple" {
   provider    = "google-beta"
   name        = "${var.env}private-host-cloudtuple"
@@ -79,6 +113,8 @@ resource "google_dns_managed_zone" "private_host_cloudtuple" {
     }
   }
 }
+
+# apple
 
 resource "google_dns_managed_zone" "private_apple_cloudtuple" {
   provider    = "google-beta"
@@ -98,6 +134,8 @@ resource "google_dns_managed_zone" "private_apple_cloudtuple" {
   }
 }
 
+# gke
+
 resource "google_dns_managed_zone" "private_gke_cloudtuple" {
   provider    = "google-beta"
   name        = "${var.env}private-gke-cloudtuple"
@@ -115,6 +153,8 @@ resource "google_dns_managed_zone" "private_gke_cloudtuple" {
     }
   }
 }
+
+# aws eu-west-1
 
 resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   provider    = "google-beta"
@@ -139,6 +179,8 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
     }
   }
 }
+
+# aws us-east-1
 
 resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
   provider    = "google-beta"
@@ -170,6 +212,9 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
 
 # Peering Zones
 #--------------------------------
+
+# mango
+
 resource "google_dns_managed_zone" "private_mango_cloudtuple" {
   provider    = "google-beta"
   name        = "${var.env}private-mango-cloudtuple"
@@ -194,6 +239,8 @@ resource "google_dns_managed_zone" "private_mango_cloudtuple" {
   }
 }
 
+# orange
+
 resource "google_dns_managed_zone" "private_orange_cloudtuple" {
   provider    = "google-beta"
   name        = "${var.env}private-orange-cloudtuple"
@@ -217,7 +264,6 @@ resource "google_dns_managed_zone" "private_orange_cloudtuple" {
     }
   }
 }
-
 
 # DNS Policy
 #-------------------------

@@ -5,6 +5,4 @@ metadata:
   namespace: kube-system
 data:
   stubDomains: |
-    {"west1.cloudtuples.com": ["169.254.169.254"]}
-  upstreamNameservers: |
-    ["169.254.169.254"]
+    {"west1.cloudtuples.com": ["172.16.10.100"]}

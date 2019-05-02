@@ -9,8 +9,13 @@ white_bg=`tput setab 7`
 bold=$(tput bold)
 reset=`tput sgr0`
 
+# seed: when network project is not specified
 
-#======================================
+NETWORK_PROJECT='host-project-39'
+REGION='europe-west1'
+
+# select a project
+
 export PROJECTS=$(gcloud projects list --format=json | jq -r '.[].projectId')
 export AUTH_USER=$(gcloud info --format="value(config.account)")
 export ACTIVE_PROJECT=$(gcloud info --format="value(config.project)")
@@ -34,8 +39,8 @@ echo ""
 echo "--> gcloud config set project $PROJECT"
 gcloud config set project $PROJECT
 
+# select a cluster
 
-#======================================
 export CLUSTERS=$(gcloud container clusters list --format=json | jq -r '.[].name')
 echo ""
 echo -e "\nClusters in $PROJECT"
@@ -52,16 +57,14 @@ done
 CLUSTER=$item
 echo $CLUSTER
 
+# run skaffold cd
 
-#======================================
 usage="$(basename "$0") [-h] [- n r] -- program to deploy gke services
 where:
     -h help
     -n network project (host project for shared vpc)
     -r region"
 
-# seed: when network project is not specified
-NETWORK_PROJECT=$PROJECT
 while getopts h:n:r: option
 do
   case "${option}" in
@@ -86,4 +89,4 @@ echo "----------------------------"
 gcloud beta container subnets list-usable --network-project ${NETWORK_PROJECT}
 echo ""
 echo "----------------------------"
-skaffold run --default-repo=gcr.io/${PROJECT}
+skaffold run --default-repo=eu.gcr.io/${PROJECT}

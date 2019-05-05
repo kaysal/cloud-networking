@@ -1,7 +1,7 @@
 # VPC
 #==============================
 resource "aws_vpc" "vpc1" {
-  cidr_block                       = "${var.vpc1_cidr}"
+  cidr_block                       = "172.18.0.0/16"
   assign_generated_ipv6_cidr_block = true
   enable_dns_hostnames             = true
   enable_dns_support               = true
@@ -32,7 +32,7 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
 resource "aws_subnet" "public_172_18_0" {
   availability_zone       = "us-east-1a"
   vpc_id                  = "${aws_vpc.vpc1.id}"
-  cidr_block              = "${var.public_172_18_0}"
+  cidr_block              = "172.18.0.0/24"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc1.ipv6_cidr_block, 8, 0)}"
   map_public_ip_on_launch = true
 
@@ -45,7 +45,7 @@ resource "aws_subnet" "public_172_18_0" {
 resource "aws_subnet" "public_172_18_1" {
   availability_zone       = "us-east-1b"
   vpc_id                  = "${aws_vpc.vpc1.id}"
-  cidr_block              = "${var.public_172_18_1}"
+  cidr_block              = "172.18.1.0/24"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc1.ipv6_cidr_block, 8, 1)}"
   map_public_ip_on_launch = true
 
@@ -59,7 +59,7 @@ resource "aws_subnet" "public_172_18_1" {
 resource "aws_subnet" "private_172_18_10" {
   availability_zone       = "us-east-1a"
   vpc_id                  = "${aws_vpc.vpc1.id}"
-  cidr_block              = "${var.private_172_18_10}"
+  cidr_block              = "172.18.10.0/24"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc1.ipv6_cidr_block, 8, 10)}"
   map_public_ip_on_launch = false
 
@@ -72,7 +72,7 @@ resource "aws_subnet" "private_172_18_10" {
 resource "aws_subnet" "private_172_18_11" {
   availability_zone       = "us-east-1b"
   vpc_id                  = "${aws_vpc.vpc1.id}"
-  cidr_block              = "${var.private_172_18_11}"
+  cidr_block              = "172.18.11.0/24"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc1.ipv6_cidr_block, 8, 11)}"
   map_public_ip_on_launch = false
 
@@ -85,7 +85,7 @@ resource "aws_subnet" "private_172_18_11" {
 resource "aws_subnet" "private_172_18_12" {
   availability_zone       = "us-east-1c"
   vpc_id                  = "${aws_vpc.vpc1.id}"
-  cidr_block              = "${var.private_172_18_12}"
+  cidr_block              = "172.18.12.0/24"
   ipv6_cidr_block         = "${cidrsubnet(aws_vpc.vpc1.ipv6_cidr_block, 8, 12)}"
   map_public_ip_on_launch = false
 

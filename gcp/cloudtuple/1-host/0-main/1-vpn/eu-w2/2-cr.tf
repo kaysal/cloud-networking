@@ -14,19 +14,24 @@ resource "google_compute_router" "cr_eu_w2" {
       range = "10.200.20.0/24"
     }
 
-    # aws eu-west1-vpc1
+    # rfc1918
     advertised_ip_ranges {
-      range = "172.16.0.0/16"
+      range = "10.0.0.0/8"
     }
 
-    # aws eu-west1-vpc2
+    # rfc1918
     advertised_ip_ranges {
-      range = "172.17.0.0/16"
+      range = "172.16.0.0/12"
     }
 
-    # aws eu-east1-vpc1
+    # rfc1918
     advertised_ip_ranges {
-      range = "172.18.0.0/16"
+      range = "192.168.0.0/16"
+    }
+
+    # cgn
+    advertised_ip_ranges {
+      range = "100.64.0.0/10"
     }
   }
 }

@@ -155,7 +155,7 @@ resource "google_dns_managed_zone" "private_gke_cloudtuple" {
 }
 
 # aws eu-west-1
-
+/*
 resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
   provider    = "google-beta"
   name        = "${var.env}private-aws-west1-cloudtuples"
@@ -178,7 +178,7 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
       ipv4_address = "172.16.10.100"
     }
   }
-}
+}*/
 
 # aws us-east-1
 

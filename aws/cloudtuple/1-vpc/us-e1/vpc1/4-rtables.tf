@@ -63,7 +63,7 @@ resource "aws_route_table_association" "private_172_18_11" {
   route_table_id = "${aws_route_table.private_rtb_b.id}"
 }
 
-resource "aws_route_table_association" "private_172_18_12" {
-  subnet_id      = "${aws_subnet.private_172_18_12.id}"
+resource "aws_route_table_association" "private_100_64_10" {
+  subnet_id      = "${aws_subnet.private_100_64_10.id}"
   route_table_id = "${aws_route_table.private_rtb_c.id}"
 }

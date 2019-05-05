@@ -52,11 +52,11 @@ resource "google_compute_firewall" "private_to_gce" {
   ]
 }
 
-# AWS to VPC
-#--------------------------
-resource "google_compute_firewall" "aws_gce" {
-  name        = "${var.main}aws-gce"
-  description = "allowed connections from aws to gce"
+# cgn and rfc1918 space to gce
+
+resource "google_compute_firewall" "cgn_rfc1918_gce" {
+  name        = "${var.main}cgn-rfc1918-gce"
+  description = "cgn and rfc1918 ip ranges to gce"
   network     = "${google_compute_network.vpc.self_link}"
 
   #enable_logging = true
@@ -77,8 +77,9 @@ resource "google_compute_firewall" "aws_gce" {
     ports    = ["3389"]
   }
   source_ranges = [
-    "172.16.0.0/16",
-    "172.17.0.0/16",
-    "172.18.0.0/16",
+    "10.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16",
+    "100.64.0.0/10",
   ]
 }

@@ -24,7 +24,7 @@ resource "google_dns_record_set" "googleapis_cname" {
   ttl  = 300
 
   managed_zone = "${google_dns_managed_zone.private_googleapis.name}"
-  rrdatas = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
+  rrdatas      = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
 }
 
 resource "google_dns_record_set" "restricted_googleapis" {
@@ -38,7 +38,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
     "199.36.153.4",
     "199.36.153.5",
     "199.36.153.6",
-    "199.36.153.7"
+    "199.36.153.7",
   ]
 }
 
@@ -65,8 +65,8 @@ resource "google_dns_managed_zone" "private_mango_cloudtuple" {
 # DNS Peering
 #===================================
 resource "google_project_iam_binding" "dns_peer" {
-  provider   = "google-beta"
-  role       = "roles/dns.peer"
+  provider = "google-beta"
+  role     = "roles/dns.peer"
 
   members = [
     "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
@@ -177,6 +177,7 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
   dns_name    = "east1.cloudtuples.com."
   description = "zone queries to aws east1 region inbound endpoint"
   visibility  = "private"
+
   labels = {
     foo = "bar"
   }

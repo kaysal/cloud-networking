@@ -11,6 +11,11 @@ resource "aws_vpc" "vpc1" {
   }
 }
 
+resource "aws_vpc_ipv4_cidr_block_association" "cgn_cidr" {
+  vpc_id     = "${aws_vpc.vpc1.id}"
+  cidr_block = "100.64.10.0/24"
+}
+
 # dhcp options
 resource "aws_vpc_dhcp_options" "dhcp_options" {
   domain_name         = "east1.cloudtuples.com"
@@ -95,6 +100,18 @@ resource "aws_subnet" "private_172_18_12" {
   }
 }
 
+resource "aws_subnet" "private_100_64_10" {
+  availability_zone       = "us-east-1c"
+  vpc_id                  = "${aws_vpc.vpc1.id}"
+  cidr_block              = "100.64.10.0/24"
+  map_public_ip_on_launch = false
+
+  tags {
+    Name  = "${var.name}private-100-64-10"
+    Scope = "private"
+  }
+}
+
 # Key Pair
 resource "aws_key_pair" "ks_ec2" {
   key_name   = "ks-ec2"
@@ -123,8 +140,8 @@ output "private_172_18_11" {
   value = "${aws_subnet.private_172_18_11.id}"
 }
 
-output "private_172_18_12" {
-  value = "${aws_subnet.private_172_18_12.id}"
+output "private_100_64_10" {
+  value = "${aws_subnet.private_100_64_10.id}"
 }
 
 # EXTERNAL DATA

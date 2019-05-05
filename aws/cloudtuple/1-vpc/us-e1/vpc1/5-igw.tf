@@ -1,5 +1,5 @@
-# INTERNET GATEWAY
-#==============================
+# internet gateway
+
 resource "aws_internet_gateway" "vpc1_igw" {
   vpc_id = "${aws_vpc.vpc1.id}"
 
@@ -8,8 +8,8 @@ resource "aws_internet_gateway" "vpc1_igw" {
   }
 }
 
-# ROUTE
-#==============================
+# route
+
 resource "aws_route" "public_internet_route_a" {
   route_table_id         = "${aws_route_table.public_rtb_a.id}"
   destination_cidr_block = "0.0.0.0/0"

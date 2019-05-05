@@ -1,6 +1,5 @@
-# NAT GATEWAYS
-#==============================
-# NAT GWs for the private subnet
+# nat gateways
+
 resource "aws_eip" "eip_natgw_a" {
   vpc = true
 
@@ -37,8 +36,8 @@ resource "aws_nat_gateway" "natgw_b" {
   }
 }
 
-# ROUTES
-#==============================
+# routes
+
 resource "aws_route" "private_internet_route_a" {
   route_table_id         = "${aws_route_table.private_rtb_a.id}"
   destination_cidr_block = "0.0.0.0/0"
@@ -47,6 +46,12 @@ resource "aws_route" "private_internet_route_a" {
 
 resource "aws_route" "private_internet_route_b" {
   route_table_id         = "${aws_route_table.private_rtb_b.id}"
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = "${aws_nat_gateway.natgw_b.id}"
+}
+
+resource "aws_route" "private_internet_route_c" {
+  route_table_id         = "${aws_route_table.private_rtb_c.id}"
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${aws_nat_gateway.natgw_b.id}"
 }

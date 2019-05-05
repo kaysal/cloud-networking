@@ -69,8 +69,8 @@ output "private_orange_cloudtuple_name" {
 # DNS Peering
 #===================================
 resource "google_project_iam_binding" "dns_peer" {
-  provider   = "google-beta"
-  role       = "roles/dns.peer"
+  provider = "google-beta"
+  role     = "roles/dns.peer"
 
   members = [
     "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",

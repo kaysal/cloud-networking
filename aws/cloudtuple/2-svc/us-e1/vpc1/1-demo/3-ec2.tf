@@ -79,10 +79,9 @@ output "--- server ---" {
 resource "aws_instance" "sandbox" {
   instance_type               = "t2.micro"
   availability_zone           = "us-east-1c"
-  ami                         = "${data.aws_ami.ami.id}"
+  ami                         = "${data.aws_ami.ubuntu.id}"
   key_name                    = "${data.terraform_remote_state.e1_shared.kp}"
-  subnet_id                   = "${data.terraform_remote_state.e1_vpc1.private_172_18_12}"
-  private_ip                  = "172.18.12.10"
+  subnet_id                   = "${data.terraform_remote_state.e1_vpc1.private_100_64_10}"
   associate_public_ip_address = false
   user_data                   = "${file("./scripts/ec2/aws.sh")}"
 

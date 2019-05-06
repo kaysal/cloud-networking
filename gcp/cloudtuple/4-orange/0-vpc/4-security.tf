@@ -23,7 +23,6 @@ resource "google_compute_firewall" "onprem_to_bastion" {
   }
 
   source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
-  target_tags   = ["bastion"]
 }
 
 resource "google_compute_firewall" "allow_bastion" {

@@ -82,10 +82,10 @@ EOF
 }
 
 resource "aws_s3_bucket_object" "aws_logo" {
-  bucket       = "${aws_s3_bucket.img.bucket}"
-  key          = "awsLogo.png"
-  source       = "./scripts/cdn/awsLogo.png"
-  etag         = "${md5(file("./scripts/s3/index.html"))}"
+  bucket = "${aws_s3_bucket.img.bucket}"
+  key    = "awsLogo.png"
+  source = "./scripts/cdn/awsLogo.png"
+  etag   = "${md5(file("./scripts/s3/index.html"))}"
 }
 
 /*
@@ -131,3 +131,4 @@ resource "aws_s3_bucket_object" "error_html" {
   etag         = "${md5(file("~/tf/aws/CERT/associate/scripts/error.html"))}"
   content_type = "text/html"
 }*/
+

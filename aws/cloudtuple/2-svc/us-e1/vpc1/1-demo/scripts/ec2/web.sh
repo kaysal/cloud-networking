@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#! /bin/bash
 apt-get update
 apt-get -y install awscli traceroute mtr tcpdump iperf whois host dnsutils siege apache2 php
 

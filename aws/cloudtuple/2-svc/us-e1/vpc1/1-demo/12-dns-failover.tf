@@ -1,5 +1,5 @@
 resource "aws_route53_health_check" "alb_health_check" {
-  fqdn              = "${aws_lb.alb.dns_name}"
+  fqdn              = "${aws_lb.alb_ext.dns_name}"
   port              = 80
   type              = "HTTP"
   resource_path     = "/"
@@ -19,8 +19,8 @@ resource "aws_route53_record" "alb_cloudtuples" {
   type    = "A"
 
   alias {
-    name                   = "${aws_lb.alb.dns_name}"
-    zone_id                = "${aws_lb.alb.zone_id}"
+    name                   = "${aws_lb.alb_ext.dns_name}"
+    zone_id                = "${aws_lb.alb_ext.zone_id}"
     evaluate_target_health = true
   }
 
@@ -33,7 +33,7 @@ resource "aws_route53_record" "alb_cloudtuples" {
   health_check_id = "${aws_route53_health_check.alb_health_check.id}"
 
   depends_on = [
-    "aws_lb.alb",
+    "aws_lb.alb_ext",
     "aws_route53_health_check.alb_health_check",
   ]
 }

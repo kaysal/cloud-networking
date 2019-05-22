@@ -121,7 +121,6 @@ resource "aws_route53_resolver_rule" "gcp_host_cloudtuple" {
     ip = "10.100.10.40"
   }
 
-
   tags {
     Environment = "Prod"
   }
@@ -150,7 +149,6 @@ resource "aws_route53_resolver_rule" "gcp_apple_cloudtuple" {
   target_ip {
     ip = "10.100.10.40"
   }
-
 
   tags {
     Environment = "Prod"

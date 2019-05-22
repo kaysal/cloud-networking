@@ -1,10 +1,14 @@
 #! /bin/bash
-yum -y update
-yum -y install \
+apt-get update
+apt-get -y install \
   traceroute \
   mtr \
   tcpdump \
-  bind-utils \
+  iperf \
+  whois \
+  host \
+  dnsutils \
+  siege \
   nmap \
   fping \
   awscli

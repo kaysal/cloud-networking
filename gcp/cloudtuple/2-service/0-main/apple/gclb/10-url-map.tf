@@ -38,9 +38,8 @@ resource "google_compute_url_map" "url_map" {
 
   path_matcher {
     name            = "devpath"
-    default_service = "${google_compute_backend_service.dev-be-svc.self_link}"
+    default_service = "${google_compute_backend_service.dev_be_svc.self_link}"
 
-    /*
     path_rule {
       paths   = ["/app1", "/app1/*"]
       service = "${var.path}/gclb-dev-neg-app1-be-svc"
@@ -49,6 +48,6 @@ resource "google_compute_url_map" "url_map" {
     path_rule {
       paths   = ["/app2", "/app2/*"]
       service = "${var.path}/gclb-dev-neg-app2-be-svc"
-    }*/
+    }
   }
 }

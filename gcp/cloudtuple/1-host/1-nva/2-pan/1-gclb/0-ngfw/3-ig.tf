@@ -7,12 +7,17 @@ resource "google_compute_instance_group" "ig_b" {
 
   named_port {
     name = "http-80"
-    port = "80"
+    port = 80
   }
 
   named_port {
     name = "http-8080"
-    port = "8080"
+    port = 8080
+  }
+
+  named_port {
+    name = "http-8081"
+    port = 8081
   }
 }
 
@@ -23,11 +28,16 @@ resource "google_compute_instance_group" "ig_c" {
 
   named_port {
     name = "http-80"
-    port = "80"
+    port = 80
   }
 
   named_port {
     name = "http-8080"
-    port = "8080"
+    port = 8080
+  }
+
+  named_port {
+    name = "http-8081"
+    port = 8081
   }
 }

@@ -26,7 +26,7 @@ resource "google_compute_firewall" "allow_inbound" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "80","8080"]
+    ports    = [22, 80, 8080, 8081]
   }
 
   allow {

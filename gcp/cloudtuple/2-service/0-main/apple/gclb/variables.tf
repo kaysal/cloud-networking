@@ -44,10 +44,7 @@ variable "crt_path_dev_v6" {
   description = "Path to dev (ipv6) certificate"
 }
 
-/*
 variable "path" {
   description = "The self link for backend services"
   default     = "https://www.googleapis.com/compute/v1/projects/apple-service-project-b5/global/backendServices"
 }
-*/
-

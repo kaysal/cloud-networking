@@ -3,7 +3,7 @@ resource "google_compute_instance_template" "blue_template_eu_w1" {
   name         = "${var.main}blue-template-eu-w1"
   region       = "europe-west1"
   machine_type = "f1-micro"
-  tags         = ["gce", "mig", "nat-europe-west1"]
+  tags         = ["gce", "mig"]
 
   disk {
     source_image = "debian-cloud/debian-9"

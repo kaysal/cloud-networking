@@ -31,5 +31,10 @@ resource "google_compute_url_map" "url_map" {
       paths   = ["/app8080", "/app8080/*"]
       service = "${google_compute_backend_service.be_svc_orange_8080.self_link}"
     }
+
+    path_rule {
+      paths   = ["/gke", "/gke/*"]
+      service = "${google_compute_backend_service.be_svc_gke_8081.self_link}"
+    }
   }
 }

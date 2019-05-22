@@ -1,5 +1,5 @@
 # Bastion host
-#============================
+#--------------------
 locals {
   project               = "${data.terraform_remote_state.apple.apple_service_project_id}"
   network_project       = "${data.terraform_remote_state.host.host_project_id}"
@@ -45,16 +45,16 @@ resource "google_dns_record_set" "bastion_private" {
   rrdatas      = ["${module.bastion.bastion_private_ip}"]
 }
 
-/*
 # NEG endpoint VM
-#============================
-# vm neg 1
 #--------------------
+
+# vm neg 1
+
 resource "google_compute_instance" "neg_eu_w3_vm1" {
   name                      = "${var.main}neg-eu-w3-vm1"
   machine_type              = "g1-small"
   zone                      = "europe-west3-a"
-  tags                      = ["gce", "gce-mig-gclb"]
+  tags                      = ["gce", "mig"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -84,15 +84,13 @@ resource "google_compute_instance" "neg_eu_w3_vm1" {
   }
 }
 
-
-
 # vm neg2
-#--------------------
+
 resource "google_compute_instance" "neg_eu_w3_vm2" {
   name                      = "${var.main}neg-eu-w3-vm2"
   machine_type              = "g1-small"
   zone                      = "europe-west3-a"
-  tags                      = ["gce", "gce-mig-gclb"]
+  tags                      = ["gce", "mig"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -122,15 +120,13 @@ resource "google_compute_instance" "neg_eu_w3_vm2" {
   }
 }
 
-
-
 # vm neg3
-#--------------------
+
 resource "google_compute_instance" "neg_eu_w3_vm3" {
   name                      = "${var.main}neg-eu-w3-vm3"
   machine_type              = "g1-small"
   zone                      = "europe-west3-b"
-  tags                      = ["gce", "gce-mig-gclb"]
+  tags                      = ["gce", "mig"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -162,12 +158,12 @@ resource "google_compute_instance" "neg_eu_w3_vm3" {
 
 
 # sandbox instance
-#--------------------
+
 resource "google_compute_instance" "sandbox_us_e1_vm" {
   name                      = "${var.main}sandbox-us-e1-vm"
   machine_type              = "g1-small"
   zone                      = "us-east1-c"
-  tags                      = ["gce", "nat-us-east1"]
+  tags                      = ["gce"]
   allow_stopping_for_update = true
 
   boot_disk {
@@ -189,5 +185,3 @@ resource "google_compute_instance" "sandbox_us_e1_vm" {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
-*/
-

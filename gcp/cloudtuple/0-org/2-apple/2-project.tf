@@ -11,4 +11,8 @@ resource "google_project" "apple_service_project" {
   project_id = "apple-service-project-${random_id.suffix.hex}"
   folder_id  = "${google_folder.apple_folder.name}"
   billing_account = "${var.billing_account_id}"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }

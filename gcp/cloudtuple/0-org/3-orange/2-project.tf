@@ -11,6 +11,10 @@ resource "google_project" "orange_project" {
   project_id = "orange-project-${random_id.suffix.hex}"
   folder_id  = "${google_folder.orange_folder.name}"
   billing_account = "${var.billing_account_id}"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # Give the terraform and vm service account dns admin role

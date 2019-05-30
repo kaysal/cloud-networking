@@ -1,6 +1,5 @@
-
 resource "google_compute_target_pool" "target_pool" {
-  name = "${var.name}target-pool"
+  name             = "${var.name}target-pool"
   session_affinity = "NONE"
 
   health_checks = [

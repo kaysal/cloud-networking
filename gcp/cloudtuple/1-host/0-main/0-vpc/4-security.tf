@@ -200,23 +200,22 @@ resource "google_compute_firewall" "bastion" {
 # gke pod ip range to gce (node tags only affects gke node ip range)
 # all other external private ip sources
 resource "google_compute_firewall" "rfc1918_gce" {
-  provider       = "google-beta"
-  name           = "${var.env}pod-gce"
-  description    = "rfc1918 to gce"
-  network        = "${google_compute_network.vpc.self_link}"
+  provider    = "google-beta"
+  name        = "${var.env}pod-gce"
+  description = "rfc1918 to gce"
+  network     = "${google_compute_network.vpc.self_link}"
+
   #enable_logging = true
 
   allow {
     protocol = "all"
   }
-
   source_ranges = [
     "10.0.0.0/8",
     "172.16.0.0/12",
-    "192.168.0.0/16"
+    "192.168.0.0/16",
   ]
-
-  target_tags   = ["gce"]
+  target_tags = ["gce"]
 }
 
 # cgn ip range to gce
@@ -224,16 +223,16 @@ resource "google_compute_firewall" "rfc1918_gce" {
 # gke pod ip range to gce (node tags only affects gke node ip range)
 # all other external private ip sources
 resource "google_compute_firewall" "cgn_gce" {
-  provider       = "google-beta"
-  name           = "${var.env}cgn-gce"
-  description    = "cgn ip address pace to gce"
-  network        = "${google_compute_network.vpc.self_link}"
+  provider    = "google-beta"
+  name        = "${var.env}cgn-gce"
+  description = "cgn ip address pace to gce"
+  network     = "${google_compute_network.vpc.self_link}"
+
   #enable_logging = true
 
   allow {
     protocol = "all"
   }
-
   source_ranges = ["100.64.0.0/10"]
   target_tags   = ["gce"]
 }
@@ -243,21 +242,20 @@ resource "google_compute_firewall" "cgn_gce" {
 # gke pod ip range to gke (node tags only affects gke node ip range)
 # all other external private ip sources
 resource "google_compute_firewall" "rfc1918_gke" {
-  provider       = "google-beta"
-  name           = "${var.env}pod-gke"
-  description    = "rfc1918 to gke"
-  network        = "${google_compute_network.vpc.self_link}"
+  provider    = "google-beta"
+  name        = "${var.env}pod-gke"
+  description = "rfc1918 to gke"
+  network     = "${google_compute_network.vpc.self_link}"
+
   #enable_logging = true
 
   allow {
     protocol = "all"
   }
-
   source_ranges = [
     "10.0.0.0/8",
     "172.16.0.0/12",
-    "192.168.0.0/16"
+    "192.168.0.0/16",
   ]
-
-  target_tags   = ["gke"]
+  target_tags = ["gke"]
 }

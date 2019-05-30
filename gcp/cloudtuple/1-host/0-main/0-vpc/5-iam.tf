@@ -23,6 +23,7 @@ resource "google_compute_shared_vpc_service_project" "gke_service_project" {
 # apple-grp@: compute network user (project level access given to only apple service project)
 # apple terraform service account: network access
 # apple compute engine default sevice account: network user role for creating GCLB MIG in host network
+# cloud function network user role
 
 resource "google_project_iam_binding" "project_network_user" {
   project = "${data.terraform_remote_state.host.host_project_id}"
@@ -31,6 +32,7 @@ resource "google_project_iam_binding" "project_network_user" {
   members = [
     "group:apple-grp@cloudtuple.com",
     "serviceAccount:${data.terraform_remote_state.apple.apple_service_project_number}@cloudservices.gserviceaccount.com",
+    "serviceAccount:service-${data.terraform_remote_state.host.host_project_number}@gcf-admin-robot.iam.gserviceaccount.com",
   ]
 }
 
@@ -101,8 +103,8 @@ resource "google_compute_subnetwork_iam_binding" "gke_eu_w2_10_0_8" {
 # DNS Peering
 #===================================
 resource "google_project_iam_binding" "dns_peer" {
-  provider   = "google-beta"
-  role       = "roles/dns.peer"
+  provider = "google-beta"
+  role     = "roles/dns.peer"
 
   members = [
     "serviceAccount:${data.terraform_remote_state.orange.vm_orange_project_service_account_email}",

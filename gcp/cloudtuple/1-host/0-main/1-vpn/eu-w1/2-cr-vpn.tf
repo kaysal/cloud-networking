@@ -2,7 +2,7 @@
 #------------------------------
 resource "google_compute_router" "cr_eu_w1" {
   name    = "${var.main}cr-eu-w1"
-  network = "${data.google_compute_network.vpc.self_link}"
+  network = data.google_compute_network.vpc.self_link
   region  = "europe-west1"
 
   bgp {
@@ -31,3 +31,4 @@ resource "google_compute_router" "cr_eu_w1" {
     }
   }
 }
+

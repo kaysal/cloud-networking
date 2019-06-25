@@ -2,7 +2,7 @@
 data "terraform_remote_state" "host" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/1-host"
   }
@@ -12,7 +12,7 @@ data "terraform_remote_state" "host" {
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
@@ -22,13 +22,14 @@ data "terraform_remote_state" "vpc" {
 data "terraform_remote_state" "aws" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
   }
 }
 
 data "google_compute_network" "vpc" {
-  name    = "${data.terraform_remote_state.vpc.vpc_name}"
-  project = "${data.terraform_remote_state.host.host_project_id}"
+  name    = data.terraform_remote_state.vpc.outputs.vpc_name
+  project = data.terraform_remote_state.host.outputs.host_project_id
 }
+

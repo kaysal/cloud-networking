@@ -6,3 +6,4 @@ variable "main" {
 variable "preshared_key" {
   description = "ipsec vpn tunnel pre-shared key"
 }
+

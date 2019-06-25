@@ -1,6 +1,6 @@
 # create a regional bucket in europe-west1
 resource "google_storage_bucket" "bucket" {
-  name          = "${data.terraform_remote_state.host.host_project_id}"
+  name          = data.terraform_remote_state.host.outputs.host_project_id
   location      = "europe-west1"
   force_destroy = true
   storage_class = "REGIONAL"
@@ -10,7 +10,7 @@ resource "google_storage_bucket" "bucket" {
 resource "google_storage_bucket_object" "file" {
   name   = "host-project-gcs-file.txt"
   source = "./objects/host-project-gcs-file.txt"
-  bucket = "${google_storage_bucket.bucket.name}"
+  bucket = google_storage_bucket.bucket.name
 }
 
 /*
@@ -44,13 +44,14 @@ resource "google_storage_bucket_iam_binding" "binding" {
 # to store google project usage reports
 #-----------------------------------
 resource "google_storage_bucket" "bucket_usage_export" {
-  name          = "${data.terraform_remote_state.host.host_project_id}-usage-export"
+  name          = "${data.terraform_remote_state.host.outputs.host_project_id}-usage-export"
   location      = "EU"
   force_destroy = true
   storage_class = "MULTI_REGIONAL"
 }
 
 resource "google_project_usage_export_bucket" "usage_export" {
-  project     = "${data.terraform_remote_state.host.host_project_id}"
-  bucket_name = "${google_storage_bucket.bucket_usage_export.name}"
+  project     = data.terraform_remote_state.host.outputs.host_project_id
+  bucket_name = google_storage_bucket.bucket_usage_export.name
 }
+

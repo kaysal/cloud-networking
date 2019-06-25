@@ -7,3 +7,4 @@ variable "local" {
   description = "prefix for local host resources"
   default     = "local-"
 }
+

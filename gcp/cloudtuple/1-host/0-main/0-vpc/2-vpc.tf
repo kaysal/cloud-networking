@@ -1,7 +1,7 @@
 # host network
 #--------------------------------------
 resource "google_compute_network" "vpc" {
-  provider                = "google-beta"
+  provider                = google-beta
   name                    = "${var.env}vpc"
   auto_create_subnetworks = "false"
   routing_mode            = "GLOBAL"
@@ -13,7 +13,7 @@ resource "google_compute_network" "vpc" {
 resource "google_compute_subnetwork" "apple_eu_w1_10_100_10" {
   name                     = "${var.env}apple-eu-w1-10-100-10"
   region                   = "europe-west1"
-  network                  = "${google_compute_network.vpc.self_link}"
+  network                  = google_compute_network.vpc.self_link
   ip_cidr_range            = "10.100.10.0/24"
   private_ip_google_access = true
   enable_flow_logs         = true
@@ -22,7 +22,7 @@ resource "google_compute_subnetwork" "apple_eu_w1_10_100_10" {
 resource "google_compute_subnetwork" "apple_eu_w2_10_150_10" {
   name                     = "${var.env}apple-eu-w2-10-150-10"
   region                   = "europe-west2"
-  network                  = "${google_compute_network.vpc.self_link}"
+  network                  = google_compute_network.vpc.self_link
   ip_cidr_range            = "10.150.10.0/24"
   private_ip_google_access = true
   enable_flow_logs         = true
@@ -31,7 +31,7 @@ resource "google_compute_subnetwork" "apple_eu_w2_10_150_10" {
 resource "google_compute_subnetwork" "apple_eu_w3_10_200_10" {
   name             = "${var.env}apple-eu-w3-10-200-10"
   ip_cidr_range    = "10.200.10.0/24"
-  network          = "${google_compute_network.vpc.self_link}"
+  network          = google_compute_network.vpc.self_link
   region           = "europe-west3"
   enable_flow_logs = true
 
@@ -44,7 +44,7 @@ resource "google_compute_subnetwork" "apple_eu_w3_10_200_10" {
 resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
   name                     = "${var.env}apple-us-e1-10-250-10"
   ip_cidr_range            = "10.250.10.0/24"
-  network                  = "${google_compute_network.vpc.self_link}"
+  network                  = google_compute_network.vpc.self_link
   region                   = "us-east1"
   private_ip_google_access = true
   enable_flow_logs         = true
@@ -54,7 +54,7 @@ resource "google_compute_subnetwork" "apple_us_e1_10_250_10" {
 resource "google_compute_subnetwork" "gke_eu_w1_10_0_4" {
   name                     = "${var.env}gke-eu-w1-10-0-4"
   region                   = "europe-west1"
-  network                  = "${google_compute_network.vpc.self_link}"
+  network                  = google_compute_network.vpc.self_link
   ip_cidr_range            = "10.0.4.0/22"
   private_ip_google_access = true
   enable_flow_logs         = true
@@ -74,7 +74,7 @@ resource "google_compute_subnetwork" "gke_eu_w1_10_0_4" {
 resource "google_compute_subnetwork" "gke_eu_w2_10_0_8" {
   name                     = "${var.env}gke-eu-w2-10-0-8"
   region                   = "europe-west2"
-  network                  = "${google_compute_network.vpc.self_link}"
+  network                  = google_compute_network.vpc.self_link
   ip_cidr_range            = "10.0.8.0/22"
   private_ip_google_access = true
   enable_flow_logs         = true
@@ -119,4 +119,3 @@ resource "google_compute_address" "gcp_eu_w3_vpn_gw1_ip" {
   name = "${var.env}gcp-eu-w3-vpn-gw1-ip"
   region = "europe-west3"
 }*/
-

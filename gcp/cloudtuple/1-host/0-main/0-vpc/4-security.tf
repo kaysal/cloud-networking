@@ -7,10 +7,10 @@
 # gke: ingress = tcp/30000-32767
 
 resource "google_compute_firewall" "gfe_http_ssl_tcp_internal" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}gfe-http-ssl-tcp-internal"
   description = "gfe http ssl tcp internal"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -21,7 +21,7 @@ resource "google_compute_firewall" "gfe_http_ssl_tcp_internal" {
   allow {
     protocol = "udp"
   }
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
+  source_ranges = data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal
   target_tags   = ["mig"]
 }
 
@@ -31,10 +31,10 @@ resource "google_compute_firewall" "gfe_http_ssl_tcp_internal" {
 # gke: nlb = tcp/10256
 
 resource "google_compute_firewall" "gfe_nlb" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}gfe-nlb"
   description = "gfe nlb"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -44,17 +44,17 @@ resource "google_compute_firewall" "gfe_nlb" {
   allow {
     protocol = "udp"
   }
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.network}"]
+  source_ranges = data.google_compute_lb_ip_ranges.ranges.network
   target_tags   = ["mig-nlb"]
 }
 
 # web nlb
 #----------------------
 resource "google_compute_firewall" "web_nlb" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}web-nlb"
   description = "web to nlb mig"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -71,10 +71,10 @@ resource "google_compute_firewall" "web_nlb" {
 # gce to gce
 #----------------------
 resource "google_compute_firewall" "gce_gce" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}gce-gce"
   description = "allow all gce to gce"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -90,10 +90,10 @@ resource "google_compute_firewall" "gce_gce" {
 # ports = tcp, udp, icmp, ah, sctp
 
 resource "google_compute_firewall" "gke_gke" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}gke-gke"
   description = "allow all gke to gke"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -107,10 +107,10 @@ resource "google_compute_firewall" "gke_gke" {
 # gce to gke
 #----------------------
 resource "google_compute_firewall" "gce_gke" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}gce-gke"
   description = "allow gce to gke"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -124,10 +124,10 @@ resource "google_compute_firewall" "gce_gke" {
 # gke to gce
 #----------------------
 resource "google_compute_firewall" "gke_gce" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}gke-gce"
   description = "allow gke to gce"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -141,10 +141,10 @@ resource "google_compute_firewall" "gke_gce" {
 # external ssh and rdp
 #----------------------
 resource "google_compute_firewall" "external_ssh_rdp" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}external-ssh-rdp"
   description = "external ssh rdp"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -156,7 +156,7 @@ resource "google_compute_firewall" "external_ssh_rdp" {
     protocol = "tcp"
     ports    = ["3389"]
   }
-  source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
+  source_ranges = ["0.0.0.0/0", data.external.onprem_ip.result.ip]
   target_tags   = ["gce", "gke"]
 }
 
@@ -164,10 +164,10 @@ resource "google_compute_firewall" "external_ssh_rdp" {
 #----------------------
 # gce: elk port = tcp/5601
 resource "google_compute_firewall" "external_elk" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}external-elk"
   description = "external to elk"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -182,10 +182,10 @@ resource "google_compute_firewall" "external_elk" {
 # bastion
 #----------------------
 resource "google_compute_firewall" "bastion" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}bastion"
   description = "allow connections from bastion"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -200,10 +200,10 @@ resource "google_compute_firewall" "bastion" {
 # gke pod ip range to gce (node tags only affects gke node ip range)
 # all other external private ip sources
 resource "google_compute_firewall" "rfc1918_gce" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}pod-gce"
   description = "rfc1918 to gce"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -223,10 +223,10 @@ resource "google_compute_firewall" "rfc1918_gce" {
 # gke pod ip range to gce (node tags only affects gke node ip range)
 # all other external private ip sources
 resource "google_compute_firewall" "cgn_gce" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}cgn-gce"
   description = "cgn ip address pace to gce"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -242,10 +242,10 @@ resource "google_compute_firewall" "cgn_gce" {
 # gke pod ip range to gke (node tags only affects gke node ip range)
 # all other external private ip sources
 resource "google_compute_firewall" "rfc1918_gke" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.env}pod-gke"
   description = "rfc1918 to gke"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -259,3 +259,4 @@ resource "google_compute_firewall" "rfc1918_gke" {
   ]
   target_tags = ["gke"]
 }
+

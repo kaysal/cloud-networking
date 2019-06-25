@@ -2,7 +2,8 @@ provider "google" {
   // gcloud auth application-default login
 }
 
-provider random {}
+provider "random" {
+}
 
 terraform {
   backend "gcs" {
@@ -11,3 +12,4 @@ terraform {
     credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
+

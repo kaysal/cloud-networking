@@ -7,12 +7,13 @@ resource "random_id" "suffix" {
 
 # Forseti Service Project
 resource "google_project" "forseti_project" {
-  name = "forseti-project-${random_id.suffix.hex}"
-  project_id = "forseti-project-${random_id.suffix.hex}"
-  folder_id  = "${google_folder.netsec_folder.name}"
-  billing_account = "${var.billing_account_id}"
+  name            = "forseti-project-${random_id.suffix.hex}"
+  project_id      = "forseti-project-${random_id.suffix.hex}"
+  folder_id       = google_folder.netsec_folder.name
+  billing_account = var.billing_account_id
 
   lifecycle {
     prevent_destroy = true
   }
 }
+

@@ -10,3 +10,4 @@ variable "billing_account_id" {
 variable "org_id" {
   description = "organization ID for personal domain"
 }
+

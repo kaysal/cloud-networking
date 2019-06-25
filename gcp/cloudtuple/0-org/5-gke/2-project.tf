@@ -9,10 +9,11 @@ resource "random_id" "suffix" {
 resource "google_project" "gke_service_project" {
   name            = "gke-service-project-${random_id.suffix.hex}"
   project_id      = "gke-service-project-${random_id.suffix.hex}"
-  folder_id       = "${google_folder.gke_folder.name}"
-  billing_account = "${var.billing_account_id}"
+  folder_id       = google_folder.gke_folder.name
+  billing_account = var.billing_account_id
 
   lifecycle {
     prevent_destroy = true
   }
 }
+

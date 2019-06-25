@@ -1,6 +1,8 @@
-provider "google" {}
+provider "google" {
+}
 
-provider random {}
+provider "random" {
+}
 
 terraform {
   backend "gcs" {
@@ -8,3 +10,4 @@ terraform {
     prefix = "states/gcp/cloudtuple/0-org/5-gke/"
   }
 }
+

@@ -10,33 +10,32 @@ locals {
 
 module "vpn-aws-eu-w1-vpc1" {
   #source              = "github.com/kaysal/modules.git//gcp/vpn?ref=v1.0"
-  source              = "../../../../../../../tf_modules/gcp/vpn"
-  project_id          = data.terraform_remote_state.host.outputs.host_project_id
-  network             = data.google_compute_network.vpc.name
-  region              = "europe-west1"
-  gateway_name        = "${var.main}vpn-gw-eu-w1"
-  reserved_gateway_ip = true
-  gateway_ip          = data.terraform_remote_state.vpc.outputs.vpn_gw_ip_eu_w1_addr
-  tunnel_name_prefix  = "${var.main}to-aws-eu-w1-vpc1-tunnel"
-  shared_secret       = var.psk
-  tunnel_count        = 2
-  cr_name             = google_compute_router.cr_eu_w1.name
-  peer_asn            = [local.peer_asn, local.peer_asn]
-  remote_subnet       = [""]
-  ike_version         = 1
+  source        = "../../../../../../../tf_modules/gcp/vpn"
+  project_id    = data.terraform_remote_state.host.outputs.host_project_id
+  network       = data.google_compute_network.vpc.name
+  region        = "europe-west1"
+  gateway_name  = "${var.main}vpn-gw-eu-w1"
+  gateway_ip    = data.terraform_remote_state.vpc.outputs.vpn_gw_ip_eu_w1_addr
+  shared_secret = var.psk
+  cr_name       = google_compute_router.cr_eu_w1.name
+  ike_version   = 1
 
-  peer_ips = [
-    local.peer1_tunnel_ip,
-    local.peer2_tunnel_ip,
-  ]
-
-  bgp_cr_session_range = [
-    "${local.vyosa_tunnel_gcp_vti}/30",
-    "${local.vyosb_tunnel_gcp_vti}/30",
-  ]
-
-  bgp_remote_session_range = [
-    local.vyosa_tunnel_aws_vti,
-    local.vyosb_tunnel_aws_vti,
+  tunnels = [
+    {
+      tunnel_name               = "${var.main}aws-eu-w1-vpc1-tun-1"
+      peer_ip                   = local.peer1_tunnel_ip
+      peer_asn                  = local.peer_asn
+      cr_bgp_session_range      = "${local.vyosa_tunnel_gcp_vti}/30"
+      remote_bgp_session_ip     = local.vyosa_tunnel_aws_vti
+      advertised_route_priority = 100
+    },
+    {
+      tunnel_name               = "${var.main}aws-eu-w1-vpc1-tun-2"
+      peer_ip                   = local.peer2_tunnel_ip
+      peer_asn                 = local.peer_asn
+      cr_bgp_session_range      = "${local.vyosb_tunnel_gcp_vti}/30"
+      remote_bgp_session_ip     = local.vyosb_tunnel_aws_vti
+      advertised_route_priority = 100
+    },
   ]
 }

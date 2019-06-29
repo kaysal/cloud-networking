@@ -28,8 +28,6 @@ module "gke" {
   monitoring_service = "monitoring.googleapis.com/kubernetes"
 
   enable_binary_authorization = false
-  enable_network_policy       = true
-  enable_kubernetes_dashboard = false
   istio_config_disabled       = false
 
   master_authorized_networks_config = [

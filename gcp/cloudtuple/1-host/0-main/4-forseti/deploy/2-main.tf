@@ -1,6 +1,6 @@
 module "forseti" {
-  source  = "git::https://github.com/terraform-google-modules/terraform-google-forseti"
-  version = "~> 1.2"
+  source = "git::https://github.com/terraform-google-modules/terraform-google-forseti"
+  #version = "~> 1.2"
 
   project_id         = "${data.terraform_remote_state.netsec.forseti_project_id}"
   gsuite_admin_email = "${var.gsuite_admin_email}"

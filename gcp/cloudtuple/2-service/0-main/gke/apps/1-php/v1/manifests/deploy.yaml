@@ -17,7 +17,7 @@ spec:
       volumes:
       - name: google-cloud-key
         secret:
-          secretName: phpkey
+          secretName: clust-w1-key
       - name: pod-info
         downwardAPI:
           items:

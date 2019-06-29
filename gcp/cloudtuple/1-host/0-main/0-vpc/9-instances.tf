@@ -1,6 +1,6 @@
 module "bastion" {
   #source                = "github.com/kaysal/modules.git//gcp/bastion"
-  source = "../../../../../../tf_modules/gcp/bastion"
+  source                = "../../../../../../tf_modules/gcp/bastion"
   name                  = "${var.env}bastion"
   hostname              = "bastion.host.cloudtuple.com"
   project               = data.terraform_remote_state.host.outputs.host_project_id

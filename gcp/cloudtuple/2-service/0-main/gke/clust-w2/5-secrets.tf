@@ -1,30 +1,31 @@
 # Service Account
 #----------------------------------
-resource "google_service_account" "php_app" {
-  account_id   = "php-app"
-  display_name = "PHP app pod svc account"
+resource "google_service_account" "cluster_w2_pods" {
+  account_id   = "cluster-w2-pods"
+  display_name = "SA account for europe-west2 pods"
 }
 
-resource "google_service_account_key" "php_key" {
-  service_account_id = "${google_service_account.php_app.name}"
+# service account key used for pods
+
+resource "google_service_account_key" "clust_w2_pod_sa_key" {
+  service_account_id = google_service_account.cluster_w2_pods.name
 }
 
-resource "google_project_iam_binding" "php_app_owner_role" {
-  project = "${data.terraform_remote_state.gke.gke_service_project_id}"
+# project owner role for pod service account
+
+resource "google_project_iam_member" "cluster_pod_owner" {
+  project = data.terraform_remote_state.gke.outputs.gke_service_project_id
   role    = "roles/owner"
-
-  members = [
-    "serviceAccount:${google_service_account.php_app.email}",
-  ]
+  member  = "serviceAccount:${google_service_account.cluster_w2_pods.email}"
 }
 
 # Kubernetes secret
 #----------------------------------
-resource "kubernetes_secret" "phpkey" {
-  metadata = {
-    name = "phpkey"
+resource "kubernetes_secret" "clust_w2_key" {
+  metadata {
+    name = "clust-w2-key"
   }
-  data {
-    key.json = "${base64decode(google_service_account_key.php_key.private_key)}"
+  data = {
+    "key.json" = "${base64decode(google_service_account_key.clust_w2_pod_sa_key.private_key)}"
   }
 }

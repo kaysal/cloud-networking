@@ -6,24 +6,27 @@ resource "google_service_account" "vm_apple_service_project" {
   display_name = "GCE Service Account"
 }
 
-# IAM roles
-#-----------------------------------------------
-resource "google_project_iam_binding" "apple_service_project_owner_iap" {
+# iam roles
+#----------------------------------------------
+
+# iap
+
+resource "google_project_iam_member" "vm_apple_service_project_iap" {
   project = google_project.apple_service_project.name
   role    = "roles/iap.httpsResourceAccessor"
-
-  members = [
-    "group:apple-grp@cloudtuple.com",
-  ]
+  member  = "group:apple-grp@cloudtuple.com"
 }
 
-resource "google_project_iam_binding" "apple_service_project_owner" {
+# owner
+
+resource "google_project_iam_member" "apple_grp_owner" {
   project = google_project.apple_service_project.name
   role    = "roles/owner"
-
-  members = [
-    "group:apple-grp@cloudtuple.com",
-    "serviceAccount:${google_service_account.vm_apple_service_project.email}",
-  ]
+  member  = "group:apple-grp@cloudtuple.com"
 }
 
+resource "google_project_iam_member" "vm_apple_owner" {
+  project = google_project.apple_service_project.name
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.vm_apple_service_project.email}"
+}

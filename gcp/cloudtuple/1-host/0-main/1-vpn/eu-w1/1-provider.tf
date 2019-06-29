@@ -12,4 +12,3 @@ terraform {
     prefix = "states/gcp/cloudtuple/1-host/0-main/1-vpn/eu-w1"
   }
 }
-

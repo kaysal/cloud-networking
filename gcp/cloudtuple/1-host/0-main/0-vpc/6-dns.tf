@@ -66,7 +66,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
 }
 
 # gcr.io
-/*
+
 resource "google_dns_managed_zone" "private_gcr_io" {
   provider    = "google-beta"
   name        = "${var.env}private-gcr-io"
@@ -86,13 +86,28 @@ resource "google_dns_managed_zone" "private_gcr_io" {
 }
 
 resource "google_dns_record_set" "gcr_io_cname" {
-  name = "*.${google_dns_managed_zone.private_gcr_io.dns_name}"
+  name = "*.gcr.io."
   type = "CNAME"
   ttl  = 300
 
   managed_zone = "${google_dns_managed_zone.private_gcr_io.name}"
-  rrdatas      = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
-}*/
+  rrdatas      = ["gcr.io."]
+}
+
+resource "google_dns_record_set" "restricted_gcr_io" {
+  name = "gcr.io."
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.private_gcr_io.name
+
+  rrdatas = [
+    "199.36.153.4",
+    "199.36.153.5",
+    "199.36.153.6",
+    "199.36.153.7",
+  ]
+}
 
 # host
 
@@ -276,4 +291,3 @@ resource "google_dns_policy" "allow_inbound" {
     network_url = google_compute_network.vpc.self_link
   }
 }
-

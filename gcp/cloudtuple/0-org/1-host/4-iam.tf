@@ -1,13 +1,13 @@
 
 # xpn admin
 
-resource "google_organization_iam_member" "shared_vpc_admin_netsec" {
+resource "google_organization_iam_member" "xpn_admin_netsec" {
   org_id = var.org_id
   role   = "roles/compute.xpnAdmin"
   member = "group:netsec-grp@cloudtuple.com"
 }
 
-resource "google_organization_iam_member" "shared_vpc_admin_salawu" {
+resource "google_organization_iam_member" "xpn_admin_salawu" {
   org_id = var.org_id
   role   = "roles/compute.xpnAdmin"
   member = "user:salawu@google.com"

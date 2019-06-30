@@ -5,7 +5,7 @@ locals {
   vyosb_tunnel_gcp_vti = data.terraform_remote_state.aws.outputs.vyosb_gcp_tunnel_inside_address
   vyosa_tunnel_aws_vti = data.terraform_remote_state.aws.outputs.vyosa_aws_tunnel_inside_address
   vyosb_tunnel_aws_vti = data.terraform_remote_state.aws.outputs.vyosb_aws_tunnel_inside_address
-  peer_asn             = "65010"
+  peer_asn             = 65010
 }
 
 module "vpn_aws_eu_w1_vpc1" {

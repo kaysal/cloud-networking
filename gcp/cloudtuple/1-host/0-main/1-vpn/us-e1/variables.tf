@@ -1,9 +1,8 @@
-variable "name" {
+variable "main" {
   description = "prefix to be appended to some resources"
   default     = ""
 }
 
-variable "preshared_key" {
+variable "psk" {
   description = "ipsec vpn tunnel pre-shared key"
 }
-

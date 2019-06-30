@@ -1,7 +1,7 @@
 #! /bin/bash
 
 apt-get update
-apt-get install -y apache2 php traceroute dnsutils mtr
+apt-get install -y apache2 php
 cd /var/www/html
 rm index.html -f
 rm index.php -f

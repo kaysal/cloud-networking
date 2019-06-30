@@ -1,12 +1,13 @@
 provider "google" {
-  project = "${data.terraform_remote_state.orange.orange_project_id}"
+  project = data.terraform_remote_state.orange.outputs.orange_project_id
 }
 
 provider "google-beta" {
-  project = "${data.terraform_remote_state.orange.orange_project_id}"
+  project = data.terraform_remote_state.orange.outputs.orange_project_id
 }
 
-provider "random" {}
+provider "random" {
+}
 
 terraform {
   backend "gcs" {
@@ -14,3 +15,4 @@ terraform {
     prefix = "states/gcp/cloudtuple/4-orange/0-vpc"
   }
 }
+

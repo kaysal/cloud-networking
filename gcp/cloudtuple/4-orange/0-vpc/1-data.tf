@@ -4,7 +4,7 @@
 data "terraform_remote_state" "orange" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/3-orange"
   }
@@ -16,7 +16,7 @@ data "terraform_remote_state" "orange" {
 data "terraform_remote_state" "mango" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/4-mango"
   }
@@ -26,15 +26,15 @@ data "terraform_remote_state" "mango" {
 data "terraform_remote_state" "mango_vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/5-mango/0-vpc"
   }
 }
 
 data "google_compute_network" "mango_vpc" {
-  project = "${data.terraform_remote_state.mango.mango_project_id}"
-  name    = "${data.terraform_remote_state.mango_vpc.vpc_name}"
+  project = data.terraform_remote_state.mango.outputs.mango_project_id
+  name    = data.terraform_remote_state.mango_vpc.outputs.vpc_name
 }
 
 # host
@@ -43,7 +43,7 @@ data "google_compute_network" "mango_vpc" {
 data "terraform_remote_state" "host" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/1-host"
   }
@@ -53,20 +53,20 @@ data "terraform_remote_state" "host" {
 data "terraform_remote_state" "host_vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
 }
 
 data "google_compute_network" "host_vpc" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
-  name    = "${data.terraform_remote_state.host_vpc.vpc_name}"
+  project = data.terraform_remote_state.host.outputs.host_project_id
+  name    = data.terraform_remote_state.host_vpc.outputs.vpc_name
 }
 
 # host public dns zone
 data "google_dns_managed_zone" "public_host_cloudtuple" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
+  project = data.terraform_remote_state.host.outputs.host_project_id
   name    = "public-host-cloudtuple"
 }
 
@@ -78,12 +78,14 @@ data "external" "onprem_ip" {
 }
 
 #  gfe ip ranges
-data "google_compute_lb_ip_ranges" "ranges" {}
+data "google_compute_lb_ip_ranges" "ranges" {
+}
 
 output "nlb" {
-  value = "${data.google_compute_lb_ip_ranges.ranges.network}"
+  value = data.google_compute_lb_ip_ranges.ranges.network
 }
 
 output "http_ssl_tcp_internal" {
-  value = "${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"
+  value = data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal
 }
+

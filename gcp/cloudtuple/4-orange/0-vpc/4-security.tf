@@ -2,32 +2,32 @@
 #=======================================
 resource "google_compute_firewall" "gfe_to_gce" {
   name    = "${var.main}gfe-to-gce"
-  network = "${google_compute_network.vpc.self_link}"
+  network = google_compute_network.vpc.self_link
 
   allow {
     protocol = "tcp"
     ports    = ["80", "8080"]
   }
 
-  source_ranges = ["${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"]
+  source_ranges = data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal
   target_tags   = ["mig"]
 }
 
 resource "google_compute_firewall" "onprem_to_bastion" {
   name    = "${var.main}onprem-to-bastion"
-  network = "${google_compute_network.vpc.self_link}"
+  network = google_compute_network.vpc.self_link
 
   allow {
     protocol = "tcp"
     ports    = ["22"]
   }
 
-  source_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
+  source_ranges = ["0.0.0.0/0", data.external.onprem_ip.result.ip]
 }
 
 resource "google_compute_firewall" "allow_bastion" {
   name    = "${var.main}allow-bastion"
-  network = "${google_compute_network.vpc.self_link}"
+  network = google_compute_network.vpc.self_link
 
   allow {
     protocol = "all"
@@ -38,7 +38,7 @@ resource "google_compute_firewall" "allow_bastion" {
 
 resource "google_compute_firewall" "private_to_gce" {
   name    = "${var.main}private-to-gce"
-  network = "${google_compute_network.vpc.self_link}"
+  network = google_compute_network.vpc.self_link
 
   allow {
     protocol = "all"
@@ -56,7 +56,7 @@ resource "google_compute_firewall" "private_to_gce" {
 resource "google_compute_firewall" "cgn_rfc1918_gce" {
   name        = "${var.main}cgn-rfc1918-gce"
   description = "cgn and rfc1918 ip ranges to gce"
-  network     = "${google_compute_network.vpc.self_link}"
+  network     = google_compute_network.vpc.self_link
 
   #enable_logging = true
 
@@ -82,3 +82,4 @@ resource "google_compute_firewall" "cgn_rfc1918_gce" {
     "100.64.0.0/10",
   ]
 }
+

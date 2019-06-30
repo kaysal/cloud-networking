@@ -1,6 +1,6 @@
 # create a regional bucket in us
 resource "google_storage_bucket" "bucket" {
-  name          = "${var.name}${data.terraform_remote_state.orange.orange_project_id}"
+  name          = "${var.name}${data.terraform_remote_state.orange.outputs.orange_project_id}"
   location      = "europe-west1"
   force_destroy = true
   storage_class = "REGIONAL"
@@ -10,8 +10,9 @@ resource "google_storage_bucket" "bucket" {
 resource "google_storage_bucket_object" "picture" {
   name   = "orange-project-gcs-file.txt"
   source = "./objects/orange-project-gcs-file.txt"
-  bucket = "${google_storage_bucket.bucket.name}"
+  bucket = google_storage_bucket.bucket.name
 }
+
 /*
 resource "google_storage_bucket_iam_binding" "binding" {
   bucket = "${google_storage_bucket.bucket.name}"

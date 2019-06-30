@@ -50,7 +50,7 @@ resource "google_compute_security_policy" "dev_app_policy" {
       versioned_expr = "SRC_IPS_V1"
 
       config {
-        src_ip_ranges = ["0.0.0.0/0", "${data.external.onprem_ip.result.ip}"]
+        src_ip_ranges = ["0.0.0.0/0", data.external.onprem_ip.result.ip]
       }
     }
 
@@ -72,3 +72,4 @@ resource "google_compute_security_policy" "dev_app_policy" {
     description = "default rule"
   }
 }
+

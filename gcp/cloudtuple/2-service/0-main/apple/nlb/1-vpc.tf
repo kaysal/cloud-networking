@@ -9,3 +9,4 @@ resource "google_compute_address" "ipv4" {
 data "external" "onprem_ip" {
   program = ["sh", "scripts/onprem-ip.sh"]
 }
+

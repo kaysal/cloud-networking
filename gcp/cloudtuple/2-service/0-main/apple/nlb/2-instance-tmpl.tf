@@ -11,10 +11,10 @@ resource "google_compute_instance_template" "template_eu_w1" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.apple_eu_w1_10_100_10
   }
 
-  metadata_startup_script = "${file("scripts/startup-web-prod.sh")}"
+  metadata_startup_script = file("scripts/startup-web-prod.sh")
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
@@ -24,3 +24,4 @@ resource "google_compute_instance_template" "template_eu_w1" {
     create_before_destroy = true
   }
 }
+

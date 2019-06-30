@@ -1,14 +1,15 @@
 provider "google" {
-  project = "${data.terraform_remote_state.apple.apple_service_project_id}"
+  project = data.terraform_remote_state.apple.outputs.apple_service_project_id
   region  = "europe-west1"
 }
 
 provider "google-beta" {
-  project = "${data.terraform_remote_state.apple.apple_service_project_id}"
+  project = data.terraform_remote_state.apple.outputs.apple_service_project_id
   region  = "europe-west1"
 }
 
-provider "random" {}
+provider "random" {
+}
 
 terraform {
   backend "gcs" {
@@ -21,7 +22,7 @@ terraform {
 data "terraform_remote_state" "host" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/1-host"
   }
@@ -30,7 +31,7 @@ data "terraform_remote_state" "host" {
 data "terraform_remote_state" "apple" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/2-apple"
   }
@@ -40,8 +41,9 @@ data "terraform_remote_state" "apple" {
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
 }
+

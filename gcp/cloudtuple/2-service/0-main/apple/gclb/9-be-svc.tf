@@ -1,13 +1,13 @@
 # backend service
 #---------------------------------------
 resource "google_compute_backend_service" "prod_be_svc" {
-  provider        = "google-beta"
+  provider        = google-beta
   name            = "${var.main}prod-be-svc"
   port_name       = "http"
   protocol        = "HTTP"
   timeout_sec     = "30"
   enable_cdn      = false
-  security_policy = "${google_compute_security_policy.prod_app_policy.name}"
+  security_policy = google_compute_security_policy.prod_app_policy.name
 
   /*
                   iap {
@@ -26,38 +26,38 @@ resource "google_compute_backend_service" "prod_be_svc" {
   ]
 
   backend {
-    group                 = "${google_compute_region_instance_group_manager.blue_eu_w1.instance_group}"
+    group                 = google_compute_region_instance_group_manager.blue_eu_w1.instance_group
     balancing_mode        = "RATE"
     max_rate_per_instance = "50"
     capacity_scaler       = "1"
   }
 
   backend {
-    group                 = "${google_compute_region_instance_group_manager.blue_eu_w2.instance_group}"
+    group                 = google_compute_region_instance_group_manager.blue_eu_w2.instance_group
     balancing_mode        = "RATE"
     max_rate_per_instance = "50"
     capacity_scaler       = "1"
   }
 
   backend {
-    group                 = "${google_compute_region_instance_group_manager.green_eu_w1.instance_group}"
+    group                 = google_compute_region_instance_group_manager.green_eu_w1.instance_group
     balancing_mode        = "RATE"
     max_rate_per_instance = "50"
     capacity_scaler       = "0"
   }
 
   backend {
-    group                 = "${google_compute_region_instance_group_manager.green_eu_w2.instance_group}"
+    group                 = google_compute_region_instance_group_manager.green_eu_w2.instance_group
     balancing_mode        = "RATE"
     max_rate_per_instance = "50"
     capacity_scaler       = "0"
   }
 
-  health_checks = ["${google_compute_health_check.http_80_hc.self_link}"]
+  health_checks = [google_compute_health_check.http_80_hc.self_link]
 }
 
 resource "google_compute_backend_service" "dev_be_svc" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}dev-be-svc"
   port_name   = "http"
   protocol    = "HTTP"
@@ -76,12 +76,12 @@ resource "google_compute_backend_service" "dev_be_svc" {
     "X-TLS-Cipher-Suite:{tls_cipher_suite}",
   ]
   backend {
-    group           = "${google_compute_region_instance_group_manager.dev_eu_w3.instance_group}"
+    group           = google_compute_region_instance_group_manager.dev_eu_w3.instance_group
     balancing_mode  = "UTILIZATION"
     max_utilization = "0.8"
     capacity_scaler = "1"
   }
-  health_checks = ["${google_compute_health_check.http_80_hc.self_link}"]
+  health_checks = [google_compute_health_check.http_80_hc.self_link]
 }
 
 /*

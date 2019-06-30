@@ -11,3 +11,4 @@ resource "google_compute_health_check" "ilb_health" {
   healthy_threshold   = "2"
   unhealthy_threshold = "2"
 }
+

@@ -1,15 +1,15 @@
 provider "google" {
-  project     = "${data.terraform_remote_state.apple.apple_service_project_id}"
-  region      = "europe-west1"
+  project = data.terraform_remote_state.apple.outputs.apple_service_project_id
+  region  = "europe-west1"
 }
 
 provider "google-beta" {
-  project     = "${data.terraform_remote_state.apple.apple_service_project_id}"
-  region      = "europe-west1"
+  project = data.terraform_remote_state.apple.outputs.apple_service_project_id
+  region  = "europe-west1"
 }
 
-
-provider "random" {}
+provider "random" {
+}
 
 terraform {
   backend "gcs" {
@@ -17,3 +17,4 @@ terraform {
     prefix = "states/gcp/cloudtuple/2-service/0-main/apple/ilb"
   }
 }
+

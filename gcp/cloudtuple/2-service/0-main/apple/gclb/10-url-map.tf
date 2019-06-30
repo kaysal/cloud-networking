@@ -1,7 +1,7 @@
 # url map
 resource "google_compute_url_map" "url_map" {
   name            = "${var.main}url-map"
-  default_service = "${google_compute_backend_service.prod_be_svc.self_link}"
+  default_service = google_compute_backend_service.prod_be_svc.self_link
 
   host_rule {
     hosts        = ["*"]
@@ -28,17 +28,17 @@ resource "google_compute_url_map" "url_map" {
 
   path_matcher {
     name            = "allpaths"
-    default_service = "${google_compute_backend_service.prod_be_svc.self_link}"
+    default_service = google_compute_backend_service.prod_be_svc.self_link
   }
 
   path_matcher {
     name            = "prodpath"
-    default_service = "${google_compute_backend_service.prod_be_svc.self_link}"
+    default_service = google_compute_backend_service.prod_be_svc.self_link
   }
 
   path_matcher {
     name            = "devpath"
-    default_service = "${google_compute_backend_service.dev_be_svc.self_link}"
+    default_service = google_compute_backend_service.dev_be_svc.self_link
 
     path_rule {
       paths   = ["/app1", "/app1/*"]
@@ -51,3 +51,4 @@ resource "google_compute_url_map" "url_map" {
     }
   }
 }
+

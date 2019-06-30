@@ -1,11 +1,11 @@
 # Bastion host
 #--------------------
 locals {
-  project               = "${data.terraform_remote_state.apple.apple_service_project_id}"
-  network_project       = "${data.terraform_remote_state.host.host_project_id}"
-  network               = "${data.google_compute_network.vpc.self_link}"
-  subnetwork            = "${data.terraform_remote_state.vpc.apple_eu_w1_10_100_10}"
-  service_account_email = "${data.terraform_remote_state.apple.vm_apple_service_project_service_account_email}"
+  project               = data.terraform_remote_state.apple.outputs.apple_service_project_id
+  network_project       = data.terraform_remote_state.host.outputs.host_project_id
+  network               = data.google_compute_network.vpc.self_link
+  subnetwork            = data.terraform_remote_state.vpc.outputs.apple_eu_w1_10_100_10
+  service_account_email = data.terraform_remote_state.apple.outputs.vm_apple_service_project_service_account_email
   zone                  = "europe-west1-b"
 }
 
@@ -13,13 +13,12 @@ module "bastion" {
   source                = "/home/salawu/tf_modules/gcp/bastion"
   name                  = "${var.main}bastion"
   hostname              = "bastion.host.cloudtuple.com"
-  project               = "${local.project}"
-  network_project       = "${local.network_project}"
-  network               = "${local.network}"
-  subnetwork            = "${local.subnetwork}"
-  zone                  = "${local.zone}"
-  service_account_email = "${local.service_account_email}"
-
+  project               = local.project
+  network_project       = local.network_project
+  network               = local.network
+  subnetwork            = local.subnetwork
+  zone                  = local.zone
+  service_account_email = local.service_account_email
   #machine_type             = "f1-micro"
   #list_of_tags             = ["bastion", "gce"]
   #image                    = "debian-cloud/debian-9"
@@ -28,21 +27,37 @@ module "bastion" {
 }
 
 resource "google_dns_record_set" "bastion_public" {
-  project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.public_host_cloudtuple.name}"
+  project      = data.terraform_remote_state.host.outputs.host_project_id
+  managed_zone = data.google_dns_managed_zone.public_host_cloudtuple.name
   name         = "bastion.gclb.apple.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
-  rrdatas      = ["${module.bastion.bastion_nat_ip}"]
+  # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+  # force an interpolation expression to be interpreted as a list by wrapping it
+  # in an extra set of list brackets. That form was supported for compatibilty in
+  # v0.11, but is no longer supported in Terraform v0.12.
+  #
+  # If the expression in the following list itself returns a list, remove the
+  # brackets to avoid interpretation as a list of lists. If the expression
+  # returns a single list item then leave it as-is and remove this TODO comment.
+  rrdatas = [module.bastion.bastion_nat_ip]
 }
 
 resource "google_dns_record_set" "bastion_private" {
-  project      = "${data.terraform_remote_state.host.host_project_id}"
-  managed_zone = "${data.google_dns_managed_zone.private_apple_cloudtuple.name}"
+  project      = data.terraform_remote_state.host.outputs.host_project_id
+  managed_zone = data.google_dns_managed_zone.private_apple_cloudtuple.name
   name         = "bastion.gclb.${data.google_dns_managed_zone.private_apple_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
-  rrdatas      = ["${module.bastion.bastion_private_ip}"]
+  # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
+  # force an interpolation expression to be interpreted as a list by wrapping it
+  # in an extra set of list brackets. That form was supported for compatibilty in
+  # v0.11, but is no longer supported in Terraform v0.12.
+  #
+  # If the expression in the following list itself returns a list, remove the
+  # brackets to avoid interpretation as a list of lists. If the expression
+  # returns a single list item then leave it as-is and remove this TODO comment.
+  rrdatas = [module.bastion.bastion_private_ip]
 }
 
 # NEG endpoint VM
@@ -64,7 +79,7 @@ resource "google_compute_instance" "neg_eu_w3_vm1" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w3_10_200_10}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.apple_eu_w3_10_200_10
     network_ip = "10.200.10.11"
 
     alias_ip_range {
@@ -73,11 +88,11 @@ resource "google_compute_instance" "neg_eu_w3_vm1" {
     }
   }
 
-  metadata {
-    ssh-keys = "user:${file("${var.public_key_path}")}"
+  metadata = {
+    ssh-keys = "user:${file(var.public_key_path)}"
   }
 
-  metadata_startup_script = "${file("scripts/startup-web-neg-appx.sh")}"
+  metadata_startup_script = file("scripts/startup-web-neg-appx.sh")
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
@@ -100,7 +115,7 @@ resource "google_compute_instance" "neg_eu_w3_vm2" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w3_10_200_10}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.apple_eu_w3_10_200_10
     network_ip = "10.200.10.22"
 
     alias_ip_range {
@@ -109,11 +124,11 @@ resource "google_compute_instance" "neg_eu_w3_vm2" {
     }
   }
 
-  metadata {
-    ssh-keys = "user:${file("${var.public_key_path}")}"
+  metadata = {
+    ssh-keys = "user:${file(var.public_key_path)}"
   }
 
-  metadata_startup_script = "${file("scripts/startup-web-neg-app1.sh")}"
+  metadata_startup_script = file("scripts/startup-web-neg-app1.sh")
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
@@ -136,7 +151,7 @@ resource "google_compute_instance" "neg_eu_w3_vm3" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_eu_w3_10_200_10}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.apple_eu_w3_10_200_10
     network_ip = "10.200.10.33"
 
     alias_ip_range {
@@ -145,17 +160,16 @@ resource "google_compute_instance" "neg_eu_w3_vm3" {
     }
   }
 
-  metadata {
-    ssh-keys = "user:${file("${var.public_key_path}")}"
+  metadata = {
+    ssh-keys = "user:${file(var.public_key_path)}"
   }
 
-  metadata_startup_script = "${file("scripts/startup-web-neg-app1.sh")}"
+  metadata_startup_script = file("scripts/startup-web-neg-app1.sh")
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
-
 
 # sandbox instance
 
@@ -173,15 +187,16 @@ resource "google_compute_instance" "sandbox_us_e1_vm" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.apple_us_e1_10_250_10}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.apple_us_e1_10_250_10
     network_ip = "10.250.10.10"
   }
 
-  metadata {
-    ssh-keys = "user:${file("${var.public_key_path}")}"
+  metadata = {
+    ssh-keys = "user:${file(var.public_key_path)}"
   }
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
+

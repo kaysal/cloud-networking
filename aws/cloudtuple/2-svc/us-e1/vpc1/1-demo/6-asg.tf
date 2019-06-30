@@ -5,17 +5,17 @@ resource "aws_autoscaling_group" "asg" {
   min_size         = 2
 
   target_group_arns = [
-    "${aws_lb_target_group.alb_ext_asg_tg.arn}",
+    aws_lb_target_group.alb_ext_asg_tg.arn,
   ]
 
-  launch_template = {
-    id      = "${aws_launch_template.launch_templ.id}"
-    version = "$$Latest"
+  launch_template {
+    id      = aws_launch_template.launch_templ.id
+    version = "$Latest"
   }
 
   vpc_zone_identifier = [
-    "${data.terraform_remote_state.e1_vpc1.private_172_18_10}",
-    "${data.terraform_remote_state.e1_vpc1.private_172_18_11}",
+    data.terraform_remote_state.e1_vpc1.outputs.private_172_18_10,
+    data.terraform_remote_state.e1_vpc1.outputs.private_172_18_11,
   ]
 
   enabled_metrics = [
@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "asg" {
 
 resource "aws_autoscaling_policy" "asg_scale_up" {
   name                   = "${var.name}asg-scale-up"
-  autoscaling_group_name = "${aws_autoscaling_group.asg.name}"
+  autoscaling_group_name = aws_autoscaling_group.asg.name
   policy_type            = "StepScaling"
   adjustment_type        = "ChangeInCapacity"
 
@@ -49,7 +49,7 @@ resource "aws_autoscaling_policy" "asg_scale_up" {
 
 resource "aws_autoscaling_policy" "asg_scale_down" {
   name                   = "${var.name}asg-scale-down"
-  autoscaling_group_name = "${aws_autoscaling_group.asg.name}"
+  autoscaling_group_name = aws_autoscaling_group.asg.name
   policy_type            = "StepScaling"
   adjustment_type        = "ChangeInCapacity"
 
@@ -88,7 +88,7 @@ resource "aws_autoscaling_policy" "asg-policy" {
 resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-80-incr" {
   alarm_name                = "${var.name}cpu-alarm-thresh-80-incr"
   actions_enabled           = true
-  alarm_actions             = ["${aws_autoscaling_policy.asg_scale_up.arn}"]
+  alarm_actions             = [aws_autoscaling_policy.asg_scale_up.arn]
   statistic                 = "Average"
   metric_name               = "CPUUtilization"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
@@ -100,7 +100,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-80-incr" {
   insufficient_data_actions = []
 
   dimensions = {
-    "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
+    "AutoScalingGroupName" = aws_autoscaling_group.asg.name
   }
 }
 
@@ -108,7 +108,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-80-incr" {
 resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-50-decr" {
   alarm_name                = "${var.name}cpu-alarm-thresh-50-decr"
   actions_enabled           = true
-  alarm_actions             = ["${aws_autoscaling_policy.asg_scale_down.arn}"]
+  alarm_actions             = [aws_autoscaling_policy.asg_scale_down.arn]
   statistic                 = "Average"
   metric_name               = "CPUUtilization"
   comparison_operator       = "LessThanThreshold"
@@ -120,6 +120,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm-thresh-50-decr" {
   insufficient_data_actions = []
 
   dimensions = {
-    "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
+    "AutoScalingGroupName" = aws_autoscaling_group.asg.name
   }
 }
+

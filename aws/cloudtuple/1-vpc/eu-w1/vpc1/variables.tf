@@ -100,6 +100,7 @@ variable "vyosb_gcp_tunnel_inside_address2" {
 
 variable "client_instance_metadata" {
   description = "Metadata key/value pairs to make available from within the client instance."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
+

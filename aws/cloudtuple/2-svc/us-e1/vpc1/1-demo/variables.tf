@@ -38,3 +38,4 @@ variable "bucket_img" {
 variable "domain_name" {
   default = "cloudtuples.com"
 }
+

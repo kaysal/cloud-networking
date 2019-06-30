@@ -18,3 +18,4 @@ variable "env" {
   description = "general resource prefix"
   default     = "ks-w1-"
 }
+

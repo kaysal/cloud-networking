@@ -22,3 +22,4 @@ variable "name" {
 variable "domain_name" {
   default = "cloudtuples.com"
 }
+

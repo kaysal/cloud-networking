@@ -2,9 +2,9 @@
 #--------------------------
 resource "aws_security_group" "bastion_pub_sg" {
   name   = "${var.name}bastion-pub-sg"
-  vpc_id = "${aws_vpc.vpc1.id}"
+  vpc_id = aws_vpc.vpc1.id
 
-  tags {
+  tags = {
     Name  = "${var.name}bastion-pub-sg"
     Scope = "public"
   }
@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "bastion_ssh_ingress" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.bastion_pub_sg.id}"
+  security_group_id = aws_security_group.bastion_pub_sg.id
 }
 
 # icmp & traceroute ingress
@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "bastion_icmp_ingress" {
   ]
 
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.bastion_pub_sg.id}"
+  security_group_id = aws_security_group.bastion_pub_sg.id
 }
 
 resource "aws_security_group_rule" "bastion_traceroute_ingress" {
@@ -55,7 +55,7 @@ resource "aws_security_group_rule" "bastion_traceroute_ingress" {
   ]
 
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.bastion_pub_sg.id}"
+  security_group_id = aws_security_group.bastion_pub_sg.id
 }
 
 # egress
@@ -67,16 +67,16 @@ resource "aws_security_group_rule" "bastion_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.bastion_pub_sg.id}"
+  security_group_id = aws_security_group.bastion_pub_sg.id
 }
 
 # VYOS ROUTER SG
 #--------------------------
 resource "aws_security_group" "vyos_pub_sg" {
   name   = "${var.name}vyos-pub-sg"
-  vpc_id = "${aws_vpc.vpc1.id}"
+  vpc_id = aws_vpc.vpc1.id
 
-  tags {
+  tags = {
     Name  = "${var.name}vyos-pub-sg"
     Scope = "public"
   }
@@ -91,7 +91,7 @@ resource "aws_security_group_rule" "vyos_ssh_ingress" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.vyos_pub_sg.id}"
+  security_group_id = aws_security_group.vyos_pub_sg.id
 }
 
 # bastion ingress
@@ -101,8 +101,8 @@ resource "aws_security_group_rule" "bastion_ingress" {
   from_port                = "0"
   to_port                  = "0"
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.bastion_pub_sg.id}"
-  security_group_id        = "${aws_security_group.vyos_pub_sg.id}"
+  source_security_group_id = aws_security_group.bastion_pub_sg.id
+  security_group_id        = aws_security_group.vyos_pub_sg.id
 }
 
 # ike & ipsec ingress
@@ -114,7 +114,7 @@ resource "aws_security_group_rule" "vyos_udp_500_ingress" {
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.vyos_pub_sg.id}"
+  security_group_id = aws_security_group.vyos_pub_sg.id
 }
 
 resource "aws_security_group_rule" "vyos_udp_4500_ingress" {
@@ -124,7 +124,7 @@ resource "aws_security_group_rule" "vyos_udp_4500_ingress" {
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.vyos_pub_sg.id}"
+  security_group_id = aws_security_group.vyos_pub_sg.id
 }
 
 # vyos sg ingress
@@ -134,8 +134,8 @@ resource "aws_security_group_rule" "vyos_ingress" {
   from_port                = 0
   to_port                  = 0
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.vyos_pub_sg.id}"
-  security_group_id        = "${aws_security_group.vyos_pub_sg.id}"
+  source_security_group_id = aws_security_group.vyos_pub_sg.id
+  security_group_id        = aws_security_group.vyos_pub_sg.id
 }
 
 # ec2 ingress
@@ -145,8 +145,8 @@ resource "aws_security_group_rule" "vpc_ec2_ingress" {
   from_port                = 0
   to_port                  = 0
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.ec2_prv_sg.id}"
-  security_group_id        = "${aws_security_group.vyos_pub_sg.id}"
+  source_security_group_id = aws_security_group.ec2_prv_sg.id
+  security_group_id        = aws_security_group.vyos_pub_sg.id
 }
 
 # egress
@@ -158,16 +158,16 @@ resource "aws_security_group_rule" "vyos_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.vyos_pub_sg.id}"
+  security_group_id = aws_security_group.vyos_pub_sg.id
 }
 
 # EC2 INSTANCES SG
 #--------------------------
 resource "aws_security_group" "ec2_prv_sg" {
   name   = "${var.name}ec2-prv-sg"
-  vpc_id = "${aws_vpc.vpc1.id}"
+  vpc_id = aws_vpc.vpc1.id
 
-  tags {
+  tags = {
     Name  = "${var.name}ec2-prv-sg"
     Scope = "private"
   }
@@ -189,7 +189,7 @@ resource "aws_security_group_rule" "ec2_prv_icmp_ingress" {
   ]
 
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_traceroute_ingress" {
@@ -206,7 +206,7 @@ resource "aws_security_group_rule" "ec2_prv_traceroute_ingress" {
   ]
 
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 # bastion ingress
@@ -216,8 +216,8 @@ resource "aws_security_group_rule" "ec2_prv_bastion_ingress" {
   from_port                = "0"
   to_port                  = "0"
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.bastion_pub_sg.id}"
-  security_group_id        = "${aws_security_group.ec2_prv_sg.id}"
+  source_security_group_id = aws_security_group.bastion_pub_sg.id
+  security_group_id        = aws_security_group.ec2_prv_sg.id
 }
 
 # dns ingres (for bind server)
@@ -236,7 +236,7 @@ resource "aws_security_group_rule" "ec2_prv_tcp_dns_ingress" {
   ]
 
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_udp_dns_ingress" {
@@ -253,7 +253,7 @@ resource "aws_security_group_rule" "ec2_prv_udp_dns_ingress" {
   ]
 
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 # egress
@@ -265,19 +265,20 @@ resource "aws_security_group_rule" "ec2_prv_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 # OUTPUTS
 #--------------------------
 output "bastion_pub_sg" {
-  value = "${aws_security_group.bastion_pub_sg.id}"
+  value = aws_security_group.bastion_pub_sg.id
 }
 
 output "vyos_pub_sg" {
-  value = "${aws_security_group.bastion_pub_sg.id}"
+  value = aws_security_group.bastion_pub_sg.id
 }
 
 output "ec2_prv_sg" {
-  value = "${aws_security_group.ec2_prv_sg.id}"
+  value = aws_security_group.ec2_prv_sg.id
 }
+

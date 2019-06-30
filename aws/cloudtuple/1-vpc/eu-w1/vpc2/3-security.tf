@@ -2,9 +2,9 @@
 #==============================
 resource "aws_security_group" "appliance_pub_sg" {
   name   = "${var.name}appliance-pub-sg"
-  vpc_id = "${aws_vpc.vpc2.id}"
+  vpc_id = aws_vpc.vpc2.id
 
-  tags {
+  tags = {
     Name  = "${var.name}appliance-pub-sg"
     Scope = "public"
   }
@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "appliance_pub_ssh_ingress" {
   ipv6_cidr_blocks = ["::/0"]
 
   #cidr_blocks       = ["${data.external.onprem_ip.result.ip}/32"]
-  security_group_id = "${aws_security_group.appliance_pub_sg.id}"
+  security_group_id = aws_security_group.appliance_pub_sg.id
 }
 
 resource "aws_security_group_rule" "appliance_pub_http_ingress" {
@@ -29,7 +29,7 @@ resource "aws_security_group_rule" "appliance_pub_http_ingress" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.appliance_pub_sg.id}"
+  security_group_id = aws_security_group.appliance_pub_sg.id
 }
 
 resource "aws_security_group_rule" "appliance_pub_egress" {
@@ -39,16 +39,16 @@ resource "aws_security_group_rule" "appliance_pub_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.appliance_pub_sg.id}"
+  security_group_id = aws_security_group.appliance_pub_sg.id
 }
 
 # Appliance Private SG
 #==============================
 resource "aws_security_group" "appliance_prv_sg" {
   name   = "${var.name}appliance-prv-sg"
-  vpc_id = "${aws_vpc.vpc2.id}"
+  vpc_id = aws_vpc.vpc2.id
 
-  tags {
+  tags = {
     Name  = "${var.name}appliance-prv-sg"
     Scope = "private"
   }
@@ -59,8 +59,8 @@ resource "aws_security_group_rule" "appliance_prv_ingress" {
   from_port                = 0
   to_port                  = 0
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.ec2_prv_sg.id}"
-  security_group_id        = "${aws_security_group.appliance_prv_sg.id}"
+  source_security_group_id = aws_security_group.ec2_prv_sg.id
+  security_group_id        = aws_security_group.appliance_prv_sg.id
 }
 
 resource "aws_security_group_rule" "appliance_prv_egress" {
@@ -70,30 +70,29 @@ resource "aws_security_group_rule" "appliance_prv_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.appliance_prv_sg.id}"
+  security_group_id = aws_security_group.appliance_prv_sg.id
 }
-
 
 # NLB SG
 #==============================
 resource "aws_security_group" "nlb_pub_sg" {
   name   = "${var.name}nlb-pub-sg"
-  vpc_id = "${aws_vpc.vpc2.id}"
+  vpc_id = aws_vpc.vpc2.id
 
-  tags {
+  tags = {
     Name  = "${var.name}nlb-pub-sg"
     Scope = "public"
   }
 }
 
 resource "aws_security_group_rule" "nlb_http_ingress" {
-  type             = "ingress"
-  from_port        = 80
-  to_port          = 80
-  protocol         = "tcp"
-  cidr_blocks      = ["0.0.0.0/0"]
-  ipv6_cidr_blocks = ["::/0"]
-  security_group_id = "${aws_security_group.nlb_pub_sg.id}"
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+  security_group_id = aws_security_group.nlb_pub_sg.id
 }
 
 resource "aws_security_group_rule" "nlb_egress" {
@@ -103,16 +102,16 @@ resource "aws_security_group_rule" "nlb_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.nlb_pub_sg.id}"
+  security_group_id = aws_security_group.nlb_pub_sg.id
 }
 
 # LAUNCH TEMPLATE SG
 #==============================
 resource "aws_security_group" "launch_prv_sg" {
   name   = "${var.name}launch-prv-sg"
-  vpc_id = "${aws_vpc.vpc2.id}"
+  vpc_id = aws_vpc.vpc2.id
 
-  tags {
+  tags = {
     Name  = "${var.name}launch-prv-sg"
     Scope = "private"
   }
@@ -123,8 +122,8 @@ resource "aws_security_group_rule" "launch_http_ingress" {
   from_port                = 80
   to_port                  = 80
   protocol                 = "tcp"
-  source_security_group_id = "${aws_security_group.nlb_pub_sg.id}"
-  security_group_id        = "${aws_security_group.launch_prv_sg.id}"
+  source_security_group_id = aws_security_group.nlb_pub_sg.id
+  security_group_id        = aws_security_group.launch_prv_sg.id
 }
 
 resource "aws_security_group_rule" "launch_appliance_ingress" {
@@ -132,8 +131,8 @@ resource "aws_security_group_rule" "launch_appliance_ingress" {
   from_port                = 0
   to_port                  = 0
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.appliance_pub_sg.id}"
-  security_group_id        = "${aws_security_group.launch_prv_sg.id}"
+  source_security_group_id = aws_security_group.appliance_pub_sg.id
+  security_group_id        = aws_security_group.launch_prv_sg.id
 }
 
 resource "aws_security_group_rule" "launch_egress" {
@@ -143,16 +142,16 @@ resource "aws_security_group_rule" "launch_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.launch_prv_sg.id}"
+  security_group_id = aws_security_group.launch_prv_sg.id
 }
 
 # EC2 INSTANCES SG
 #==============================
 resource "aws_security_group" "ec2_prv_sg" {
   name   = "${var.name}ec2-prv-sg"
-  vpc_id = "${aws_vpc.vpc2.id}"
+  vpc_id = aws_vpc.vpc2.id
 
-  tags {
+  tags = {
     Name  = "${var.name}ec2-prv-sg"
     Scope = "private"
   }
@@ -165,7 +164,7 @@ resource "aws_security_group_rule" "ec2_prv_icmp_ingress" {
   protocol          = "icmp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_traceroute_ingress" {
@@ -175,7 +174,7 @@ resource "aws_security_group_rule" "ec2_prv_traceroute_ingress" {
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_appliance_ingress" {
@@ -183,8 +182,8 @@ resource "aws_security_group_rule" "ec2_prv_appliance_ingress" {
   from_port                = 0
   to_port                  = 0
   protocol                 = "-1"
-  source_security_group_id = "${aws_security_group.appliance_prv_sg.id}"
-  security_group_id        = "${aws_security_group.ec2_prv_sg.id}"
+  source_security_group_id = aws_security_group.appliance_prv_sg.id
+  security_group_id        = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_tcp_dns_ingress" {
@@ -195,7 +194,7 @@ resource "aws_security_group_rule" "ec2_prv_tcp_dns_ingress" {
   cidr_blocks      = ["0.0.0.0/0"]
   ipv6_cidr_blocks = ["::/0"]
 
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_udp_dns_ingress" {
@@ -206,7 +205,7 @@ resource "aws_security_group_rule" "ec2_prv_udp_dns_ingress" {
   cidr_blocks      = ["0.0.0.0/0"]
   ipv6_cidr_blocks = ["::/0"]
 
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 resource "aws_security_group_rule" "ec2_prv_egress" {
@@ -216,27 +215,28 @@ resource "aws_security_group_rule" "ec2_prv_egress" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = "${aws_security_group.ec2_prv_sg.id}"
+  security_group_id = aws_security_group.ec2_prv_sg.id
 }
 
 # OUTPUTS
 #==============================
 output "appliance_pub_sg" {
-  value = "${aws_security_group.appliance_pub_sg.id}"
+  value = aws_security_group.appliance_pub_sg.id
 }
 
 output "appliance_prv_sg" {
-  value = "${aws_security_group.appliance_prv_sg.id}"
+  value = aws_security_group.appliance_prv_sg.id
 }
 
 output "nlb_pub_sg" {
-  value = "${aws_security_group.nlb_pub_sg.id}"
+  value = aws_security_group.nlb_pub_sg.id
 }
 
 output "launch_prv_sg" {
-  value = "${aws_security_group.launch_prv_sg.id}"
+  value = aws_security_group.launch_prv_sg.id
 }
 
 output "ec2_prv_sg" {
-  value = "${aws_security_group.ec2_prv_sg.id}"
+  value = aws_security_group.ec2_prv_sg.id
 }
+

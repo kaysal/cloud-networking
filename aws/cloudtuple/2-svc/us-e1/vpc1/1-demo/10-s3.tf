@@ -1,14 +1,14 @@
 # WEBSITE BUCKET
 #==============================
 resource "aws_s3_bucket" "site" {
-  bucket = "${var.bucket_site}"
+  bucket = var.bucket_site
 
   website {
     index_document = "index.html"
     error_document = "error.html"
   }
 
-  tags {
+  tags = {
     Name = "${var.name}bucket-site"
   }
 
@@ -32,35 +32,36 @@ resource "aws_s3_bucket" "site" {
   ]
 }
 EOF
+
 }
 
 resource "aws_s3_bucket_object" "index_html" {
-  bucket       = "${aws_s3_bucket.site.bucket}"
-  key          = "index.html"
-  source       = "./scripts/s3/index.html"
-  etag         = "${md5(file("./scripts/s3/index.html"))}"
+  bucket = aws_s3_bucket.site.bucket
+  key = "index.html"
+  source = "./scripts/s3/index.html"
+  etag = filemd5("./scripts/s3/index.html")
   content_type = "text/html"
 }
 
 resource "aws_s3_bucket_object" "error_html" {
-  bucket       = "${aws_s3_bucket.site.bucket}"
-  key          = "error.html"
-  source       = "./scripts/s3/error.html"
-  etag         = "${md5(file("./scripts/s3/error.html"))}"
+  bucket = aws_s3_bucket.site.bucket
+  key = "error.html"
+  source = "./scripts/s3/error.html"
+  etag = filemd5("./scripts/s3/error.html")
   content_type = "text/html"
 }
 
 # CDN IMAGES BUCKET
 #==============================
 resource "aws_s3_bucket" "img" {
-  bucket = "${var.bucket_img}"
+  bucket = var.bucket_img
 
-  tags {
+  tags = {
     Name = "${var.name}bucket-img"
   }
 
   force_destroy = true
-  acl           = "private"
+  acl = "private"
 
   policy = <<EOF
 {
@@ -79,13 +80,14 @@ resource "aws_s3_bucket" "img" {
   ]
 }
 EOF
+
 }
 
 resource "aws_s3_bucket_object" "aws_logo" {
-  bucket = "${aws_s3_bucket.img.bucket}"
-  key    = "awsLogo.png"
-  source = "./scripts/cdn/awsLogo.png"
-  etag   = "${md5(file("./scripts/s3/index.html"))}"
+bucket = aws_s3_bucket.img.bucket
+key    = "awsLogo.png"
+source = "./scripts/cdn/awsLogo.png"
+etag   = filemd5("./scripts/s3/index.html")
 }
 
 /*
@@ -131,4 +133,3 @@ resource "aws_s3_bucket_object" "error_html" {
   etag         = "${md5(file("~/tf/aws/CERT/associate/scripts/error.html"))}"
   content_type = "text/html"
 }*/
-

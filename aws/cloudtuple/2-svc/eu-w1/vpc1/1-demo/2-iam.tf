@@ -16,11 +16,12 @@ resource "aws_iam_role" "ec2_iam_role" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "s3_iam_policy" {
   name = "${var.name}s3-iam-policy"
-  role = "${aws_iam_role.ec2_iam_role.id}"
+  role = aws_iam_role.ec2_iam_role.id
 
   policy = <<EOF
 {
@@ -36,4 +37,6 @@ resource "aws_iam_role_policy" "s3_iam_policy" {
   ]
 }
 EOF
+
 }
+

@@ -18,3 +18,4 @@ variable "public_key_path" {
 variable "private_key_path" {
   description = "path to private key for ec2 SSH"
 }
+

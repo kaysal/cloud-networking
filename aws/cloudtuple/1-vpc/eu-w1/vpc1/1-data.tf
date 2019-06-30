@@ -4,7 +4,7 @@
 data "terraform_remote_state" "w1_shared" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/aws/cloudtuple/1-vpc/eu-w1/shared"
   }
@@ -14,7 +14,7 @@ data "terraform_remote_state" "w1_shared" {
 data "terraform_remote_state" "w1_vpc2" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/aws/cloudtuple/1-vpc/eu-w1/vpc2"
   }
@@ -24,7 +24,7 @@ data "terraform_remote_state" "w1_vpc2" {
 data "terraform_remote_state" "e1_vpc1" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/aws/cloudtuple/1-vpc/us-e1/vpc1"
   }
@@ -34,7 +34,7 @@ data "terraform_remote_state" "e1_vpc1" {
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
@@ -44,7 +44,7 @@ data "terraform_remote_state" "vpc" {
 data "terraform_remote_state" "untrust" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/1-host/1-nva/0-vpc"
   }
@@ -108,3 +108,4 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"] # Canonical
 }
+

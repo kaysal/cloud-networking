@@ -39,7 +39,6 @@ variable "private_172_17_12" {
   default     = "172.17.12.0/24"
 }
 
-
 variable "peer_owner_id" {
   description = "AWS account ID of the owner of the peer VPC"
 }
@@ -47,3 +46,4 @@ variable "peer_owner_id" {
 variable "domain_name" {
   default = "cloudtuples.com"
 }
+

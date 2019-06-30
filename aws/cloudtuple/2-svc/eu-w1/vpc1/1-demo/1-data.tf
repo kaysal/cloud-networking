@@ -4,7 +4,7 @@
 data "terraform_remote_state" "w1_shared" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/aws/cloudtuple/1-vpc/eu-w1/shared"
   }
@@ -14,7 +14,7 @@ data "terraform_remote_state" "w1_shared" {
 data "terraform_remote_state" "w1_vpc1" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc1"
     credentials = "~/tf/credentials/gcp-credentials-tf.json"
@@ -27,3 +27,4 @@ data "aws_route53_zone" "cloudtuples_public" {
   name         = "cloudtuples.com."
   private_zone = false
 }
+

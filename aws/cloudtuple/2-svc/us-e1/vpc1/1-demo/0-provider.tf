@@ -2,8 +2,8 @@
 #==============================
 provider "aws" {
   region     = "us-east-1"
-  access_key = "${var.access_key}"
-  secret_key = "${var.secret_key}"
+  access_key = var.access_key
+  secret_key = var.secret_key
 }
 
 /*
@@ -15,7 +15,8 @@ provider "aws" {
 }
 */
 
-provider "random" {}
+provider "random" {
+}
 
 # BACKEND
 #==============================
@@ -26,3 +27,4 @@ terraform {
     credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
+

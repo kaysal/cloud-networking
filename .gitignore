@@ -11,6 +11,7 @@
 
 # Other files
 *credentials/
+*keys/
 plugins/
 *plugins/
 *.x
@@ -31,5 +32,5 @@ pkg/
 .idea
 .skaffold-*.yaml
 .kubernetes-manifests-*/
-_run.*
+_*
 _del.*

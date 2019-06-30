@@ -6,3 +6,4 @@ variable "main" {
 variable "psk" {
   description = "ipsec vpn tunnel pre-shared key"
 }
+

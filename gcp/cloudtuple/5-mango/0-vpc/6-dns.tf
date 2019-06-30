@@ -1,7 +1,7 @@
 # private google api
 #--------------------------------
 resource "google_dns_managed_zone" "private_googleapis" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}private-googleapis"
   dns_name    = "googleapis.com."
   description = "private zone for googleapis"
@@ -13,7 +13,7 @@ resource "google_dns_managed_zone" "private_googleapis" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 }
@@ -23,7 +23,7 @@ resource "google_dns_record_set" "googleapis_cname" {
   type = "CNAME"
   ttl  = 300
 
-  managed_zone = "${google_dns_managed_zone.private_googleapis.name}"
+  managed_zone = google_dns_managed_zone.private_googleapis.name
   rrdatas      = ["restricted.${google_dns_managed_zone.private_googleapis.dns_name}"]
 }
 
@@ -32,7 +32,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
   type = "A"
   ttl  = 300
 
-  managed_zone = "${google_dns_managed_zone.private_googleapis.name}"
+  managed_zone = google_dns_managed_zone.private_googleapis.name
 
   rrdatas = [
     "199.36.153.4",
@@ -45,7 +45,7 @@ resource "google_dns_record_set" "restricted_googleapis" {
 # Main VPC Private Zone
 #--------------------------------
 resource "google_dns_managed_zone" "private_mango_cloudtuple" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}private-mango-cloudtuple"
   dns_name    = "mango.cloudtuple.com."
   description = "private zone for mango project"
@@ -57,7 +57,7 @@ resource "google_dns_managed_zone" "private_mango_cloudtuple" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 }
@@ -65,18 +65,18 @@ resource "google_dns_managed_zone" "private_mango_cloudtuple" {
 # DNS Peering
 #===================================
 resource "google_project_iam_binding" "dns_peer" {
-  provider = "google-beta"
+  provider = google-beta
   role     = "roles/dns.peer"
 
   members = [
-    "serviceAccount:${data.terraform_remote_state.host.vm_host_project_service_account_email}",
+    "serviceAccount:${data.terraform_remote_state.host.outputs.vm_host_project_service_account_email}",
   ]
 }
 
 # Peering Zones
 #--------------------------------
 resource "google_dns_managed_zone" "gcp_host_cloudtuple" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}gcp-host-cloudtuple"
   dns_name    = "host.cloudtuple.com."
   description = "queries to gcp host private zone"
@@ -88,19 +88,19 @@ resource "google_dns_managed_zone" "gcp_host_cloudtuple" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 
   peering_config {
     target_network {
-      network_url = "${data.google_compute_network.host_vpc.self_link}"
+      network_url = data.google_compute_network.host_vpc.self_link
     }
   }
 }
 
 resource "google_dns_managed_zone" "gcp_apple_cloudtuple" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}gcp-apple-cloudtuple"
   dns_name    = "apple.cloudtuple.com."
   description = "queries to gcp apple private zone"
@@ -112,19 +112,19 @@ resource "google_dns_managed_zone" "gcp_apple_cloudtuple" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 
   peering_config {
     target_network {
-      network_url = "${data.google_compute_network.host_vpc.self_link}"
+      network_url = data.google_compute_network.host_vpc.self_link
     }
   }
 }
 
 resource "google_dns_managed_zone" "gcp_orange_cloudtuple" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}gcp-orange-cloudtuple"
   dns_name    = "orange.cloudtuple.com."
   description = "queries to gcp orange private zone"
@@ -136,19 +136,19 @@ resource "google_dns_managed_zone" "gcp_orange_cloudtuple" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 
   peering_config {
     target_network {
-      network_url = "${data.google_compute_network.orange_vpc.self_link}"
+      network_url = data.google_compute_network.orange_vpc.self_link
     }
   }
 }
 
 resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}private-aws-west1-cloudtuples"
   dns_name    = "west1.cloudtuples.com."
   description = "zone queries to aws west1 region"
@@ -160,19 +160,19 @@ resource "google_dns_managed_zone" "private_aws_west1_cloudtuples" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 
   peering_config {
     target_network {
-      network_url = "${data.google_compute_network.host_vpc.self_link}"
+      network_url = data.google_compute_network.host_vpc.self_link
     }
   }
 }
 
 resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
-  provider    = "google-beta"
+  provider    = google-beta
   name        = "${var.main}private-aws-east1-cloudtuples"
   dns_name    = "east1.cloudtuples.com."
   description = "zone queries to aws east1 region inbound endpoint"
@@ -184,13 +184,13 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
 
   private_visibility_config {
     networks {
-      network_url = "${google_compute_network.vpc.self_link}"
+      network_url = google_compute_network.vpc.self_link
     }
   }
 
   peering_config {
     target_network {
-      network_url = "${data.google_compute_network.host_vpc.self_link}"
+      network_url = data.google_compute_network.host_vpc.self_link
     }
   }
 }
@@ -198,11 +198,12 @@ resource "google_dns_managed_zone" "private-aws-east1-cloudtuples" {
 # DNS Policy
 #===================================
 resource "google_dns_policy" "allow_inbound" {
-  provider                  = "google-beta"
+  provider                  = google-beta
   name                      = "allow-inbound"
   enable_inbound_forwarding = true
 
   networks {
-    network_url = "${google_compute_network.vpc.self_link}"
+    network_url = google_compute_network.vpc.self_link
   }
 }
+

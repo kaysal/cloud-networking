@@ -11,7 +11,7 @@ resource "google_compute_network" "vpc" {
 resource "google_compute_subnetwork" "eu_w2_10_200_30" {
   name                     = "${var.main}eu-w2-10-200-30"
   region                   = "europe-west2"
-  network                  = "${google_compute_network.vpc.self_link}"
+  network                  = google_compute_network.vpc.self_link
   ip_cidr_range            = "10.200.30.0/24"
   private_ip_google_access = true
 }
@@ -27,3 +27,4 @@ resource "google_compute_address" "policy_based_vpn_gw_ip" {
   name   = "policy-based-vpn-gw-ip"
   region = "us-east1"
 }
+

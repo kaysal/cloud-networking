@@ -4,7 +4,7 @@ resource "google_compute_instance_template" "prod_template" {
   machine_type   = "f1-micro"
   tags           = ["mig", "nat-europe-west2"]
   can_ip_forward = true
-  tags           = ["mig","gce"]
+  tags           = ["mig", "gce"]
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -12,14 +12,14 @@ resource "google_compute_instance_template" "prod_template" {
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.eu_w2_10_200_30}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.eu_w2_10_200_30
   }
 
-  metadata {
-    ssh-keys = "user:${file("${var.public_key_path}")}"
+  metadata = {
+    ssh-keys = "user:${file(var.public_key_path)}"
   }
 
-  metadata_startup_script = "${file("scripts/startup-web-prod.sh")}"
+  metadata_startup_script = file("scripts/startup-web-prod.sh")
 
   service_account {
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
@@ -29,3 +29,4 @@ resource "google_compute_instance_template" "prod_template" {
     create_before_destroy = true
   }
 }
+

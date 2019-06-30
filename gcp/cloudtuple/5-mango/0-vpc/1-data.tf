@@ -4,7 +4,7 @@
 data "terraform_remote_state" "mango" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/4-mango"
   }
@@ -16,7 +16,7 @@ data "terraform_remote_state" "mango" {
 data "terraform_remote_state" "host" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/1-host"
   }
@@ -26,20 +26,20 @@ data "terraform_remote_state" "host" {
 data "terraform_remote_state" "host_vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/1-host/0-main/0-vpc"
   }
 }
 
 data "google_compute_network" "host_vpc" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
-  name    = "${data.terraform_remote_state.host_vpc.vpc_name}"
+  project = data.terraform_remote_state.host.outputs.host_project_id
+  name    = data.terraform_remote_state.host_vpc.outputs.vpc_name
 }
 
 # dns data
 data "google_dns_managed_zone" "public_host_cloudtuple" {
-  project = "${data.terraform_remote_state.host.host_project_id}"
+  project = data.terraform_remote_state.host.outputs.host_project_id
   name    = "public-host-cloudtuple"
 }
 
@@ -49,7 +49,7 @@ data "google_dns_managed_zone" "public_host_cloudtuple" {
 data "terraform_remote_state" "orange" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/0-org/3-orange"
   }
@@ -59,15 +59,15 @@ data "terraform_remote_state" "orange" {
 data "terraform_remote_state" "orange_vpc" {
   backend = "gcs"
 
-  config {
+  config = {
     bucket = "tf-shk"
     prefix = "states/gcp/cloudtuple/4-orange/0-vpc"
   }
 }
 
 data "google_compute_network" "orange_vpc" {
-  project = "${data.terraform_remote_state.orange.orange_project_id}"
-  name    = "${data.terraform_remote_state.orange_vpc.vpc_name}"
+  project = data.terraform_remote_state.orange.outputs.orange_project_id
+  name    = data.terraform_remote_state.orange_vpc.outputs.vpc_name
 }
 
 # other data
@@ -78,12 +78,14 @@ data "external" "onprem_ip" {
 }
 
 # GFE LB IP ranges
-data "google_compute_lb_ip_ranges" "ranges" {}
+data "google_compute_lb_ip_ranges" "ranges" {
+}
 
 output "nlb" {
-  value = "${data.google_compute_lb_ip_ranges.ranges.network}"
+  value = data.google_compute_lb_ip_ranges.ranges.network
 }
 
 output "http_ssl_tcp_internal" {
-  value = "${data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal}"
+  value = data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal
 }
+

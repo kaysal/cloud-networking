@@ -8,7 +8,7 @@ locals {
   peer_asn             = "65010"
 }
 
-module "vpn-aws-eu-w1-vpc1" {
+module "vpn_aws_eu_w1_vpc1" {
   source        = "github.com/kaysal/modules.git//gcp/vpn"
   project_id    = data.terraform_remote_state.host.outputs.host_project_id
   network       = data.google_compute_network.vpc.name

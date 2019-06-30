@@ -9,8 +9,7 @@ locals {
 }
 
 module "vpn-aws-eu-w1-vpc1" {
-  #source              = "github.com/kaysal/modules.git//gcp/vpn?ref=v1.0"
-  source        = "../../../../../../../tf_modules/gcp/vpn"
+  source        = "github.com/kaysal/modules.git//gcp/vpn"
   project_id    = data.terraform_remote_state.host.outputs.host_project_id
   network       = data.google_compute_network.vpc.name
   region        = "europe-west1"
@@ -32,7 +31,7 @@ module "vpn-aws-eu-w1-vpc1" {
     {
       tunnel_name               = "${var.main}aws-eu-w1-vpc1-tun-2"
       peer_ip                   = local.peer2_tunnel_ip
-      peer_asn                 = local.peer_asn
+      peer_asn                  = local.peer_asn
       cr_bgp_session_range      = "${local.vyosb_tunnel_gcp_vti}/30"
       remote_bgp_session_ip     = local.vyosb_tunnel_aws_vti
       advertised_route_priority = 100

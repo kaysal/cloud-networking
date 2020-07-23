@@ -17,7 +17,6 @@ data "terraform_remote_state" "w1_vpc2" {
   config = {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/1-vpc/eu-w1/vpc2"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
 
@@ -33,4 +32,3 @@ data "aws_route53_zone" "cloudtuples_private" {
   vpc_id       = data.terraform_remote_state.w1_vpc2.outputs.vpc2
   private_zone = true
 }
-

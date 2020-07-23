@@ -24,7 +24,6 @@ terraform {
   backend "gcs" {
     bucket      = "tf-shk"
     prefix      = "states/aws/cloudtuple/2-svc/us-e1/vpc1/1-demo"
-    credentials = "~/tf/credentials/gcp-credentials-tf.json"
+    #credentials = "~/tf/credentials/gcp-credentials-tf.json"
   }
 }
-

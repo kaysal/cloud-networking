@@ -7,4 +7,3 @@ resource "aws_key_pair" "kp" {
 output "kp" {
   value = aws_key_pair.kp.key_name
 }
-

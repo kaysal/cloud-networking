@@ -105,7 +105,7 @@ resource "aws_route53_record" "server_cloudtuples_private" {
   records = [aws_instance.server.private_ip]
 }
 
-output "--- server ---" {
+output "server" {
   value = [
     "az:        ${aws_instance.server.availability_zone} ",
     "priv ip:   ${aws_instance.server.private_ip} ",
@@ -151,7 +151,7 @@ resource "aws_route53_record" "sandbox_cloudtuples_private" {
   records = [aws_instance.sandbox.private_ip]
 }
 
-output "--- sandbox ---" {
+output "sandbox" {
   value = [
     "az:        ${aws_instance.sandbox.availability_zone} ",
     "priv ip:   ${aws_instance.sandbox.private_ip} ",
@@ -159,4 +159,3 @@ output "--- sandbox ---" {
     "priv dns:  ${aws_instance.sandbox.private_dns} ",
   ]
 }
-

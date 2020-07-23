@@ -33,7 +33,7 @@ resource "aws_route53_record" "bastion_cloudtuples_private" {
   records = [aws_instance.bastion.private_ip]
 }
 
-output "--- bastion ---" {
+output "bastion" {
   value = [
     "az:        ${aws_instance.bastion.availability_zone} ",
     "priv ip:   ${aws_instance.bastion.private_ip} ",
@@ -42,4 +42,3 @@ output "--- bastion ---" {
     "priv dns:  ${aws_instance.bastion.private_dns} ",
   ]
 }
-

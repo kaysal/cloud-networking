@@ -1,14 +1,13 @@
 # PROVIDER
 #==============================
 provider "aws" {
-  region     = "eu-west-1"
-  access_key = var.access_key
-  secret_key = var.secret_key
+  region                  = "eu-west-1"
+  #shared_credentials_file = "home/salawu/.aws/credentials"
+  #profile                 = "evil-mfa"
 }
 
-provider "random" {
-}
-
+provider "random" {}
+/*
 # BACKEND
 #==============================
 terraform {
@@ -17,4 +16,4 @@ terraform {
     prefix = "states/aws/cloudtuple/1-vpc/eu-w1/shared"
   }
 }
-
+*/

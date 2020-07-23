@@ -2,23 +2,24 @@
 *.tfstate
 *.tfstate.*
 *.tfstate.backup
-*.tfvars
+terraform.tfvars
+vars.tfvars
 #*.json
 *backend*
+tfplan
+.tmp
 
 # Module directory
 .terraform/
 
 # Other files
 *credentials/
-*keys/
 plugins/
 *plugins/
 *.x
 *scrap*
 *reference*
 *artifact
-*.txt
 
 # Skaffold
 bin/
@@ -32,5 +33,7 @@ pkg/
 .idea
 .skaffold-*.yaml
 .kubernetes-manifests-*/
-_*
-_del.*
+_run.*
+_dev.*
+_delete.*
+_env.txt

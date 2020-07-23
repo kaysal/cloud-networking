@@ -1,0 +1,77 @@
+
+export ARM_SKIP_PROVIDER_REGISTRATION=true
+
+export TF_VAR_global='{
+  prefix = "a1-"
+  location = "UK South"
+  vm_size = "Standard_B1s"
+  image = {
+    debian = "debian-cloud/debian-9"
+  }
+  tags = {
+    owner = "salawu"
+    lab   = "a1-hub-spoke"
+    env   = "global"
+  }
+}'
+
+export TF_VAR_hub='{
+  prefix   = "hub-"
+  location = "West Europe"
+  vnet     = "172.16.0.0/16"
+  dns_srv  = "['8.8.8.8', '8.8.4.4']"
+  subnet = {
+    azurefw = "172.16.1.0/26"
+    wload   = "172.16.2.0/24"
+  }
+  tags = {
+    env  = "hub"
+    mode = "nva"
+  }
+}'
+
+export TF_VAR_spoke1='{
+  prefix = "spoke1-"
+  location = "UK South"
+  vnet = "172.17.0.0/16"
+  dns_srv = "['8.8.8.8', '8.8.4.4']"
+  subnet = {
+    jump  = "172.17.1.0/24"
+    wload = "172.17.2.0/24"
+  }
+  vm = {
+    jump = {
+      ip = "172.17.1.4"
+    }
+    wload = {
+      ip = "172.17.2.4"
+    }
+  }
+  tags = {
+    env  = "spoke1"
+    mode = "nva"
+  }
+}'
+
+export TF_VAR_spoke2='{
+  prefix = "spoke2-"
+  location = "UK South"
+  vnet = "172.18.0.0/16"
+  dns_srv = "['8.8.8.8', '8.8.4.4']"
+  subnet = {
+    jump  = "172.18.1.0/24"
+    wload = "172.18.2.0/24"
+  }
+  vm = {
+    jump = {
+      ip = "172.18.1.4"
+    }
+    wload = {
+      ip = "172.18.2.4"
+    }
+  }
+  tags = {
+    env  = "spoke2"
+    mode = "nva"
+  }
+}'

@@ -1,0 +1,48 @@
+node:
+  id: "ENVOY_NODE_ID"
+  cluster: cluster  # unused
+  locality:
+    zone: "ENVOY_ZONE"
+  metadata:
+    TRAFFICDIRECTOR_INTERCEPTION_PORT: "ENVOY_PORT"
+    TRAFFICDIRECTOR_NETWORK_NAME: "VPC_NETWORK_NAME"
+    TRAFFICDIRECTOR_GCP_PROJECT_NUMBER: "CONFIG_PROJECT_NUMBER"
+    TRAFFICDIRECTOR_ENABLE_TRACING: "TRACING_ENABLED"
+    TRAFFICDIRECTOR_ACCESS_LOG_PATH: "ACCESSLOG_PATH"
+
+dynamic_resources:
+  lds_config: {ads: {}}
+  cds_config: {ads: {}}
+  ads_config:
+    api_type: GRPC
+    grpc_services:
+    - google_grpc:
+        target_uri: trafficdirector.googleapis.com:443
+        stat_prefix: trafficdirector
+        channel_credentials:
+          ssl_credentials:
+            root_certs:
+              filename: XDS_SERVER_CERT
+        call_credentials:
+          google_compute_engine: {}
+
+cluster_manager:
+  load_stats_config:
+    api_type: GRPC
+    grpc_services:
+    - google_grpc:
+        target_uri: trafficdirector.googleapis.com:443
+        stat_prefix: trafficdirector
+        channel_credentials:
+          ssl_credentials:
+            root_certs:
+              filename: XDS_SERVER_CERT
+        call_credentials:
+          google_compute_engine: {}
+
+admin:
+  access_log_path: /dev/stdout
+  address:
+    socket_address:
+      address: 127.0.0.1  # Admin page is only accessible locally.
+      port_value: ENVOY_ADMIN_PORT

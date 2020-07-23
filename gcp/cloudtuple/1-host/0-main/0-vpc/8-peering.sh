@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcloud alpha compute networks peerings create host-to-orange \
+gcloud beta compute networks peerings create host-to-orange \
   --network vpc \
   --peer-network vpc \
   --peer-project orange-project-c3 \

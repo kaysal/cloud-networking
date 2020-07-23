@@ -1,0 +1,58 @@
+#! /bin/bash
+
+apt-get update
+apt install -y apache2 tcpdump fping dnsutils apache2-utils jq libxml2-utils \
+python3 python3-pip
+pip3 install requests
+pip3 install dnspython
+
+vm_hostname="$(curl -H "Metadata-Flavor:Google" \
+http://169.254.169.254/computeMetadata/v1/instance/name)"
+echo "$vm_hostname" | tee /var/www/html/index.html
+systemctl restart apache2
+
+# script
+touch /tmp/list.txt
+cat <<EOF > /tmp/list.txt
+10.4.1.2
+10.4.2.2
+10.5.1.80
+10.5.1.81
+10.5.2.80
+10.5.2.81
+EOF
+
+touch /tmp/pinger
+chmod a+x /tmp/pinger
+cat <<EOF > /tmp/pinger
+  fping -A -f /tmp/list.txt
+  echo "curl --connect-timeout 2 ${SPOKE_8080} > \$(curl ${SPOKE_8080})"
+  echo "curl --connect-timeout 2 ${SPOKE_8081} > \$(curl ${SPOKE_8081})"
+EOF
+
+COMPUTE=https://www.googleapis.com/compute/v1/projects
+STORAGE=https://www.googleapis.com/storage/v1/b?project
+touch /tmp/curlz
+chmod a+x /tmp/curlz
+cat <<EOF > /tmp/curlz
+  echo ""
+  echo "------ SPOKE 1 ------"
+  echo ""
+  curl -sS -X GET -H "Authorization:Bearer \$SPOKE1_TOKEN" \
+  $STORAGE=${SPOKE1_PROJECT_ID} 2>&1
+  curl -X GET -H "Authorization: Bearer \$SPOKE1_TOKEN" \
+  https://storage.googleapis.com/${PREFIX}${SPOKE1_PROJECT_ID} | xmllint --format -
+  echo ""
+  echo "------ SPOKE 2 ------"
+  echo ""
+  curl -sS -X GET -H "Authorization:Bearer \$SPOKE2_TOKEN" \
+  $STORAGE=${SPOKE2_PROJECT_ID} 2>&1
+  echo ""
+  curl -X GET -H "Authorization: Bearer \$SPOKE2_TOKEN" \
+    https://storage.googleapis.com/${PREFIX}${SPOKE2_PROJECT_ID} | xmllint --format -
+EOF
+
+wget -O /tmp/private_api.py https://storage.googleapis.com/salawu-gcs/gcp/networking/private_api.py
+wget -O /tmp/private_api.sh https://storage.googleapis.com/salawu-gcs/gcp/networking/private_api.sh
+chmod a+x /tmp/private_api.py
+chmod a+x /tmp/private_api.sh

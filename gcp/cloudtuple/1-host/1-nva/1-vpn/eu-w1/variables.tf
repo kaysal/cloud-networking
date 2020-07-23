@@ -6,3 +6,4 @@ variable "nva" {
 variable "psk" {
   description = "ipsec vpn tunnel pre-shared key"
 }
+

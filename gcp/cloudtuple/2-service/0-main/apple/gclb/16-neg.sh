@@ -15,27 +15,14 @@ DEV_NEG_APP2_BE_SVC=gclb-dev-neg-app2-be-svc
 APP1_NEG_HC=gclb-app1-neg-hc
 APP2_NEG_HC=gclb-app2-neg-hc
 
-# network endpoint groups
-
-gcloud beta compute network-endpoint-groups update $EPG_APP1_EU_W3A \
-  --zone=$ZONE_APP1_EU_W3A \
-  --add-endpoint 'instance=gclb-neg-eu-w3-vm1,ip=10.200.10.11,port=80' \
-  --add-endpoint 'instance=gclb-neg-eu-w3-vm2,ip=10.0.82.22,port=80'
-
-gcloud beta compute network-endpoint-groups update $EPG_APP1_EU_W3B \
-  --zone=$ZONE_APP1_EU_W3B \
-  --add-endpoint 'instance=gclb-neg-eu-w3-vm3,ip=10.0.83.33,port=80'
-
-gcloud beta compute network-endpoint-groups update $EPG_APP2_EU_W3A \
-  --zone=$ZONE_APP2_EU_W3A \
-  --add-endpoint 'instance=gclb-neg-eu-w3-vm1,ip=10.0.81.11,port=8080'
-
 # health checks
 
 gcloud beta compute health-checks create http $APP1_NEG_HC \
+  --global \
   --port=80
 
 gcloud beta compute health-checks create http $APP2_NEG_HC \
+  --global \
   --port=8080
 
 # backend services
@@ -49,7 +36,7 @@ gcloud compute backend-services create $DEV_NEG_APP2_BE_SVC \
   --health-checks $APP2_NEG_HC
 
 gcloud beta compute backend-services add-backend $DEV_NEG_APP1_BE_SVC \
-   --network-endpoint-group $EPG_APP1_EU_W3A \
+   --network-endpoint-group $EPG_APP1_EU_W3A \RATE
    --network-endpoint-group-zone=$ZONE_APP1_EU_W3A \
    --global \
    --balancing-mode=RATE \

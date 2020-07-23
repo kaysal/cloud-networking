@@ -2,7 +2,7 @@
 output "vpc_name" {
   value = google_compute_network.vpc.name
 }
-
+/*
 output "eu_w2_10_200_30" {
   value = google_compute_subnetwork.eu_w2_10_200_30.self_link
 }
@@ -19,3 +19,4 @@ output "private_mango_cloudtuple_name" {
   value = google_dns_managed_zone.private_mango_cloudtuple.name
 }
 
+*/

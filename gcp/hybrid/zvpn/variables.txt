@@ -1,0 +1,22 @@
+# ****** OpenVPN SL VPN ******
+# https://medium.com/teendevs/setting-up-an-openvpn-server-on-google-compute-engine-9ff760d775d9
+
+export TF_VAR_global='{
+  prefix = "z-"
+  psk    = "password123"
+}'
+
+export TF_VAR_gcp='{
+  machine_type = {
+    ovpn   = "n1-standard-2"
+  }
+  asn = "65300"
+  region = "us-east4"
+  subnet = {
+    ovpn   = "10.1.0.0/24"
+    client = "10.8.0.0/8"
+  }
+  ip = {
+    ovpn  = "10.1.0.10"
+  }
+}'

@@ -17,3 +17,4 @@ resource "google_compute_health_check" "hc_8080" {
     request_path = "/app8080/"
   }
 }
+

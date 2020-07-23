@@ -22,3 +22,4 @@ variable "machine_type_fw" {
 variable "machine_cpu_fw" {
   default = "Intel Skylake"
 }
+

@@ -1,3 +1,4 @@
+
 # Enable shared VPC hosting in the host project
 resource "google_compute_shared_vpc_host_project" "host_project" {
   project = data.terraform_remote_state.host.outputs.host_project_id

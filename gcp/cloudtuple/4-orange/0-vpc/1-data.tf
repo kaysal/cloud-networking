@@ -88,4 +88,3 @@ output "nlb" {
 output "http_ssl_tcp_internal" {
   value = data.google_compute_lb_ip_ranges.ranges.http_ssl_tcp_internal
 }
-

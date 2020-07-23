@@ -18,7 +18,7 @@ resource "google_dns_record_set" "bastion_public" {
   name         = "bastion.orange.${data.google_dns_managed_zone.public_host_cloudtuple.dns_name}"
   type         = "A"
   ttl          = 300
-  
+
   rrdatas = [module.bastion.bastion_nat_ip]
 }
 

@@ -135,10 +135,6 @@ resource "google_dns_managed_zone" "gcp_mango_cloudtuple" {
   description = "queries to gcp mango private zone"
   visibility  = "private"
 
-  labels = {
-    foo = "bar"
-  }
-
   private_visibility_config {
     networks {
       network_url = google_compute_network.vpc.self_link
@@ -211,4 +207,3 @@ resource "google_dns_policy" "inbound_policy" {
     network_url = google_compute_network.vpc.self_link
   }
 }
-

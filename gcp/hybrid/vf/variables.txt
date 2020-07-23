@@ -1,0 +1,76 @@
+# ****** Vodafone Scenario ******
+
+export TF_VAR_global='{
+  prefix = "vf-"
+  label  = "vf-"
+  image  = "debian-9"
+  psk    = "password123"
+  hc_tag = "hc"
+}'
+
+export TF_VAR_onprem='{
+  prefix = "onprem-"
+  location = "eu-west-1"
+  vpc = "172.16.0.0/16"
+  asn = "65010"
+  subnet = {
+    pub = {
+      a = "172.16.0.0/24"
+      b = "172.16.1.0/24"
+    }
+    prv = {
+      a = "172.16.2.0/24"
+      b = "172.16.3.0/24"
+    }
+  }
+  ip = {
+    customer1  = "172.16.2.10"
+    customer2  = "172.16.3.10"
+    unbound1 = "172.16.2.99"
+    unbound2 = "172.16.3.99"
+  }
+  cgw1 = {
+    vti1 = "169.254.100.0/30"
+    vti2 = "169.254.100.4/30"
+  }
+  cgw2 = {
+    vti1 = "169.254.100.8/30"
+    vti2 = "169.254.100.12/30"
+  }
+}'
+
+export TF_VAR_spoke1='{
+  prefix = "cust1-"
+  location = "europe-west1"
+  asn    = "65301"
+  cidr   = "10.1.1.0/24"
+  ip = {
+    vm  = "10.1.1.2"
+  }
+}'
+
+export TF_VAR_spoke2='{
+  prefix = "cust2-"
+  location = "europe-west2"
+  asn    = "65302"
+  cidr   = "10.1.2.0/24"
+  ip = {
+    vm  = "10.1.2.2"
+  }
+}'
+
+export TF_VAR_restricted_apis='[
+  "storage",
+  "bigquery",
+  "bigtable",
+  "dataflow",
+  "dataproc",
+  "cloudkms",
+  "pubsub",
+  "spanner",
+  "containerregistry",
+  "container",
+  "gkeconnect",
+  "gkehub",
+  "logging",
+]'

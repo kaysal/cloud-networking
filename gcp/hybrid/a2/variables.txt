@@ -1,0 +1,127 @@
+
+export TF_VAR_global='{
+  prefix = "a2-"
+  label  = "a2-"
+  image  = "debian-9"
+  psk    = "password123"
+  hc_tag = "hc"
+}'
+
+export TF_VAR_onprem='{
+  prefix = "onprem-"
+  location = "eu-west-1"
+  vpc = "172.16.0.0/16"
+  asn = "65010"
+  subnet = {
+    pub = {
+      a = "172.16.0.0/24"
+      b = "172.16.1.0/24"
+    }
+    prv = {
+      a = "172.16.2.0/24"
+      b = "172.16.3.0/24"
+    }
+  }
+  ip = {
+    server  = "172.16.2.10"
+    unbound = "172.16.2.99"
+    dns = {
+      in_a  = "172.16.2.98"
+      in_b  = "172.16.3.98"
+      out_a = "172.16.2.99"
+      out_b = "172.16.3.99"
+    }
+  }
+  cgw1 = {
+    vti1 = "169.254.100.0/30"
+    vti2 = "169.254.100.4/30"
+  }
+  cgw2 = {
+    vti1 = "169.254.100.8/30"
+    vti2 = "169.254.100.12/30"
+  }
+}'
+
+export TF_VAR_hub='{
+  prefix = "hub-"
+  region = {
+    eu1 = "europe-west1"
+    eu2 = "europe-west2"
+  }
+  untrust = {
+    prefix = "untrust-"
+    asn    = "65301"
+    eu1 = {
+      region = "europe-west1"
+      cidr   = "10.1.1.0/24"
+      ip = {
+        nva1  = "10.1.1.2"
+        nva2  = "10.1.1.3"
+        dgw   = "10.1.1.1"
+        ilb80 = "10.1.1.80"
+        ilb81 = "10.1.1.81"
+      }
+    }
+    eu2 = {
+      region = "europe-west2"
+      cidr   = "10.1.2.0/24"
+      ip = {
+        nva1  = "10.1.2.2"
+        nva2  = "10.1.2.3"
+        dgw   = "10.1.2.1"
+        ilb80 = "10.1.2.80"
+        ilb81 = "10.1.2.81"
+      }
+    }
+  }
+  trust1 = {
+    prefix = "trust1-"
+    region = "europe-west1"
+    cidr = {
+      nva    = "10.2.1.0/24"
+      spoke1 = "10.5.1.0/24"
+    }
+    ip = {
+      nva1  = "10.2.1.2"
+      nva2  = "10.2.1.3"
+      dgw   = "10.2.1.1"
+      ilb   = "10.2.1.99"
+      ns    = "10.5.1.2"
+      web80 = "10.5.1.80"
+      web81 = "10.5.1.81"
+    }
+  }
+  trust2 = {
+    prefix = "trust2-"
+    region = "europe-west2"
+    cidr = {
+      nva    = "10.2.2.0/24"
+      spoke2 = "10.5.2.0/24"
+    }
+    ip = {
+      nva1  = "10.2.2.2"
+      nva2  = "10.2.2.3"
+      dgw   = "10.2.2.1"
+      ilb   = "10.2.2.99"
+      ns    = "10.5.2.2"
+      web80 = "10.5.2.80"
+      web81 = "10.5.2.81"
+    }
+  }
+}'
+
+export TF_VAR_restricted_apis='[
+  "storage",
+  "bigquery",
+  "bigtable",
+  "dataflow",
+  "dataproc",
+  "cloudkms",
+  "pubsub",
+  "spanner",
+  "containerregistry",
+  "container",
+  "gkeconnect",
+  "gkehub",
+  "logging",
+]'

@@ -1,0 +1,50 @@
+# ****** OpenVPN SL VPN ******
+# https://medium.com/teendevs/setting-up-an-openvpn-server-on-google-compute-engine-9ff760d775d9
+
+export TF_VAR_global='{
+  prefix = "a3-"
+  psk    = "password123"
+}'
+
+export TF_VAR_aws='{
+  location = "eu-west-1"
+  vpc = "172.16.0.0/16"
+  asn = "65010"
+  subnet = {
+    pub = {
+      a = "172.16.0.0/24"
+      b = "172.16.1.0/24"
+    }
+    prv = {
+      a = "172.16.2.0/24"
+      b = "172.16.3.0/24"
+    }
+  }
+  ip = {
+    server  = "172.16.2.10"
+  }
+  cgw1 = {
+    vti1 = "169.254.100.0/30"
+    vti2 = "169.254.100.4/30"
+  }
+  cgw2 = {
+    vti1 = "169.254.100.8/30"
+    vti2 = "169.254.100.12/30"
+  }
+}'
+
+export TF_VAR_gcp='{
+  image  = "projects/ubuntu-os-cloud/global/images/ubuntu-1604-xenial-v20180814"
+  machine_type = "n1-standard-2"
+  asn = "65300"
+  region = "europe-west2"
+  subnet1 = "10.1.0.0/24"
+  subnet2 = "10.2.0.0/24"
+  subnet3 = "10.3.0.0/24"
+  ip = {
+    ovpn  = "10.1.0.10"
+    web0  = "10.2.0.10"
+    web1  = "10.3.0.10"
+    web2  = "10.3.0.20"
+  }
+}'

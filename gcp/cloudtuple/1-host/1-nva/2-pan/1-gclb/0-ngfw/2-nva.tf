@@ -2,17 +2,17 @@
 #=====================================
 resource "google_compute_instance" "fw_b" {
   name                      = "${var.name}-fw-b"
-  machine_type              = "${var.machine_type_fw}"
+  machine_type              = var.machine_type_fw
   zone                      = "europe-west1-b"
-  min_cpu_platform          = "${var.machine_cpu_fw}"
+  min_cpu_platform          = var.machine_cpu_fw
   can_ip_forward            = true
   allow_stopping_for_update = true
-  tags                      = ["${var.name}"]
+  tags                      = [var.name]
 
-  metadata {
+  metadata = {
     mgmt-interface-swap = "enable"
     serial-port-enable  = true
-    ssh-keys            = "user:${file("${var.public_key_path}")}"
+    ssh-keys            = "user:${file(var.public_key_path)}"
   }
 
   service_account {
@@ -30,25 +30,27 @@ resource "google_compute_instance" "fw_b" {
   # nic2 -> trust -> eth1/1 [PAN TRUST]
 
   network_interface {
-    subnetwork    = "${data.terraform_remote_state.vpc.subnet_untrust}"
-    network_ip    = "10.0.1.4"
-    access_config = {}
+    subnetwork = data.terraform_remote_state.vpc.outputs.subnet_untrust
+    network_ip = "10.0.1.4"
+    access_config {
+    }
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.subnet_mgt}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.subnet_mgt
     network_ip = "10.0.0.4"
-    access_config = {}
+    access_config {
+    }
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.subnet_trust}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.subnet_trust
     network_ip = "10.0.2.4"
   }
 
   boot_disk {
     initialize_params {
-      image = "${var.image_fw}"
+      image = var.image_fw
     }
   }
 }
@@ -57,17 +59,17 @@ resource "google_compute_instance" "fw_b" {
 #=====================================
 resource "google_compute_instance" "fw_c" {
   name                      = "${var.name}-fw-c"
-  machine_type              = "${var.machine_type_fw}"
+  machine_type              = var.machine_type_fw
   zone                      = "europe-west1-c"
-  min_cpu_platform          = "${var.machine_cpu_fw}"
+  min_cpu_platform          = var.machine_cpu_fw
   can_ip_forward            = true
   allow_stopping_for_update = true
-  tags                      = ["${var.name}"]
+  tags                      = [var.name]
 
-  metadata {
+  metadata = {
     mgmt-interface-swap = "enable"
     serial-port-enable  = true
-    ssh-keys            = "user:${file("${var.public_key_path}")}"
+    ssh-keys            = "user:${file(var.public_key_path)}"
   }
 
   service_account {
@@ -85,25 +87,28 @@ resource "google_compute_instance" "fw_c" {
   # nic2 -> trust -> eth1/1 [PAN TRUST]
 
   network_interface {
-    subnetwork    = "${data.terraform_remote_state.vpc.subnet_untrust}"
-    network_ip    = "10.0.1.5"
-    access_config = {}
+    subnetwork = data.terraform_remote_state.vpc.outputs.subnet_untrust
+    network_ip = "10.0.1.5"
+    access_config {
+    }
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.subnet_mgt}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.subnet_mgt
     network_ip = "10.0.0.5"
-    access_config = {}
+    access_config {
+    }
   }
 
   network_interface {
-    subnetwork = "${data.terraform_remote_state.vpc.subnet_trust}"
+    subnetwork = data.terraform_remote_state.vpc.outputs.subnet_trust
     network_ip = "10.0.2.5"
   }
 
   boot_disk {
     initialize_params {
-      image = "${var.image_fw}"
+      image = var.image_fw
     }
   }
 }
+

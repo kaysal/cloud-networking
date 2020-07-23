@@ -23,12 +23,13 @@ module "gke" {
   pods_range_name           = "pod-range"
   services_range_name       = "svc-range"
   default_max_pods_per_node = 16
+  min_master_version        = "1.13.7-gke.8"
 
   logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"
 
   enable_binary_authorization = false
-  istio_config_disabled       = false
+  enable_istio_config         = false
 
   master_authorized_networks_config = [
     {

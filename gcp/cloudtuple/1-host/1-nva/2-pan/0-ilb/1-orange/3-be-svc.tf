@@ -8,14 +8,14 @@ resource "google_compute_region_backend_service" "be_svc_orange_80" {
   session_affinity = "CLIENT_IP"
 
   backend {
-    group = "${data.terraform_remote_state.pan.ig_b}"
+    group = data.terraform_remote_state.pan.outputs.ig_b
   }
 
   backend {
-    group = "${data.terraform_remote_state.pan.ig_c}"
+    group = data.terraform_remote_state.pan.outputs.ig_c
   }
 
-  health_checks = ["${google_compute_health_check.hc_80.self_link}"]
+  health_checks = [google_compute_health_check.hc_80.self_link]
 }
 
 # Application on Port 8080
@@ -26,12 +26,13 @@ resource "google_compute_region_backend_service" "be_svc_orange_8080" {
   session_affinity = "CLIENT_IP"
 
   backend {
-    group = "${data.terraform_remote_state.pan.ig_b}"
+    group = data.terraform_remote_state.pan.outputs.ig_b
   }
 
   backend {
-    group = "${data.terraform_remote_state.pan.ig_c}"
+    group = data.terraform_remote_state.pan.outputs.ig_c
   }
 
-  health_checks = ["${google_compute_health_check.hc_8080.self_link}"]
+  health_checks = [google_compute_health_check.hc_8080.self_link]
 }
+

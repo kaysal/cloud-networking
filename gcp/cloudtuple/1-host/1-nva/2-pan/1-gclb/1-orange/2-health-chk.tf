@@ -27,3 +27,4 @@ resource "google_compute_health_check" "hc_8081" {
     request_path = "/"
   }
 }
+

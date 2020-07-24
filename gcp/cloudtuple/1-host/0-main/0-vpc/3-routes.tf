@@ -1,3 +1,4 @@
+
 resource "google_compute_route" "private_googleapis" {
   name             = "${var.env}private-googleapis"
   description      = "Route to default gateway for PGA"
@@ -11,4 +12,3 @@ resource "google_compute_route" "private_googleapis" {
   }
 */
 }
-

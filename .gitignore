@@ -13,6 +13,7 @@ tfplan
 .terraform/
 
 # Other files
+*keys/
 *credentials/
 plugins/
 *plugins/

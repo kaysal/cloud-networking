@@ -94,6 +94,7 @@ export TF_VAR_hub='{
       }
       megaport = {
         peer_asn          = "64511"
+        candidate_subnets = "169.254.50.0/29"
         advertised_route_priority = "100"
       }
       vpn = {

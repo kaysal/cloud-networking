@@ -19,10 +19,15 @@ resource "google_compute_security_policy" "allowed_clients" {
 
       config {
         src_ip_ranges = [
-          local.aws.ohio_eip.public_ip,
-          local.aws.tokyo_eip.public_ip,
-          local.aws.singapore_eip.public_ip,
-          local.aws.london_eip.public_ip,
+          #local.aws.ohio_eip.public_ip,
+          #local.aws.tokyo_eip.public_ip,
+          #local.aws.singapore_eip.public_ip,
+          #local.aws.london_eip.public_ip,
+          local.azure.tokyo_ip,
+          local.azure.iowa_ip,
+          local.azure.london_ip,
+          local.azure.singapore_ip,
+          local.azure.toronto_ip,
         ]
       }
     }

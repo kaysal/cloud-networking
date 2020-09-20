@@ -22,12 +22,20 @@ data "terraform_remote_state" "compute" {
     path = "../3-compute/terraform.tfstate"
   }
 }
-
+/*
 data "terraform_remote_state" "aws_init" {
   backend = "local"
 
   config = {
     path = "../../../0-aws-init/1-vpc/terraform.tfstate"
+  }
+}*/
+
+data "terraform_remote_state" "azure_init" {
+  backend = "local"
+
+  config = {
+    path = "../../../0-azure-init/1-vpc/terraform.tfstate"
   }
 }
 
@@ -39,10 +47,19 @@ locals {
   gclb_standard_vip = data.terraform_remote_state.vpc1.outputs.gclb_standard_vip
   instances         = data.terraform_remote_state.compute.outputs.instances
   templates         = data.terraform_remote_state.compute.outputs.templates
-  aws = {
+
+  /*aws = {
     tokyo_eip     = data.terraform_remote_state.aws_init.outputs.aws.tokyo.eip
     singapore_eip = data.terraform_remote_state.aws_init.outputs.aws.singapore.eip
     london_eip    = data.terraform_remote_state.aws_init.outputs.aws.london.eip
     ohio_eip      = data.terraform_remote_state.aws_init.outputs.aws.ohio.eip
+  }*/
+
+  azure = {
+    tokyo_ip     = data.terraform_remote_state.azure_init.outputs.tokyo_ip
+    iowa_ip      = data.terraform_remote_state.azure_init.outputs.iowa_ip
+    london_ip    = data.terraform_remote_state.azure_init.outputs.london_ip
+    singapore_ip = data.terraform_remote_state.azure_init.outputs.singapore_ip
+    toronto_ip   = data.terraform_remote_state.azure_init.outputs.toronto_ip
   }
 }

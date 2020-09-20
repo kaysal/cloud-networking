@@ -17,8 +17,8 @@ export AWS_PROFILE=evil-mfa
 
 terraform_apply() {
   RESOURCES=(
-  #1-vpc
-  2-interconnect
+  1-vpc
+  #2-interconnect
   #4-tcproxy
   #5-gclb
   #6-ilb

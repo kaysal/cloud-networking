@@ -13,7 +13,10 @@ export TF_VAR_project_id_vpc1=$(gcloud config get-value project)
 export TF_VAR_project_id_vpc2=$(gcloud config get-value project)
 
 terraform_apply() {
-  RESOURCES=(1-vpc)
+  RESOURCES=(
+  1-vpc
+  2-instances
+  )
 
   for i in "${RESOURCES[@]}"
   do

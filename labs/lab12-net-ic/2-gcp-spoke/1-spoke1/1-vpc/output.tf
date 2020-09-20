@@ -1,10 +1,9 @@
 
 output "network" {
   value = {
-    custom = google_compute_network.custom
+    vpc1 = google_compute_network.vpc_spoke1
     subnet = {
-      custom_us = google_compute_subnetwork.custom_us
-      custom_eu = google_compute_subnetwork.custom_eu
+      data_eu = google_compute_subnetwork.data_eu
     }
   }
   sensitive = true

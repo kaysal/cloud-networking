@@ -16,7 +16,11 @@ unset AWS_SECRET_ACCESS_KEY
 export AWS_PROFILE=evil-mfa
 
 terraform_apply() {
-  RESOURCES=(2-interconnect)
+  RESOURCES=(
+  1-vpc
+  2-interconnect
+  3-natgw
+  )
 
   for i in "${RESOURCES[@]}"
   do

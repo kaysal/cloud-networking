@@ -78,6 +78,9 @@ resource "google_compute_router" "vpc2_router_vpn" {
     asn               = var.hub.vpc2.eu.vpn.asn
     advertise_mode    = "CUSTOM"
     advertised_groups = ["ALL_SUBNETS"]
+    advertised_ip_ranges {
+      range = var.spoke.vpc_spoke1.eu.cidr.ext_db
+    }
   }
 }
 
@@ -110,14 +113,14 @@ module "vpc2_to_vpc1" {
       peer_asn                  = var.hub.vpc1.eu.vpn.asn
       cr_bgp_session_range      = "${var.hub.vpc2.eu.vpn.cr_vti1}/30"
       remote_bgp_session_ip     = var.hub.vpc1.eu.vpn.cr_vti1
-      advertised_route_priority = 100
+      advertised_route_priority = 50
     },
     {
       session_name              = "vpc2-to-vpc1"
       peer_asn                  = var.hub.vpc1.eu.vpn.asn
       cr_bgp_session_range      = "${var.hub.vpc2.eu.vpn.cr_vti2}/30"
       remote_bgp_session_ip     = var.hub.vpc1.eu.vpn.cr_vti2
-      advertised_route_priority = 100
+      advertised_route_priority = 50
     },
   ]
 }

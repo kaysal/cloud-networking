@@ -31,3 +31,7 @@ output "subnetwork" {
   }
   sensitive = true
 }
+
+output "vm10_pulbic_ip" {
+  value = google_compute_address.vm10_pulbic_ip.address
+}

@@ -12,6 +12,7 @@ resource "google_compute_network" "vpc3" {
 #------------------------------------
 
 resource "google_compute_subnetwork" "range1" {
+  provider      = google-beta
   name          = "range1"
   ip_cidr_range = var.hub.vpc3.us.cidr.range1
   region        = var.hub.vpc3.us.region
@@ -139,4 +140,11 @@ resource "google_compute_subnetwork" "range7_x" {
   ip_cidr_range = var.hub.vpc3.us.cidr2.range7
   region        = var.hub.vpc3.us.region
   network       = google_compute_network.vpc3.self_link
+}
+
+# public ip address
+
+resource "google_compute_address" "vm10_pulbic_ip" {
+  name   = "vm10-public-ip"
+  region = var.hub.vpc3.us.region
 }

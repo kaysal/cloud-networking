@@ -23,11 +23,11 @@ resource "google_compute_security_policy" "allowed_clients" {
           #local.aws.tokyo_eip.public_ip,
           #local.aws.singapore_eip.public_ip,
           #local.aws.london_eip.public_ip,
-          local.azure.tokyo_ip,
-          local.azure.iowa_ip,
-          local.azure.london_ip,
-          local.azure.singapore_ip,
-          local.azure.toronto_ip,
+          local.azure.tokyo_ip.ip_address,
+          local.azure.iowa_ip.ip_address,
+          local.azure.london_ip.ip_address,
+          local.azure.singapore_ip.ip_address,
+          local.azure.toronto_ip.ip_address,
         ]
       }
     }

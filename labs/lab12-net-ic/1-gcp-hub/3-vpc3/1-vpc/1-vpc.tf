@@ -144,6 +144,11 @@ resource "google_compute_subnetwork" "range7_x" {
 
 # public ip address
 
+resource "google_compute_address" "vm9_pulbic_ip" {
+  name   = "vm9-public-ip"
+  region = var.hub.vpc3.us.region
+}
+
 resource "google_compute_address" "vm10_pulbic_ip" {
   name   = "vm10-public-ip"
   region = var.hub.vpc3.us.region

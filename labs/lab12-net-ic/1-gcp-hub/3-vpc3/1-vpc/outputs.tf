@@ -32,6 +32,10 @@ output "subnetwork" {
   sensitive = true
 }
 
-output "vm10_pulbic_ip" {
+output "vm9_public_ip" {
+  value = google_compute_address.vm9_pulbic_ip.address
+}
+
+output "vm10_public_ip" {
   value = google_compute_address.vm10_pulbic_ip.address
 }

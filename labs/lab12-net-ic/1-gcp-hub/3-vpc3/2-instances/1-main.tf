@@ -269,7 +269,7 @@ resource "google_compute_instance" "vm8" {
 
 locals {
   vm9_init = templatefile("scripts/vm9.sh.tpl", {
-    TARGET = google_compute_instance.vm10.network_interface[0].access_config[0].nat_ip
+    TARGET = data.terraform_remote_state.vpc3.outputs.vm10_public_ip
   })
 }
 
@@ -291,7 +291,9 @@ resource "google_compute_instance" "vm9" {
   network_interface {
     subnetwork = local.subnet.range9.self_link
     network_ip = var.hub.vpc3.us.ip.vm9
-    access_config {}
+    access_config {
+      nat_ip = data.terraform_remote_state.vpc3.outputs.vm9_public_ip
+    }
   }
 
   service_account {
@@ -317,7 +319,9 @@ resource "google_compute_instance" "vm10" {
   network_interface {
     subnetwork = local.subnet.range10.self_link
     network_ip = var.hub.vpc3.us.ip.vm10
-    access_config {}
+    access_config {
+      nat_ip = data.terraform_remote_state.vpc3.outputs.vm10_public_ip
+    }
   }
 
   service_account {

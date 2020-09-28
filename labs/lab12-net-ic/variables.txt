@@ -9,6 +9,39 @@ export TF_VAR_global='{
   }
 }'
 
+export TF_VAR_azure='{
+  prefix = "live-demo-"
+  tags = {
+      owner   = "salawu"
+      purpose = "nic-live-demo"
+  }
+  tokyo = {
+    location    = "japaneast"
+    vnet_cidr   = "10.99.0.0/16"
+    subnet_cidr = "10.99.1.0/24"
+  }
+  iowa = {
+    location    = "centralus"
+    vnet_cidr   = "10.99.0.0/16"
+    subnet_cidr = "10.99.1.0/24"
+  }
+  london = {
+    location    = "uksouth"
+    vnet_cidr   = "10.99.0.0/16"
+    subnet_cidr = "10.99.1.0/24"
+  }
+  singapore = {
+    location    = "southeastasia"
+    vnet_cidr   = "10.99.0.0/16"
+    subnet_cidr = "10.99.1.0/24"
+  }
+  toronto = {
+    location    = "canadacentral"
+    vnet_cidr   = "10.99.0.0/16"
+    subnet_cidr = "10.99.1.0/24"
+  }
+}'
+
 export TF_VAR_aws='{
   tokyo = {
     region      = "ap-northeast-1"

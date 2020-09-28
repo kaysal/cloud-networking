@@ -14,7 +14,7 @@ resource "google_compute_firewall" "vpc3_allow_ssh" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  priority      = "1000"
+  priority      = "900"
 
   log_config {
     metadata = "INCLUDE_ALL_METADATA"

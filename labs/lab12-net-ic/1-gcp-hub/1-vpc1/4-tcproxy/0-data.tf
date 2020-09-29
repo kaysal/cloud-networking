@@ -7,7 +7,7 @@ provider "google-beta" {
   project = var.project_id
 }
 
-data "terraform_remote_state" "default" {
+data "terraform_remote_state" "network" {
   backend = "local"
 
   config = {
@@ -24,8 +24,8 @@ data "terraform_remote_state" "compute" {
 }
 
 locals {
-  default            = data.terraform_remote_state.default.outputs.network.default
+  vpc1               = data.terraform_remote_state.network.outputs.network.vpc1
   default_hc         = data.terraform_remote_state.compute.outputs.health_check
-  mqtt_tcp_proxy_vip = data.terraform_remote_state.default.outputs.mqtt_tcp_proxy_vip
+  mqtt_tcp_proxy_vip = data.terraform_remote_state.network.outputs.mqtt_tcp_proxy_vip
   templates          = data.terraform_remote_state.compute.outputs.templates
 }

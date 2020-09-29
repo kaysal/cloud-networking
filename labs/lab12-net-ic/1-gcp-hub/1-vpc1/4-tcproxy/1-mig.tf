@@ -7,7 +7,7 @@
 resource "google_compute_instance_group_manager" "mqtt_us" {
   name               = "mqtt-us"
   base_instance_name = "mqtt-us"
-  zone               = "${var.hub.default.us.region}-c"
+  zone               = "${var.hub.vpc1.us.region}-c"
 
   version {
     instance_template = local.templates.mqtt_us.self_link
@@ -19,14 +19,14 @@ resource "google_compute_instance_group_manager" "mqtt_us" {
   }
 
   auto_healing_policies {
-    health_check      = local.default_hc.default.self_link
+    health_check      = local.default_hc.vpc1.self_link
     initial_delay_sec = 300
   }
 }
 
 resource "google_compute_autoscaler" "mqtt_us" {
   name   = "mqtt-us"
-  zone   = "${var.hub.default.us.region}-c"
+  zone   = "${var.hub.vpc1.us.region}-c"
   target = google_compute_instance_group_manager.mqtt_us.self_link
 
   autoscaling_policy {

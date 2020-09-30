@@ -7,10 +7,6 @@ bold=$(tput bold)
 reset=`tput sgr0`
 
 source ../variables.txt
-export TF_WARN_OUTPUT_ERRORS=1
-export GOOGLE_PROJECT=$(gcloud config get-value project)
-export TF_VAR_project_id_vpc1=$(gcloud config get-value project)
-export TF_VAR_project_id_vpc2=$(gcloud config get-value project)
 unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY
 export AWS_PROFILE=aws-mfa
